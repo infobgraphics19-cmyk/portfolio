@@ -23,6 +23,12 @@ Accessibility and fallbacks:
 - If a script fails to load, the site shows a clean static version with all content visible.
 - On phones the horizontal gallery becomes a vertical list, and the custom cursor is turned off on touch devices.
 
+## Two versions
+
+- **Option 1**: `index.html` (site root) is the original scroll-animated design.
+- **Option 2**: `v2/index.html` adds blurred aurora lighting, a glass navigation bar, blur-in text, floating WordPress/Shopify/Wix logos with depth-of-field parallax, smoother scrolling for every visitor, and a draggable **Before / After** redesign section.
+  - Edit the `REDESIGNS` list at the top of `v2/js/main.js`. Set `before` and `after` to your screenshots, for example `images/client-before.jpg`. Without screenshots, illustrated examples are shown.
+
 ## Structure
 
 ```
@@ -35,7 +41,7 @@ images/             project screenshots
 
 ## Customise
 
-1. **Your details:** replace `Your Name`, `<YN/>` (logo initials), `hello@example.com` and the WhatsApp, LinkedIn, GitHub and Upwork links in `index.html`. Set `CONTACT_EMAIL` in `js/main.js`.
+1. **Your details:** the name is set to Kishan; replace `hello@example.com` and the WhatsApp, LinkedIn, GitHub and Upwork links in `index.html`. Set `CONTACT_EMAIL` in `js/main.js`.
 2. **Stats:** set the `data-count` numbers in the About section to your real figures.
 3. **Projects:** edit the `PROJECTS` array at the top of `js/main.js`. `tarmalsteel.com` and `bazayan.ch` are already in; the other four are examples to replace. Each project's number and the horizontal-scroll length update automatically.
 4. **Screenshots:** save a full-width screenshot, for example `images/tarmalsteel.jpg` at about 1600×1050, and set `image: "images/tarmalsteel.jpg"`. Without one, a generated cover is shown.
