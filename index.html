@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Name — WordPress, Shopify &amp; Wix Developer</title>
+  <meta name="description" content="Freelance web developer with 5+ years of experience building custom WordPress themes and plugins, Shopify stores and Wix websites.">
+  <meta property="og:title" content="Your Name — WordPress, Shopify &amp; Wix Developer">
+  <meta property="og:description" content="Custom WordPress, Shopify and Wix websites. 5+ years of experience.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'>&lt;/&gt;</text></svg>">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <nav class="nav container" aria-label="Main">
+      <a href="#top" class="logo"><span class="logo-mark">&lt;/&gt;</span> Your&nbsp;Name</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact" class="btn btn-sm">Hire me</a></li>
+        <li>
+          <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+            <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="dot"></span> Available for new projects</p>
+          <h1>I build fast, custom websites on <span class="grad">WordPress</span>, <span class="grad">Shopify</span> &amp; <span class="grad">Wix</span>.</h1>
+          <p class="lead">Hi, I'm Your Name, a web developer with <strong>5+ years</strong> of experience. I turn designs into reliable websites and online stores that are easy for you to manage and good at bringing in customers.</p>
+          <div class="hero-cta">
+            <a href="#projects" class="btn">View my work</a>
+            <a href="#contact" class="btn btn-ghost">Let's talk</a>
+          </div>
+          <ul class="hero-badges" aria-label="Platforms">
+            <li>WordPress</li><li>Shopify</li><li>Wix</li><li>WooCommerce</li><li>Elementor</li>
+          </ul>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="code-card">
+            <div class="code-bar"><i></i><i></i><i></i><span>functions.php</span></div>
+<pre><code><span class="c">// custom post type for projects</span>
+<span class="k">add_action</span>(<span class="s">'init'</span>, <span class="k">function</span> () {
+  <span class="k">register_post_type</span>(<span class="s">'project'</span>, [
+    <span class="s">'public'</span>    =&gt; <span class="n">true</span>,
+    <span class="s">'has_archive'</span> =&gt; <span class="n">true</span>,
+    <span class="s">'supports'</span>  =&gt; [<span class="s">'title'</span>, <span class="s">'thumbnail'</span>],
+    <span class="s">'show_in_rest'</span> =&gt; <span class="n">true</span>,
+  ]);
+});</code></pre>
+          </div>
+          <div class="float-card fc-1"><strong>5+</strong><span>Years experience</span></div>
+          <div class="float-card fc-2"><strong>3</strong><span>Platforms mastered</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+      <div class="container stats-grid">
+        <div class="stat"><strong data-count="5" data-suffix="+">0</strong><span>Years in web development</span></div>
+        <div class="stat"><strong data-count="100" data-suffix="+">0</strong><span>Websites delivered</span></div>
+        <div class="stat"><strong data-count="3">0</strong><span>Platforms: WordPress, Shopify, Wix</span></div>
+        <div class="stat"><strong data-count="100" data-suffix="%">0</strong><span>Responsive &amp; mobile-first</span></div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">What I do</p>
+          <h2>Services</h2>
+          <p>From a simple business site to a complete online store, built on the platform that fits your goals and budget.</p>
+        </header>
+        <div class="cards-3">
+          <article class="service-card">
+            <div class="service-icon wp" aria-hidden="true">W</div>
+            <h3>Custom WordPress Development</h3>
+            <p>Custom themes built from scratch, custom plugins, Gutenberg blocks, ACF-powered layouts, and WooCommerce stores.</p>
+            <ul class="ticks">
+              <li>Custom themes &amp; child themes</li>
+              <li>Plugin development &amp; API integrations</li>
+              <li>Elementor / Gutenberg / ACF builds</li>
+              <li>WooCommerce setup &amp; customisation</li>
+              <li>Speed optimisation &amp; security hardening</li>
+            </ul>
+          </article>
+          <article class="service-card">
+            <div class="service-icon shopify" aria-hidden="true">S</div>
+            <h3>Shopify Store Development</h3>
+            <p>Shopify stores built for sales, with custom Liquid sections, theme customisation, and the right apps.</p>
+            <ul class="ticks">
+              <li>Custom Shopify 2.0 themes &amp; sections</li>
+              <li>Liquid, metafields &amp; dynamic content</li>
+              <li>Product, collection &amp; checkout setup</li>
+              <li>App integration &amp; store migration</li>
+              <li>Conversion-focused UX improvements</li>
+            </ul>
+          </article>
+          <article class="service-card">
+            <div class="service-icon wix" aria-hidden="true">X</div>
+            <h3>Wix Website Design</h3>
+            <p>Well-designed Wix sites you can update yourself, with Velo code when you need custom features.</p>
+            <ul class="ticks">
+              <li>Wix Studio / Editor X layouts</li>
+              <li>Velo (custom code) &amp; dynamic pages</li>
+              <li>Wix Stores &amp; Bookings setup</li>
+              <li>Multilingual websites</li>
+              <li>On-page SEO setup</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section section-alt">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Recent work</p>
+          <h2>Featured Projects</h2>
+          <p>A selection of websites I've built for clients. Click any project to visit the live site.</p>
+        </header>
+
+        <div class="filters" role="tablist" aria-label="Filter projects">
+          <button class="filter is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="filter" data-filter="wordpress" role="tab" aria-selected="false">WordPress</button>
+          <button class="filter" data-filter="shopify" role="tab" aria-selected="false">Shopify</button>
+          <button class="filter" data-filter="wix" role="tab" aria-selected="false">Wix</button>
+        </div>
+
+        <div class="projects-grid" id="projects-grid">
+          <!-- Rendered from the PROJECTS list in js/main.js -->
+        </div>
+        <noscript><p class="center">Enable JavaScript to see the project gallery.</p></noscript>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" class="section">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">How I work</p>
+          <h2>A simple, transparent process</h2>
+        </header>
+        <ol class="process">
+          <li><span>01</span><h3>Discovery</h3><p>We talk about your business, goals, audience and the features you need. I recommend the right platform.</p></li>
+          <li><span>02</span><h3>Plan &amp; Design</h3><p>Sitemap, wireframes and design direction, or I build from your Figma / XD / PSD files.</p></li>
+          <li><span>03</span><h3>Development</h3><p>Clean, responsive builds with regular progress updates on a staging link.</p></li>
+          <li><span>04</span><h3>Launch &amp; Support</h3><p>Testing, SEO basics, speed checks, go-live, training, and ongoing support when you need it.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section section-alt">
+      <div class="container skills-wrap">
+        <div>
+          <p class="eyebrow">Toolbox</p>
+          <h2>Skills &amp; Technologies</h2>
+          <p>Front-end skills and deep platform knowledge, so I can handle both custom code and no-code builds.</p>
+        </div>
+        <div class="skill-groups">
+          <div class="skill-group"><h3>Platforms</h3><ul class="chips"><li>WordPress</li><li>WooCommerce</li><li>Shopify</li><li>Wix / Wix Studio</li><li>Elementor</li><li>Gutenberg</li></ul></div>
+          <div class="skill-group"><h3>Code</h3><ul class="chips"><li>PHP</li><li>Liquid</li><li>Velo (Wix)</li><li>JavaScript</li><li>jQuery</li><li>HTML5</li><li>CSS3 / SCSS</li><li>MySQL</li><li>REST APIs</li></ul></div>
+          <div class="skill-group"><h3>Tools</h3><ul class="chips"><li>ACF Pro</li><li>Figma</li><li>Git</li><li>cPanel</li><li>Google Analytics</li><li>Search Console</li></ul></div>
+          <div class="skill-group"><h3>Extras</h3><ul class="chips"><li>Speed optimisation</li><li>On-page SEO</li><li>Multilingual (WPML / Polylang)</li><li>Site migration</li><li>Maintenance</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="container contact-card">
+        <div class="contact-copy">
+          <p class="eyebrow">Let's work together</p>
+          <h2>Have a project in mind?</h2>
+          <p>Tell me about your website or store. I usually reply within 24 hours.</p>
+          <ul class="contact-list">
+            <li><span>Email</span><a href="mailto:hello@example.com">hello@example.com</a></li>
+            <li><span>WhatsApp</span><a href="https://wa.me/0000000000" target="_blank" rel="noopener">+00 000 000 0000</a></li>
+            <li><span>LinkedIn</span><a href="https://www.linkedin.com/" target="_blank" rel="noopener">linkedin.com/in/yourname</a></li>
+          </ul>
+        </div>
+        <form class="contact-form" id="contact-form" novalidate>
+          <label>Name<input name="name" type="text" autocomplete="name" required></label>
+          <label>Email<input name="email" type="email" autocomplete="email" required></label>
+          <label>Platform
+            <select name="platform">
+              <option>WordPress</option><option>Shopify</option><option>Wix</option><option>Not sure yet</option>
+            </select>
+          </label>
+          <label>Project details<textarea name="message" rows="4" required></textarea></label>
+          <button type="submit" class="btn">Send message</button>
+          <p class="form-note" id="form-note" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> Your Name. WordPress, Shopify &amp; Wix developer.</p>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
