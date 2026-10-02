@@ -4,227 +4,338 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Your Name — WordPress, Shopify &amp; Wix Developer</title>
-  <meta name="description" content="Freelance web developer with 5+ years of experience building custom WordPress themes and plugins, Shopify stores and Wix websites.">
+  <meta name="description" content="Web developer with 5+ years of experience building custom WordPress themes and plugins, Shopify stores and Wix websites.">
   <meta property="og:title" content="Your Name — WordPress, Shopify &amp; Wix Developer">
-  <meta property="og:description" content="Custom WordPress, Shopify and Wix websites. 5+ years of experience.">
+  <meta property="og:description" content="Custom WordPress, Shopify and Wix websites, hand-coded. 5+ years of experience.">
   <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0a0a0b">
+  <script>
+    // Turn on the animated experience only when motion is allowed.
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("has-motion");
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'>&lt;/&gt;</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0a0b'/><text x='50' y='64' font-size='44' text-anchor='middle' fill='%23d4ff3f' font-family='monospace' font-weight='700'>&lt;/&gt;</text></svg>">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header" id="top">
-    <nav class="nav container" aria-label="Main">
-      <a href="#top" class="logo"><span class="logo-mark">&lt;/&gt;</span> Your&nbsp;Name</a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
+  <!-- Preloader: fake terminal boot -->
+  <div class="preloader" aria-hidden="true">
+    <div class="preloader-term">
+      <p><span class="pl-prompt">~/portfolio $</span> npm run build</p>
+      <p class="pl-line">› compiling themes <span class="ok">✓</span></p>
+      <p class="pl-line">› bundling liquid sections <span class="ok">✓</span></p>
+      <p class="pl-line">› optimising assets <span class="ok">✓</span></p>
+      <p class="pl-line">› deploying experience…</p>
+    </div>
+    <div class="preloader-count"><span id="pl-num">0</span>%</div>
+    <div class="preloader-bar"><span></span></div>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><div class="cursor-dot"></div><div class="cursor-ring"><span class="cursor-label">View</span></div></div>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Main">
+      <a href="#top" class="logo" data-magnetic>&lt;YN<span>/</span>&gt;</a>
       <ul class="nav-links" id="nav-links">
-        <li><a href="#services">Services</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#process">Process</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact" class="btn btn-sm">Hire me</a></li>
-        <li>
-          <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
-            <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></svg>
-            <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
-          </button>
-        </li>
+        <li><a href="#about"><span>01</span>About</a></li>
+        <li><a href="#services"><span>02</span>Services</a></li>
+        <li><a href="#work"><span>03</span>Work</a></li>
+        <li><a href="#process"><span>04</span>Process</a></li>
+        <li><a href="#contact"><span>05</span>Contact</a></li>
       </ul>
+      <div class="nav-right">
+        <span class="status"><i></i>Available for projects</span>
+        <button class="menu-btn" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span></span><span></span></button>
+      </div>
     </nav>
   </header>
 
   <main id="main">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow"><span class="dot"></span> Available for new projects</p>
-          <h1>I build fast, custom websites on <span class="grad">WordPress</span>, <span class="grad">Shopify</span> &amp; <span class="grad">Wix</span>.</h1>
-          <p class="lead">Hi, I'm Your Name, a web developer with <strong>5+ years</strong> of experience. I turn designs into reliable websites and online stores that are easy for you to manage and good at bringing in customers.</p>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <div class="hero-grid-bg" aria-hidden="true"></div>
+      <div class="hero-inner wrap">
+        <p class="hero-kicker mono"><span class="accent">//</span> WordPress · Shopify · Wix developer <span class="dim">— 5+ yrs</span></p>
+        <h1 class="hero-title" aria-label="I build websites that convert.">
+          <span class="ht-line ht-1" aria-hidden="true">I build</span>
+          <span class="ht-line ht-2" aria-hidden="true"><em class="outline">websites</em> <span class="ht-tag mono">&lt;/&gt;</span></span>
+          <span class="ht-line ht-3" aria-hidden="true">that <span class="accent">convert.</span></span>
+        </h1>
+        <div class="hero-bottom">
+          <p class="hero-sub">Hi, I'm <strong>Your Name</strong>. I hand-code custom WordPress themes and plugins, Shopify stores and Wix sites that load fast, rank well and are easy to manage.</p>
           <div class="hero-cta">
-            <a href="#projects" class="btn">View my work</a>
-            <a href="#contact" class="btn btn-ghost">Let's talk</a>
+            <a href="#work" class="btn btn-accent" data-magnetic><span>See my work</span><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a href="#contact" class="btn btn-line" data-magnetic><span>Start a project</span></a>
           </div>
-          <ul class="hero-badges" aria-label="Platforms">
-            <li>WordPress</li><li>Shopify</li><li>Wix</li><li>WooCommerce</li><li>Elementor</li>
-          </ul>
         </div>
-        <div class="hero-visual" aria-hidden="true">
-          <div class="code-card">
-            <div class="code-bar"><i></i><i></i><i></i><span>functions.php</span></div>
-<pre><code><span class="c">// custom post type for projects</span>
-<span class="k">add_action</span>(<span class="s">'init'</span>, <span class="k">function</span> () {
-  <span class="k">register_post_type</span>(<span class="s">'project'</span>, [
-    <span class="s">'public'</span>    =&gt; <span class="n">true</span>,
-    <span class="s">'has_archive'</span> =&gt; <span class="n">true</span>,
-    <span class="s">'supports'</span>  =&gt; [<span class="s">'title'</span>, <span class="s">'thumbnail'</span>],
-    <span class="s">'show_in_rest'</span> =&gt; <span class="n">true</span>,
-  ]);
-});</code></pre>
-          </div>
-          <div class="float-card fc-1"><strong>5+</strong><span>Years experience</span></div>
-          <div class="float-card fc-2"><strong>3</strong><span>Platforms mastered</span></div>
+      </div>
+      <div class="hero-scroll mono" aria-hidden="true"><span>scroll</span><i></i></div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <section class="marquee" aria-label="Platforms and technologies">
+      <div class="marquee-row" data-dir="-1">
+        <div class="marquee-track">
+          <span>WordPress</span><b>✦</b><span>Shopify</span><b>✦</b><span>Wix Studio</span><b>✦</b><span>WooCommerce</span><b>✦</b><span>Elementor</span><b>✦</b><span>Gutenberg</span><b>✦</b>
+        </div>
+      </div>
+      <div class="marquee-row marquee-row--alt" data-dir="1">
+        <div class="marquee-track mono">
+          <span>PHP</span><b>/</b><span>Liquid</span><b>/</b><span>Velo</span><b>/</b><span>JavaScript</span><b>/</b><span>ACF Pro</span><b>/</b><span>REST API</span><b>/</b><span>SCSS</span><b>/</b><span>MySQL</span><b>/</b>
         </div>
       </div>
     </section>
 
-    <!-- STATS -->
-    <section class="stats">
-      <div class="container stats-grid">
-        <div class="stat"><strong data-count="5" data-suffix="+">0</strong><span>Years in web development</span></div>
-        <div class="stat"><strong data-count="100" data-suffix="+">0</strong><span>Websites delivered</span></div>
-        <div class="stat"><strong data-count="3">0</strong><span>Platforms: WordPress, Shopify, Wix</span></div>
-        <div class="stat"><strong data-count="100" data-suffix="%">0</strong><span>Responsive &amp; mobile-first</span></div>
+    <!-- ============ ABOUT ============ -->
+    <section class="about section" id="about">
+      <div class="wrap">
+        <p class="label mono"><span>01</span> About</p>
+        <p class="about-text" data-reveal-words>For more than five years I've been turning ideas and designs into fast websites. I write custom code where it matters and use page builders where they save you money, so you get a site that's easy to edit and built to grow your business.</p>
+        <div class="stats">
+          <div class="stat"><span class="stat-num" data-count="5" data-suffix="+">5+</span><span class="stat-label mono">years experience</span></div>
+          <div class="stat"><span class="stat-num" data-count="100" data-suffix="+">100+</span><span class="stat-label mono">websites shipped</span></div>
+          <div class="stat"><span class="stat-num" data-count="3">3</span><span class="stat-label mono">platforms mastered</span></div>
+          <div class="stat"><span class="stat-num" data-count="95" data-suffix="+">95+</span><span class="stat-label mono">target PageSpeed score</span></div>
+        </div>
       </div>
     </section>
 
-    <!-- SERVICES -->
-    <section id="services" class="section">
-      <div class="container">
-        <header class="section-head">
-          <p class="eyebrow">What I do</p>
-          <h2>Services</h2>
-          <p>From a simple business site to a complete online store, built on the platform that fits your goals and budget.</p>
-        </header>
-        <div class="cards-3">
-          <article class="service-card">
-            <div class="service-icon wp" aria-hidden="true">W</div>
+    <!-- ============ SERVICES (stacking cards) ============ -->
+    <section class="services section" id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="label mono"><span>02</span> Services</p>
+          <h2 class="split-heading">What I build for you</h2>
+        </div>
+        <div class="stack">
+          <article class="stack-card" style="--c: var(--wp)">
+            <div class="sc-top"><span class="sc-num mono">/01</span><span class="sc-pill mono">PHP · ACF · WooCommerce</span></div>
             <h3>Custom WordPress Development</h3>
-            <p>Custom themes built from scratch, custom plugins, Gutenberg blocks, ACF-powered layouts, and WooCommerce stores.</p>
-            <ul class="ticks">
-              <li>Custom themes &amp; child themes</li>
-              <li>Plugin development &amp; API integrations</li>
-              <li>Elementor / Gutenberg / ACF builds</li>
-              <li>WooCommerce setup &amp; customisation</li>
-              <li>Speed optimisation &amp; security hardening</li>
-            </ul>
+            <div class="sc-body">
+              <p>Themes coded from scratch, custom plugins, Gutenberg blocks and flexible ACF layouts. Your team can edit everything without breaking the design.</p>
+              <ul class="mono">
+                <li>Custom themes &amp; child themes</li>
+                <li>Plugin &amp; REST API development</li>
+                <li>Elementor / Gutenberg / ACF builds</li>
+                <li>WooCommerce stores</li>
+                <li>Speed &amp; security hardening</li>
+              </ul>
+            </div>
+            <span class="sc-big" aria-hidden="true">WP</span>
           </article>
-          <article class="service-card">
-            <div class="service-icon shopify" aria-hidden="true">S</div>
+          <article class="stack-card" style="--c: var(--shopify)">
+            <div class="sc-top"><span class="sc-num mono">/02</span><span class="sc-pill mono">Liquid · OS 2.0 · Apps</span></div>
             <h3>Shopify Store Development</h3>
-            <p>Shopify stores built for sales, with custom Liquid sections, theme customisation, and the right apps.</p>
-            <ul class="ticks">
-              <li>Custom Shopify 2.0 themes &amp; sections</li>
-              <li>Liquid, metafields &amp; dynamic content</li>
-              <li>Product, collection &amp; checkout setup</li>
-              <li>App integration &amp; store migration</li>
-              <li>Conversion-focused UX improvements</li>
-            </ul>
+            <div class="sc-body">
+              <p>Stores built to sell, with custom Liquid sections, metafield-driven content, clean product pages and the right apps.</p>
+              <ul class="mono">
+                <li>Custom Online Store 2.0 themes</li>
+                <li>Sections, blocks &amp; metafields</li>
+                <li>Collections, filters &amp; checkout setup</li>
+                <li>Store migration &amp; app integration</li>
+                <li>Conversion-focused UX</li>
+              </ul>
+            </div>
+            <span class="sc-big" aria-hidden="true">SH</span>
           </article>
-          <article class="service-card">
-            <div class="service-icon wix" aria-hidden="true">X</div>
+          <article class="stack-card" style="--c: var(--wix)">
+            <div class="sc-top"><span class="sc-num mono">/03</span><span class="sc-pill mono">Wix Studio · Velo</span></div>
             <h3>Wix Website Design</h3>
-            <p>Well-designed Wix sites you can update yourself, with Velo code when you need custom features.</p>
-            <ul class="ticks">
-              <li>Wix Studio / Editor X layouts</li>
-              <li>Velo (custom code) &amp; dynamic pages</li>
-              <li>Wix Stores &amp; Bookings setup</li>
-              <li>Multilingual websites</li>
-              <li>On-page SEO setup</li>
-            </ul>
+            <div class="sc-body">
+              <p>Polished Wix sites you can update yourself, with Velo code when you need custom features the editor can't do.</p>
+              <ul class="mono">
+                <li>Wix Studio layouts</li>
+                <li>Velo code &amp; dynamic pages</li>
+                <li>Stores &amp; Bookings</li>
+                <li>Multilingual websites</li>
+                <li>On-page SEO setup</li>
+              </ul>
+            </div>
+            <span class="sc-big" aria-hidden="true">WX</span>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="section section-alt">
-      <div class="container">
-        <header class="section-head">
-          <p class="eyebrow">Recent work</p>
-          <h2>Featured Projects</h2>
-          <p>A selection of websites I've built for clients. Click any project to visit the live site.</p>
-        </header>
-
-        <div class="filters" role="tablist" aria-label="Filter projects">
-          <button class="filter is-active" data-filter="all" role="tab" aria-selected="true">All</button>
-          <button class="filter" data-filter="wordpress" role="tab" aria-selected="false">WordPress</button>
-          <button class="filter" data-filter="shopify" role="tab" aria-selected="false">Shopify</button>
-          <button class="filter" data-filter="wix" role="tab" aria-selected="false">Wix</button>
-        </div>
-
-        <div class="projects-grid" id="projects-grid">
-          <!-- Rendered from the PROJECTS list in js/main.js -->
-        </div>
-        <noscript><p class="center">Enable JavaScript to see the project gallery.</p></noscript>
-      </div>
-    </section>
-
-    <!-- PROCESS -->
-    <section id="process" class="section">
-      <div class="container">
-        <header class="section-head">
-          <p class="eyebrow">How I work</p>
-          <h2>A simple, transparent process</h2>
-        </header>
-        <ol class="process">
-          <li><span>01</span><h3>Discovery</h3><p>We talk about your business, goals, audience and the features you need. I recommend the right platform.</p></li>
-          <li><span>02</span><h3>Plan &amp; Design</h3><p>Sitemap, wireframes and design direction, or I build from your Figma / XD / PSD files.</p></li>
-          <li><span>03</span><h3>Development</h3><p>Clean, responsive builds with regular progress updates on a staging link.</p></li>
-          <li><span>04</span><h3>Launch &amp; Support</h3><p>Testing, SEO basics, speed checks, go-live, training, and ongoing support when you need it.</p></li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" class="section section-alt">
-      <div class="container skills-wrap">
-        <div>
-          <p class="eyebrow">Toolbox</p>
-          <h2>Skills &amp; Technologies</h2>
-          <p>Front-end skills and deep platform knowledge, so I can handle both custom code and no-code builds.</p>
-        </div>
-        <div class="skill-groups">
-          <div class="skill-group"><h3>Platforms</h3><ul class="chips"><li>WordPress</li><li>WooCommerce</li><li>Shopify</li><li>Wix / Wix Studio</li><li>Elementor</li><li>Gutenberg</li></ul></div>
-          <div class="skill-group"><h3>Code</h3><ul class="chips"><li>PHP</li><li>Liquid</li><li>Velo (Wix)</li><li>JavaScript</li><li>jQuery</li><li>HTML5</li><li>CSS3 / SCSS</li><li>MySQL</li><li>REST APIs</li></ul></div>
-          <div class="skill-group"><h3>Tools</h3><ul class="chips"><li>ACF Pro</li><li>Figma</li><li>Git</li><li>cPanel</li><li>Google Analytics</li><li>Search Console</li></ul></div>
-          <div class="skill-group"><h3>Extras</h3><ul class="chips"><li>Speed optimisation</li><li>On-page SEO</li><li>Multilingual (WPML / Polylang)</li><li>Site migration</li><li>Maintenance</li></ul></div>
+    <!-- ============ WORK (horizontal scroll) ============ -->
+    <section class="work" id="work">
+      <div class="work-pin">
+        <div class="work-track" id="work-track">
+          <div class="work-intro">
+            <p class="label mono"><span>03</span> Selected work</p>
+            <h2 class="work-title">Recent<br><em class="outline">projects</em></h2>
+            <p class="work-hint mono">Scroll to explore <span aria-hidden="true">→</span></p>
+          </div>
+          <!-- Project cards are rendered here from the PROJECTS list in js/main.js -->
+          <div class="work-outro">
+            <p class="mono dim">// and many more…</p>
+            <h3>Your project<br>could be next.</h3>
+            <a href="#contact" class="btn btn-accent" data-magnetic><span>Let's talk</span></a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="section">
-      <div class="container contact-card">
-        <div class="contact-copy">
-          <p class="eyebrow">Let's work together</p>
-          <h2>Have a project in mind?</h2>
-          <p>Tell me about your website or store. I usually reply within 24 hours.</p>
-          <ul class="contact-list">
-            <li><span>Email</span><a href="mailto:hello@example.com">hello@example.com</a></li>
-            <li><span>WhatsApp</span><a href="https://wa.me/0000000000" target="_blank" rel="noopener">+00 000 000 0000</a></li>
-            <li><span>LinkedIn</span><a href="https://www.linkedin.com/" target="_blank" rel="noopener">linkedin.com/in/yourname</a></li>
-          </ul>
+    <!-- ============ CODE (pinned terminal) ============ -->
+    <section class="code section" id="code">
+      <div class="code-pin wrap">
+        <div class="code-copy">
+          <p class="label mono"><span>&lt;/&gt;</span> Under the hood</p>
+          <h2 class="split-heading">Real code, not just drag-and-drop.</h2>
+          <p class="dim">Page builders are great, until you need something they can't do. I write custom code on all three platforms, so you're never limited by a template.</p>
+          <ol class="code-steps mono">
+            <li class="is-active"><span>WP</span> Custom post types &amp; ACF</li>
+            <li><span>SH</span> Shopify sections in Liquid</li>
+            <li><span>WX</span> Velo backend logic</li>
+          </ol>
         </div>
-        <form class="contact-form" id="contact-form" novalidate>
-          <label>Name<input name="name" type="text" autocomplete="name" required></label>
-          <label>Email<input name="email" type="email" autocomplete="email" required></label>
-          <label>Platform
-            <select name="platform">
-              <option>WordPress</option><option>Shopify</option><option>Wix</option><option>Not sure yet</option>
-            </select>
-          </label>
-          <label>Project details<textarea name="message" rows="4" required></textarea></label>
-          <button type="submit" class="btn">Send message</button>
-          <p class="form-note" id="form-note" role="status"></p>
-        </form>
+        <div class="editor" aria-label="Code examples">
+          <div class="editor-bar">
+            <i></i><i></i><i></i>
+            <div class="editor-tabs" role="tablist">
+              <button class="tab is-active" role="tab" aria-selected="true" data-tab="0">functions.php</button>
+              <button class="tab" role="tab" aria-selected="false" data-tab="1">featured.liquid</button>
+              <button class="tab" role="tab" aria-selected="false" data-tab="2">booking.web.js</button>
+            </div>
+          </div>
+          <div class="editor-body">
+<pre class="pane is-active" data-pane="0"><code><span class="ln"><span class="c">&lt;?php // register a "project" post type</span></span>
+<span class="ln"><span class="f">add_action</span>(<span class="s">'init'</span>, <span class="k">function</span> () {</span>
+<span class="ln">  <span class="f">register_post_type</span>(<span class="s">'project'</span>, [</span>
+<span class="ln">    <span class="s">'public'</span>       =&gt; <span class="n">true</span>,</span>
+<span class="ln">    <span class="s">'has_archive'</span>  =&gt; <span class="n">true</span>,</span>
+<span class="ln">    <span class="s">'show_in_rest'</span> =&gt; <span class="n">true</span>,</span>
+<span class="ln">    <span class="s">'supports'</span>     =&gt; [<span class="s">'title'</span>, <span class="s">'thumbnail'</span>],</span>
+<span class="ln">  ]);</span>
+<span class="ln">});</span>
+<span class="ln"></span>
+<span class="ln"><span class="v">$client</span> = <span class="f">get_field</span>(<span class="s">'client_name'</span>); <span class="c">// ACF</span></span></code></pre>
+<pre class="pane" data-pane="1"><code><span class="ln"><span class="c">{%- comment -%} Featured collection {%- endcomment -%}</span></span>
+<span class="ln">&lt;<span class="k">section</span> <span class="v">class</span>=<span class="s">"featured"</span>&gt;</span>
+<span class="ln">  {%- <span class="k">for</span> product <span class="k">in</span> section.settings.collection.products <span class="k">limit</span>: <span class="n">4</span> -%}</span>
+<span class="ln">    {%- <span class="f">render</span> <span class="s">'product-card'</span>, product: product -%}</span>
+<span class="ln">  {%- <span class="k">endfor</span> -%}</span>
+<span class="ln">&lt;/<span class="k">section</span>&gt;</span>
+<span class="ln"></span>
+<span class="ln">{% <span class="k">schema</span> %}</span>
+<span class="ln">{ <span class="s">"name"</span>: <span class="s">"Featured collection"</span>,</span>
+<span class="ln">  <span class="s">"settings"</span>: [{ <span class="s">"type"</span>: <span class="s">"collection"</span>, <span class="s">"id"</span>: <span class="s">"collection"</span> }] }</span>
+<span class="ln">{% <span class="k">endschema</span> %}</span></code></pre>
+<pre class="pane" data-pane="2"><code><span class="ln"><span class="c">// backend/booking.web.js (Wix Velo)</span></span>
+<span class="ln"><span class="k">import</span> { Permissions, webMethod } <span class="k">from</span> <span class="s">'wix-web-module'</span>;</span>
+<span class="ln"><span class="k">import</span> wixData <span class="k">from</span> <span class="s">'wix-data'</span>;</span>
+<span class="ln"></span>
+<span class="ln"><span class="k">export const</span> <span class="f">createBooking</span> = <span class="f">webMethod</span>(Permissions.Anyone,</span>
+<span class="ln">  <span class="k">async</span> (data) =&gt; {</span>
+<span class="ln">    <span class="k">const</span> item = { ...data, status: <span class="s">'pending'</span> };</span>
+<span class="ln">    <span class="k">return</span> wixData.<span class="f">insert</span>(<span class="s">'Bookings'</span>, item);</span>
+<span class="ln">  });</span></code></pre>
+          </div>
+          <div class="editor-status mono"><span class="accent">●</span> main <span class="dim">· UTF-8 · no errors</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROCESS ============ -->
+    <section class="process section" id="process">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="label mono"><span>04</span> Process</p>
+          <h2 class="split-heading">From brief to launch</h2>
+        </div>
+        <div class="timeline">
+          <svg class="timeline-line" viewBox="0 0 4 1000" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="2" y1="0" x2="2" y2="1000" class="tl-base"/>
+            <line x1="2" y1="0" x2="2" y2="1000" class="tl-fill" pathLength="1"/>
+          </svg>
+          <div class="tl-step"><span class="tl-dot"></span><span class="mono tl-num">01 — Discover</span><h3>Understand your goals</h3><p>We talk about your business, audience and the features you need. Then I recommend the right platform for your budget.</p></div>
+          <div class="tl-step"><span class="tl-dot"></span><span class="mono tl-num">02 — Plan</span><h3>Structure &amp; design</h3><p>Sitemap, wireframes and design direction, or I build pixel-perfect from your Figma, XD or PSD files.</p></div>
+          <div class="tl-step"><span class="tl-dot"></span><span class="mono tl-num">03 — Build</span><h3>Clean, responsive development</h3><p>Built on a staging link you can check anytime, with regular progress updates.</p></div>
+          <div class="tl-step"><span class="tl-dot"></span><span class="mono tl-num">04 — Launch</span><h3>Test, ship &amp; support</h3><p>Cross-device testing, SEO basics, speed tuning, go-live and training, plus support after launch.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STACK ============ -->
+    <section class="toolbox section" id="stack">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="label mono"><span>⌘</span> Toolbox</p>
+          <h2 class="split-heading">Tech I work with</h2>
+        </div>
+        <ul class="tools">
+          <li><b>WordPress</b><span class="mono">CMS</span></li>
+          <li><b>WooCommerce</b><span class="mono">E-com</span></li>
+          <li><b>Shopify</b><span class="mono">E-com</span></li>
+          <li><b>Wix Studio</b><span class="mono">Builder</span></li>
+          <li><b>Elementor</b><span class="mono">Builder</span></li>
+          <li><b>ACF Pro</b><span class="mono">Fields</span></li>
+          <li><b>PHP</b><span class="mono">Lang</span></li>
+          <li><b>Liquid</b><span class="mono">Lang</span></li>
+          <li><b>JavaScript</b><span class="mono">Lang</span></li>
+          <li><b>Velo</b><span class="mono">Wix code</span></li>
+          <li><b>HTML / CSS / SCSS</b><span class="mono">Front-end</span></li>
+          <li><b>MySQL</b><span class="mono">Data</span></li>
+          <li><b>Figma</b><span class="mono">Design</span></li>
+          <li><b>Git</b><span class="mono">Workflow</span></li>
+          <li><b>WPML / Polylang</b><span class="mono">i18n</span></li>
+          <li><b>GA4 &amp; Search Console</b><span class="mono">SEO</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <p class="label mono"><span>05</span> Contact</p>
+        <h2 class="contact-big"><span>Let's build</span><span class="outline">something</span><span class="accent">great.</span></h2>
+        <div class="contact-grid">
+          <div class="contact-info">
+            <a class="contact-mail" href="mailto:hello@example.com" data-magnetic>hello@example.com <span aria-hidden="true">↗</span></a>
+            <ul class="socials mono">
+              <li><a href="https://wa.me/0000000000" target="_blank" rel="noopener">WhatsApp ↗</a></li>
+              <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+              <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a></li>
+              <li><a href="https://www.upwork.com/" target="_blank" rel="noopener">Upwork ↗</a></li>
+            </ul>
+          </div>
+          <form class="contact-form" id="contact-form" novalidate>
+            <div class="field"><input id="f-name" name="name" type="text" autocomplete="name" placeholder=" " required><label for="f-name">Your name</label></div>
+            <div class="field"><input id="f-email" name="email" type="email" autocomplete="email" placeholder=" " required><label for="f-email">Email</label></div>
+            <fieldset class="chips">
+              <legend class="mono">Platform</legend>
+              <label><input type="radio" name="platform" value="WordPress" checked><span>WordPress</span></label>
+              <label><input type="radio" name="platform" value="Shopify"><span>Shopify</span></label>
+              <label><input type="radio" name="platform" value="Wix"><span>Wix</span></label>
+              <label><input type="radio" name="platform" value="Not sure yet"><span>Not sure</span></label>
+            </fieldset>
+            <div class="field"><textarea id="f-msg" name="message" rows="3" placeholder=" " required></textarea><label for="f-msg">Tell me about your project</label></div>
+            <button type="submit" class="btn btn-accent" data-magnetic><span>Send message</span></button>
+            <p class="form-note mono" id="form-note" role="status"></p>
+          </form>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>&copy; <span id="year"></span> Your Name. WordPress, Shopify &amp; Wix developer.</p>
+    <div class="wrap footer-inner mono">
+      <p>© <span id="year"></span> Your Name</p>
+      <p class="dim">Hand-coded with GSAP, ScrollTrigger &amp; Lenis</p>
       <a href="#top">Back to top ↑</a>
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/vendor/gsap.min.js" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="js/vendor/SplitText.min.js" defer></script>
+  <script src="js/vendor/lenis.min.js" defer></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
