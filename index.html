@@ -10,8 +10,9 @@
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#0a0a0b">
   <script>
-    // Turn on the animated experience only when motion is allowed.
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("has-motion");
+    // Animations always run. With the OS "reduce motion" setting on, only smooth scrolling and the preloader are skipped.
+    document.documentElement.classList.add("has-motion");
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("reduce-motion");
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

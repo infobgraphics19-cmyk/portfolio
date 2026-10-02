@@ -172,12 +172,15 @@ function initMotion() {
   const { gsap, ScrollTrigger, SplitText, Lenis } = window;
   gsap.registerPlugin(ScrollTrigger, SplitText);
 
-  // --- Smooth scroll, kept in sync with ScrollTrigger
-  const lenis = new Lenis({ lerp: 0.1, anchors: false });
-  lenis.on("scroll", ScrollTrigger.update);
-  gsap.ticker.add((t) => lenis.raf(t * 1000));
-  gsap.ticker.lagSmoothing(0);
-  lenis.stop();
+  // --- Smooth scroll, kept in sync with ScrollTrigger (native scrolling when the OS asks for reduced motion)
+  const reduced = root.classList.contains("reduce-motion");
+  const lenis = reduced ? null : new Lenis({ lerp: 0.1, anchors: false });
+  if (lenis) {
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    lenis.stop();
+  }
 
   setupMenu(lenis);
   setupAnchors(lenis);
@@ -243,7 +246,8 @@ function initMotion() {
 
   // --- Preloader → intro
   const counter = { v: 0 };
-  gsap.timeline({ onComplete: () => { lenis.start(); $(".preloader").remove(); } })
+  if (reduced) { $(".preloader").remove(); intro.play(); }
+  else gsap.timeline({ onComplete: () => { lenis.start(); $(".preloader").remove(); } })
     .from(".pl-line", { autoAlpha: 0, x: -10, stagger: 0.28, duration: 0.3 }, 0.2)
     .to(counter, { v: 100, duration: 1.6, ease: "power2.inOut", onUpdate: () => { $("#pl-num").textContent = Math.round(counter.v); } }, 0)
     .to(".preloader-bar span", { scaleX: 1, duration: 1.6, ease: "power2.inOut" }, 0)
@@ -303,13 +307,12 @@ function initMotion() {
   const stageAt = [0, 1.2, 3.8, 6.8];
   const build = gsap.timeline({
     defaults: { ease: "none" },
-    scrollTrigger: {
-      trigger: ".build", pin: ".build-pin", start: "top top", end: "+=360%", scrub: 1, anticipatePin: 1,
-      onUpdate: () => {
-        const t = build.time();
-        const idx = stageAt.filter((s) => t >= s).length - 1;
-        steps.forEach((li, k) => li.classList.toggle("is-active", k === idx));
-      },
+    scrollTrigger: { trigger: ".build", pin: ".build-pin", start: "top top", end: "+=360%", scrub: 1, anticipatePin: 1 },
+    // runs on every frame of the scrubbed timeline, so the label never lags behind the visuals
+    onUpdate: () => {
+      const t = build.time();
+      const idx = stageAt.filter((s) => t >= s).length - 1;
+      steps.forEach((li, k) => li.classList.toggle("is-active", k === idx));
     },
   });
   build
@@ -366,7 +369,10 @@ function initMotion() {
         if (i !== +($(".tab.is-active")?.dataset.tab)) { showPane(i); revealPane(i); }
       },
     });
-    onTab = (i) => lenis.scrollTo(st.start + ((st.end - st.start) * (i + 0.5)) / 3, { duration: 1.2 });
+    onTab = (i) => {
+      const y = st.start + ((st.end - st.start) * (i + 0.5)) / 3;
+      lenis ? lenis.scrollTo(y, { duration: 1.2 }) : window.scrollTo({ top: y });
+    };
     return () => { onTab = showPane; };
   });
 
@@ -415,7 +421,7 @@ function boot() {
   setupForm();
   setupToolGlow();
 
-  const canAnimate = root.classList.contains("has-motion") && window.gsap && window.ScrollTrigger && window.SplitText && window.Lenis;
+  const canAnimate = root.classList.contains("has-motion") && window.gsap && window.ScrollTrigger && window.SplitText && (window.Lenis || root.classList.contains("reduce-motion"));
   if (!canAnimate) {
     // Static fallback: everything visible, native scrolling, clickable tabs.
     root.classList.remove("has-motion");

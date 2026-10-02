@@ -504,7 +504,9 @@ html:not(.has-motion) .work-intro, html:not(.has-motion) .work-outro, html:not(.
 .split-line { overflow: clip; padding-bottom: .1em; margin-bottom: -.1em; }
 .line-mask { padding-bottom: .14em; margin-bottom: -.14em; }
 
+/* OS "reduce motion": skip the preloader and looping CSS effects; scroll animations stay on */
+.reduce-motion .preloader { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
+  *, *::before, *::after { animation: none !important; }
   html { scroll-behavior: auto; }
 }

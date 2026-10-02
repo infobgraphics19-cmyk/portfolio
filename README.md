@@ -19,7 +19,8 @@ A hand-coded, scroll-animated developer portfolio built with **GSAP 3.15 + Scrol
 | Global | Custom cursor ("View" over projects), scroll progress bar, film grain, active nav link |
 
 Accessibility and fallbacks:
-- With **reduced motion** turned on, or if a script fails to load, the site shows a clean static version with all content visible.
+- Scroll animations always run. Visitors who turn on their system's "reduce motion" setting skip the preloader and smooth scrolling.
+- If a script fails to load, the site shows a clean static version with all content visible.
 - On phones the horizontal gallery becomes a vertical list, and the custom cursor is turned off on touch devices.
 
 ## Structure
