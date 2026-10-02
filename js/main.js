@@ -279,13 +279,56 @@ function initMotion() {
     gsap.fromTo(s.words, { opacity: 0.12 }, { opacity: 1, stagger: 0.1, ease: "none", scrollTrigger: { trigger: el, start: "top 80%", end: "bottom 45%", scrub: true } });
   });
 
-  // --- Counters
-  $$("[data-count]").forEach((el) => {
-    const n = { v: 0 }, target = +el.dataset.count, suffix = el.dataset.suffix || "";
-    el.textContent = `0${suffix}`;
-    gsap.to(n, { v: target, duration: 2, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%" },
-      onUpdate: () => (el.textContent = Math.round(n.v) + suffix) });
+  // --- Counters: count up (with a filling bar) every time the stats scroll into view
+  const stats = $$(".stat").map((st) => ({ num: $(".stat-num", st), bar: $(".stat-bar", st) }));
+  const resetStats = () => stats.forEach(({ num, bar }) => { num.textContent = `0${num.dataset.suffix || ""}`; gsap.set(bar, { scaleX: 0 }); });
+  const runStats = () => stats.forEach(({ num, bar }, i) => {
+    const n = { v: 0 }, target = +num.dataset.count, suffix = num.dataset.suffix || "";
+    gsap.to(n, { v: target, duration: 2.4, delay: i * 0.15, ease: "power2.out", overwrite: true,
+      onUpdate: () => (num.textContent = Math.round(n.v) + suffix) });
+    gsap.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: 2.4, delay: i * 0.15, ease: "power2.out", overwrite: true });
   });
+  resetStats();
+  ScrollTrigger.create({ trigger: ".stats", start: "top 85%", end: "bottom top", onEnter: runStats, onEnterBack: runStats, onLeaveBack: resetStats });
+
+  // --- Live build: pinned sequence, wireframe → design → code → launch
+  const scores = $$(".score").map((el) => ({ target: +el.dataset.score, ring: $(".r-fg", el), num: $("b", el) }));
+  const scoreProxy = { p: 0 };
+  const drawScores = () => scores.forEach(({ target, ring, num }) => {
+    const v = Math.round(target * scoreProxy.p);
+    num.textContent = v;
+    ring.style.strokeDashoffset = 100 - v;
+  });
+  const steps = $$(".build-steps li");
+  const stageAt = [0, 1.2, 3.8, 6.8];
+  const build = gsap.timeline({
+    defaults: { ease: "none" },
+    scrollTrigger: {
+      trigger: ".build", pin: ".build-pin", start: "top top", end: "+=360%", scrub: 1, anticipatePin: 1,
+      onUpdate: () => {
+        const t = build.time();
+        const idx = stageAt.filter((s) => t >= s).length - 1;
+        steps.forEach((li, k) => li.classList.toggle("is-active", k === idx));
+      },
+    },
+  });
+  build
+    .fromTo(".bs-browser", { scale: 0.86, rotateX: 16, y: 50, transformPerspective: 1400 }, { scale: 1, rotateX: 0, y: 0, duration: 1, ease: "power2.out" }, 0)
+    .fromTo(".build-rail span", { scaleX: 0 }, { scaleX: 1, duration: 10.4 }, 0)
+    // design paints over the wireframe behind a scanning line
+    .fromTo(".bs-design", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 2 }, 1.2)
+    .fromTo(".bs-scan", { left: "0%", autoAlpha: 1 }, { left: "100%", duration: 2 }, 1.2)
+    .to(".bs-scan", { autoAlpha: 0, duration: 0.2 }, 3.2)
+    // the code slides in and types itself
+    .fromTo(".bs-code", { xPercent: 105 }, { xPercent: 0, duration: 1, ease: "power2.out" }, 3.8)
+    .fromTo(".bs-code .cl", { autoAlpha: 0, x: -12 }, { autoAlpha: 1, x: 0, duration: 0.3, stagger: 0.14 }, 4.2)
+    .to(".bs-code", { xPercent: 105, duration: 0.9, ease: "power2.in" }, 6.1)
+    // launch: scores rise and count up
+    .fromTo(".bs-scores", { yPercent: 130, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.9, ease: "power2.out" }, 6.8)
+    .fromTo(scoreProxy, { p: 0 }, { p: 1, duration: 2, ease: "power1.out", onUpdate: drawScores }, 7.2)
+    .fromTo(".bs-badge", { y: -16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.5, ease: "back.out(2)" }, 9.1)
+    .to({}, { duration: 0.8 }, 9.6);
+  gsap.from(".build-head > *", { y: 40, autoAlpha: 0, duration: 1, stagger: 0.1, ease: "expo.out", scrollTrigger: { trigger: ".build", start: "top 70%" } });
 
   // --- Services: each card shrinks and dims as the next one stacks on top
   const cards = $$(".stack-card");

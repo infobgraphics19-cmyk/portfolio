@@ -98,10 +98,73 @@
         <p class="label mono"><span>01</span> About</p>
         <p class="about-text" data-reveal-words>For more than five years I've been turning ideas and designs into fast websites. I write custom code where it matters and use page builders where they save you money, so you get a site that's easy to edit and built to grow your business.</p>
         <div class="stats">
-          <div class="stat"><span class="stat-num" data-count="5" data-suffix="+">5+</span><span class="stat-label mono">years experience</span></div>
-          <div class="stat"><span class="stat-num" data-count="100" data-suffix="+">100+</span><span class="stat-label mono">websites shipped</span></div>
-          <div class="stat"><span class="stat-num" data-count="3">3</span><span class="stat-label mono">platforms mastered</span></div>
-          <div class="stat"><span class="stat-num" data-count="95" data-suffix="+">95+</span><span class="stat-label mono">target PageSpeed score</span></div>
+          <div class="stat"><span class="stat-num" data-count="5" data-suffix="+">5+</span><span class="stat-label mono">years experience</span><i class="stat-bar"></i></div>
+          <div class="stat"><span class="stat-num" data-count="100" data-suffix="+">100+</span><span class="stat-label mono">websites shipped</span><i class="stat-bar"></i></div>
+          <div class="stat"><span class="stat-num" data-count="3" data-suffix="+">3+</span><span class="stat-label mono">platforms mastered</span><i class="stat-bar"></i></div>
+          <div class="stat"><span class="stat-num" data-count="95" data-suffix="+">95+</span><span class="stat-label mono">target PageSpeed score</span><i class="stat-bar"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LIVE BUILD (pinned scroll sequence) ============ -->
+    <section class="build" id="build" aria-labelledby="build-title">
+      <div class="build-pin">
+        <div class="build-head wrap">
+          <div>
+            <p class="label mono"><span>&#9654;</span> Live build</p>
+            <h2 id="build-title" class="build-title">Watch a website<br>come to life.</h2>
+          </div>
+          <div class="build-progress">
+          <ol class="build-steps mono" aria-label="Build stages">
+            <li class="is-active"><b>01</b> Wireframe</li>
+            <li><b>02</b> Design</li>
+            <li><b>03</b> Develop</li>
+            <li><b>04</b> Launch</li>
+          </ol>
+          <span class="build-rail" aria-hidden="true"><span></span></span>
+          </div>
+        </div>
+
+        <div class="build-stage wrap">
+          <div class="bs-browser" aria-hidden="true">
+            <div class="bs-bar"><i></i><i></i><i></i><span class="bs-url mono">yourclient.com</span><span class="bs-badge mono">&#10003; Deployed</span></div>
+            <div class="bs-view">
+              <!-- 1. wireframe -->
+              <div class="bs-site bs-wire">
+                <div class="s-nav"><b class="wf"></b><span class="s-links"><b class="wf"></b><b class="wf"></b><b class="wf"></b></span><b class="wf s-btn"></b></div>
+                <div class="s-hero"><div class="s-copy"><b class="wf l1"></b><b class="wf l2"></b><b class="wf l3"></b><b class="wf s-cta"></b></div><b class="wf x s-img"></b></div>
+                <div class="s-cards"><b class="wf x"></b><b class="wf x"></b><b class="wf x"></b></div>
+              </div>
+              <!-- 2. design -->
+              <div class="bs-site bs-design">
+                <div class="s-nav"><span class="d-logo">Brightline<i>.</i></span><span class="s-links d-links"><span>Shop</span><span>About</span><span>Journal</span></span><span class="d-btn">Cart (2)</span></div>
+                <div class="s-hero"><div class="s-copy"><span class="d-kicker">New collection</span><span class="d-h1">Built to sell. Made to last.</span><span class="d-p">Handmade goods, shipped worldwide.</span><span class="d-cta">Shop now &rarr;</span></div><span class="s-img d-img"><i></i></span></div>
+                <div class="s-cards"><span class="d-card c1"><i></i><b>Oak Chair</b><em>$240</em></span><span class="d-card c2"><i></i><b>Clay Vase</b><em>$68</em></span><span class="d-card c3"><i></i><b>Linen Throw</b><em>$95</em></span></div>
+              </div>
+              <div class="bs-scan"></div>
+              <!-- 3. code -->
+              <div class="bs-code mono">
+                <p class="cl"><span class="c">{%- comment -%} hero.liquid {%- endcomment -%}</span></p>
+                <p class="cl">&lt;<span class="k">section</span> <span class="v">class</span>=<span class="s">"hero"</span>&gt;</p>
+                <p class="cl">  &lt;<span class="k">h1</span>&gt;{{ section.settings.<span class="f">title</span> }}&lt;/<span class="k">h1</span>&gt;</p>
+                <p class="cl">  {%- <span class="k">for</span> p <span class="k">in</span> collections.new.products -%}</p>
+                <p class="cl">    {%- <span class="f">render</span> <span class="s">'card'</span>, product: p -%}</p>
+                <p class="cl">  {%- <span class="k">endfor</span> -%}</p>
+                <p class="cl">&lt;/<span class="k">section</span>&gt;</p>
+                <p class="cl"><span class="c">/* style.css */</span></p>
+                <p class="cl">.<span class="f">hero</span> { <span class="v">display</span>: grid; <span class="v">gap</span>: <span class="n">2rem</span>; }</p>
+                <p class="cl"><span class="ok">&#10003; build passed in 1.2s</span></p>
+              </div>
+              <!-- 4. launch -->
+              <div class="bs-scores">
+                <div class="score" data-score="95"><svg viewBox="0 0 36 36"><circle class="r-bg" cx="18" cy="18" r="15.9"/><circle class="r-fg" cx="18" cy="18" r="15.9" pathLength="100"/></svg><b class="mono">95</b><span class="mono">Performance</span></div>
+                <div class="score" data-score="100"><svg viewBox="0 0 36 36"><circle class="r-bg" cx="18" cy="18" r="15.9"/><circle class="r-fg" cx="18" cy="18" r="15.9" pathLength="100"/></svg><b class="mono">100</b><span class="mono">Accessibility</span></div>
+                <div class="score" data-score="100"><svg viewBox="0 0 36 36"><circle class="r-bg" cx="18" cy="18" r="15.9"/><circle class="r-fg" cx="18" cy="18" r="15.9" pathLength="100"/></svg><b class="mono">100</b><span class="mono">Best Practices</span></div>
+                <div class="score" data-score="100"><svg viewBox="0 0 36 36"><circle class="r-bg" cx="18" cy="18" r="15.9"/><circle class="r-fg" cx="18" cy="18" r="15.9" pathLength="100"/></svg><b class="mono">100</b><span class="mono">SEO</span></div>
+              </div>
+            </div>
+          </div>
+          <p class="build-caption mono dim">Every project goes through these four stages. The scores are my target for every site I launch.</p>
         </div>
       </div>
     </section>
