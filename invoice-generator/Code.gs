@@ -1,68 +1,114 @@
 /**
- * Pesto Marketing – Invoice Generator (Google Sheets + Google Docs + Apps Script)
+ * Pesto Marketing – Invoice Generator v2 (Google Sheets + Google Docs + Apps Script)
  *
- * One Google Sheet holds your settings, clients and invoice rows.
+ * One Google Sheet holds your settings, clients, bank details and invoice rows.
  * One Google Doc is the template (built for you by "Setup").
- * Select invoice row(s) → menu "🧾 Invoices → Generate invoice" →
+ * Select an invoice row → menu "🧾 Invoices → Generate invoice" →
  * a filled Google Doc + PDF land in your Drive folder, and the invoice
  * number (PM-2026-0033, PM-2026-0034, …) is assigned automatically.
  *
- * Install: see README.md in this folder.
+ * The client's country decides the currency (USA → USD, Netherlands/Eurozone → EUR,
+ * Australia → AUD) and which bank details are printed under "Remittance Instructions".
+ *
+ * Install / upgrade: see README.md in this folder.
  */
 
 // ---------------------------------------------------------------------------
-// Company details that are printed on every invoice (baked into the template).
+// Company details printed on every invoice (baked into the template).
 // Edit these BEFORE running Setup, or edit the template Doc directly later.
-// Sensitive values (GSTIN, PAN, bank details) live in the Settings sheet.
 // ---------------------------------------------------------------------------
 const COMPANY = {
   name: 'PESTO MARKETING',
-  address: [
-    '130-A, First Floor, Old Housing Board Colony,',
-    'Sector 19, Panchkula, Haryana,',
-    'India, Pin - 134113',
+  tagline: 'Global E-Commerce & Digital Advertising Agency',
+  lines: [
+    ['USA Desk: ', '9169 W State St #4211, Garden City, 83714, Idaho, USA'],
+    ['UK Desk: ', '182-184 High Street North, East Ham, London, E6 2JA'],
+    ['Global Delivery & Tax Node: ', 'PKL-R2, HR, IN'],
   ],
   email: 'info@pestomarketing.com',
-  phone: '+91 76965 44580',
+  phone: '+1 (208) 801-7080',
+  signatory: 'PESTO MARKETING (India Node)',
+  remittanceHeading: 'REMINDED REMITTANCE INSTRUCTIONS:',
+  terms: [
+    '1. All credit card processing fees, intermediary wire deductions, or transfer charges shall be ' +
+      'borne solely by the payer.',
+    '2. The Client is fully responsible for ensuring that the net invoiced amount ({{TOTAL}}) is ' +
+      'realized by Pesto Marketing in full.',
+    '3. These services are classified as Zero-Rated Service Exports under the Indian Foreign Exchange ' +
+      'Management Act (FEMA).',
+  ],
 };
 
-const NAVY = '#0f172a';
-const GREY = '#475569';
-const LIGHT = '#e2e8f0';
-const SHEETS = { settings: 'Settings', clients: 'Clients', invoices: 'Invoices' };
+// Values that pre-fill the Settings and Banks tabs on Setup. Kept empty in the
+// public repository; fill them here or type them into the Sheet after Setup.
+const PRIVATE_DEFAULTS = {
+  gstin: '',
+  lutNote: '',
+  banks: [], // [currency, field label, value]
+};
+
+// Brand
+const FONT = 'Plus Jakarta Sans';
+const GREEN = '#022d1d';      // brand green – headings, labels, totals
+const TEXT = '#33463d';       // body text
+const MUTED = '#5f7268';      // small print
+const MINT = '#e7f4ec';       // light green highlight (LUT box, table header)
+const LINE = '#d3e4da';       // table borders
+
+const SHEETS = { settings: 'Settings', clients: 'Clients', banks: 'Banks', invoices: 'Invoices' };
+const VERSION = 2;
 
 // Invoices sheet columns (1-based).
 const COL = {
-  number: 1, issueDate: 2, dueDate: 3, client: 4, placeOfSupply: 5,
-  description: 6, details: 7, sac: 8, qty: 9, rate: 10, lineTotal: 11,
+  number: 1, issueDate: 2, client: 3, placeOfSupply: 4,
+  service: 5, scope: 6, period: 7, sac: 8, qty: 9, rate: 10, lineTotal: 11,
   cgst: 12, sgst: 13, igst: 14, status: 15, docLink: 16, pdfLink: 17,
 };
 const INVOICE_HEADERS = [
-  'Invoice No (auto)', 'Date of Issue', 'Due Date', 'Client', 'Place of Supply (optional override)',
-  'Description of Service', 'Details (sub-line)', 'SAC Code', 'Qty', 'Rate', 'Line Total',
+  'Invoice No (auto)', 'Date of Issue', 'Client', 'Place of Supply (optional override)',
+  'Service', 'Scope / Details', 'Billing Period', 'SAC Code', 'Qty', 'Rate', 'Line Total',
   'CGST %', 'SGST %', 'IGST %', 'Status', 'Google Doc', 'PDF',
 ];
 const CLIENT_HEADERS = [
-  'Client Name', 'Attn', 'Address Line 1', 'Address Line 2', 'Email', 'Phone', 'Place of Supply', 'Currency',
+  'Company', 'Attention', 'Address Line 1', 'Address Line 2', 'Address Line 3', 'Country',
+  'Email', 'Phone', 'Place of Supply', 'Currency (optional override)',
 ];
-const SETTING_ROWS = [
-  ['Invoice Prefix', 'PM', 'Invoice number = PREFIX-YEAR-0001'],
-  ['Next Invoice Number', 1, 'Set this to your next number (e.g. 33 if your last was PM-2026-0032). Auto-increments.'],
-  ['Counter Year', new Date().getFullYear(), 'Used for yearly reset. Do not edit normally.'],
-  ['Reset Counter Every Year', 'Yes', 'Yes = numbering restarts at 0001 on 1 January'],
-  ['Number Digits', 4, 'Zero padding: 4 → 0033'],
-  ['Default Due Days', 5, 'Used when Due Date is left blank'],
-  ['Date Format', 'dd/MM/yyyy', ''],
-  ['Logo (Drive file URL or ID)', '', 'Upload your logo PNG/JPG to Drive and paste its link here'],
-  ['Logo Width (px)', 150, ''],
-  ['GSTIN', '', ''],
-  ['PAN', '', ''],
-  ['Bank Details', '', 'e.g. State Bank of India, Current Account No: XXXXXXXX, IFSC: XXXXXXX'],
-  ['LUT Note', '', 'Printed in the box under the header for export invoices. Leave blank to hide the box.'],
-  ['Template Doc ID', '', 'Filled by Setup'],
-  ['Output Folder ID', '', 'Filled by Setup'],
-];
-const CURRENCY_SYMBOLS = { USD: '$', INR: '₹', EUR: '€', GBP: '£', AUD: 'A$', CAD: 'C$', AED: 'AED ', SGD: 'S$' };
+const BANK_HEADERS = ['Currency', 'Field', 'Value'];
+
+function settingRows_() {
+  return [
+    ['Version', VERSION, 'Do not edit'],
+    ['Invoice Prefix', 'PM', 'Invoice number = PREFIX-YEAR-0001'],
+    ['Next Invoice Number', 1, 'Set this to your next number (e.g. 33 if your last was PM-2026-0032). Auto-increments.'],
+    ['Counter Year', new Date().getFullYear(), 'Used for yearly reset. Do not edit normally.'],
+    ['Reset Counter Every Year', 'Yes', 'Yes = numbering restarts at 0001 on 1 January'],
+    ['Number Digits', 4, 'Zero padding: 4 → 0033'],
+    ['Date Format', 'yyyy-MM-dd', 'e.g. yyyy-MM-dd → 2026-10-07, dd/MM/yyyy → 07/10/2026'],
+    ['Default Currency', 'USD', 'Used when the client country is not recognised'],
+    ['Logo (Drive file URL or ID)', '', 'Upload your logo PNG/JPG to Drive and paste its link here'],
+    ['Logo Width (px)', 140, ''],
+    ['Signature Image (Drive file URL or ID)', '', 'Optional – a PNG of your signature, printed above the line'],
+    ['Signature Width (px)', 140, ''],
+    ['GSTIN', PRIVATE_DEFAULTS.gstin, ''],
+    ['LUT Note', PRIVATE_DEFAULTS.lutNote, 'Printed in the green box under the header. Leave blank to hide it.'],
+    ['Template Doc ID', '', 'Filled by Setup'],
+    ['Output Folder ID', '', 'Filled by Setup'],
+  ];
+}
+
+// Settings carried over when upgrading from v1.
+const CARRY_OVER = ['Invoice Prefix', 'Next Invoice Number', 'Counter Year', 'Reset Counter Every Year',
+  'Number Digits', 'Logo (Drive URL or ID)', 'Logo (Drive file URL or ID)', 'GSTIN', 'LUT Note',
+  'Output Folder ID'];
+
+const CURRENCY_SYMBOLS = { USD: '$', EUR: '€', AUD: 'A$', GBP: '£', INR: '₹', CAD: 'C$', SGD: 'S$', AED: 'AED ' };
+const COUNTRY_CURRENCY = {
+  USD: ['usa', 'us', 'united states', 'united states of america', 'america'],
+  EUR: ['netherlands', 'the netherlands', 'holland', 'germany', 'france', 'belgium', 'ireland', 'italy',
+    'spain', 'portugal', 'austria', 'finland', 'luxembourg', 'greece', 'estonia', 'latvia', 'lithuania',
+    'slovakia', 'slovenia', 'malta', 'cyprus', 'croatia'],
+  AUD: ['australia'],
+};
 
 // ---------------------------------------------------------------------------
 // Menu
@@ -70,70 +116,103 @@ const CURRENCY_SYMBOLS = { USD: '$', INR: '₹', EUR: '€', GBP: '£', AUD: 'A$
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('🧾 Invoices')
-    .addItem('Generate invoice from selected row(s)', 'generateInvoice')
+    .addItem('Generate invoice from selected row', 'generateInvoice')
     .addSeparator()
-    .addItem('Setup (first time only)', 'setup')
+    .addItem('Setup / Upgrade', 'setup')
     .addItem('Rebuild template Doc', 'rebuildTemplate')
     .addToUi();
 }
 
 // ---------------------------------------------------------------------------
-// Setup: creates the sheets, the output folder and the template Doc.
+// Setup: creates the tabs, the output folder and the template Doc.
+// Running it on a v1 sheet keeps the old tabs as "… (v1)" and carries the
+// invoice counter, logo, GSTIN, LUT note and folder over.
 // ---------------------------------------------------------------------------
 function setup() {
   const ss = SpreadsheetApp.getActive();
+  let carried = {};
+
+  const oldSettings = ss.getSheetByName(SHEETS.settings);
+  if (oldSettings && !readSettings_().Version) {
+    carried = readSettings_();
+    [SHEETS.settings, SHEETS.clients, SHEETS.invoices].forEach(name => {
+      const sh = ss.getSheetByName(name);
+      if (sh) sh.setName(name + ' (v1)');
+    });
+  }
 
   let settings = ss.getSheetByName(SHEETS.settings);
   if (!settings) {
     settings = ss.insertSheet(SHEETS.settings);
+    const rows = settingRows_();
     settings.getRange(1, 1, 1, 3).setValues([['Setting', 'Value', 'Notes']]).setFontWeight('bold');
-    settings.getRange(2, 1, SETTING_ROWS.length, 3).setValues(SETTING_ROWS);
-    settings.setColumnWidth(1, 220).setColumnWidth(2, 420).setColumnWidth(3, 520);
+    settings.getRange(2, 1, rows.length, 3).setValues(rows);
+    settings.setColumnWidth(1, 260).setColumnWidth(2, 420).setColumnWidth(3, 520);
     settings.setFrozenRows(1);
+    CARRY_OVER.forEach(key => {
+      if (carried[key] !== undefined && carried[key] !== '') {
+        writeSetting_(key === 'Logo (Drive URL or ID)' ? 'Logo (Drive file URL or ID)' : key, carried[key]);
+      }
+    });
   }
 
   let clients = ss.getSheetByName(SHEETS.clients);
   if (!clients) {
     clients = ss.insertSheet(SHEETS.clients);
     clients.getRange(1, 1, 1, CLIENT_HEADERS.length).setValues([CLIENT_HEADERS]).setFontWeight('bold');
-    clients.appendRow(['Passion Is Beauty', 'Terry Lee', '4320 International Blvd NW, Norcross,',
-      'Georgia, 30093, United States of America', 'ubx7004@gmail.com', '+1 678 313 1254',
-      'Outside India (Export)', 'USD']);
+    clients.getRange(2, 1, 1, CLIENT_HEADERS.length).setValues([['Passion Is Beauty', 'Terry Lee',
+      '4320 International Blvd NW,', 'Norcross, Georgia, 30093,', '', 'United States of America',
+      'ubx7004@gmail.com', '+16783131254', 'Outside India (Export)', '']]);
     clients.setFrozenRows(1);
     clients.autoResizeColumns(1, CLIENT_HEADERS.length);
+  }
+
+  let banks = ss.getSheetByName(SHEETS.banks);
+  if (!banks) {
+    banks = ss.insertSheet(SHEETS.banks);
+    banks.getRange(1, 1, 1, 3).setValues([BANK_HEADERS]).setFontWeight('bold');
+    if (PRIVATE_DEFAULTS.banks.length) {
+      banks.getRange(2, 1, PRIVATE_DEFAULTS.banks.length, 3).setValues(PRIVATE_DEFAULTS.banks);
+    }
+    banks.setFrozenRows(1);
+    banks.setColumnWidth(1, 90).setColumnWidth(2, 220).setColumnWidth(3, 460);
   }
 
   let invoices = ss.getSheetByName(SHEETS.invoices);
   if (!invoices) {
     invoices = ss.insertSheet(SHEETS.invoices, 0);
     invoices.getRange(1, 1, 1, INVOICE_HEADERS.length).setValues([INVOICE_HEADERS])
-      .setFontWeight('bold').setBackground(NAVY).setFontColor('#ffffff');
+      .setFontWeight('bold').setBackground(GREEN).setFontColor('#ffffff');
     invoices.setFrozenRows(1);
-    invoices.getRange('B2:C').setNumberFormat('dd/MM/yyyy');
+    invoices.getRange('B2:B').setNumberFormat('yyyy-mm-dd');
     invoices.getRange('J2:K').setNumberFormat('#,##0.00');
-    // Client dropdown sourced from the Clients sheet.
-    invoices.getRange('D2:D').setDataValidation(
-      SpreadsheetApp.newDataValidation().requireValueInRange(clients.getRange('A2:A'), true).build());
-    // Sample row (columns A–J and L–N; K is the Line Total formula).
-    invoices.getRange(2, 1, 1, 10).setValues([['', '', '', 'Passion Is Beauty', '',
-      'E-commerce Marketplace Advertising, Amazon PPC Campaign Optimization & Digital Store Management Services',
-      'Charges for the duration of October 6, 2026, to November 5, 2026', '998311', 1, 1000]]);
+    invoices.getRange('C2:C').setDataValidation(SpreadsheetApp.newDataValidation()
+      .requireValueInRange(clients.getRange('A2:A'), true).setAllowInvalid(false).build());
+    // Sample invoice with two items: row 3 has no Client, so it belongs to row 2's invoice.
+    invoices.getRange(2, 1, 2, 10).setValues([
+      ['', '', 'Passion Is Beauty', '', 'E-commerce Marketplace Advertising & Account Operations',
+        'Scope: Amazon & eBay Storefront Management, PPC Campaign Optimization.',
+        'October 6, 2026, to November 5, 2026', '998311', 1, 1000],
+      ['', '', '', '', 'Google Ads Management', 'Scope: Campaign setup, bidding and monthly optimisation.',
+        'October 6, 2026, to November 5, 2026', '998311', 1, 500],
+    ]);
     invoices.getRange(2, COL.cgst, 1, 3).setValues([[0, 0, 0]]);
     invoices.getRange('K2').setFormula('=ARRAYFORMULA(IF(I2:I="", "", I2:I * J2:J))');
-    invoices.setColumnWidth(COL.description, 360).setColumnWidth(COL.details, 300);
+    invoices.setColumnWidth(COL.service, 320).setColumnWidth(COL.scope, 340).setColumnWidth(COL.period, 240);
   }
 
-  const s = readSettings_();
-  if (!s['Output Folder ID']) {
-    const folder = DriveApp.createFolder(COMPANY.name + ' – Invoices');
-    writeSetting_('Output Folder ID', folder.getId());
+  if (!readSettings_()['Output Folder ID']) {
+    writeSetting_('Output Folder ID', DriveApp.createFolder(COMPANY.name + ' – Invoices').getId());
   }
-  if (!s['Template Doc ID']) rebuildTemplate();
+  // A fresh (or upgraded) Settings tab has no template yet; later runs keep your edited template.
+  if (!readSettings_()['Template Doc ID']) rebuildTemplate();
 
   SpreadsheetApp.getUi().alert(
-    'Setup complete!\n\n1. Fill GSTIN, PAN, Bank Details, LUT Note and Logo in the Settings tab.\n' +
-    '2. Set "Next Invoice Number".\n3. Add clients in the Clients tab.\n' +
-    '4. Fill a row in Invoices, select it, then 🧾 Invoices → Generate.');
+    'Setup complete!\n\n1. Settings tab: check Logo, GSTIN, LUT Note and "Next Invoice Number".\n' +
+    '2. Banks tab: bank details per currency (USD, EUR, AUD …).\n' +
+    '3. Clients tab: add clients with their Country.\n' +
+    '4. Invoices tab: fill a row (extra items go in the rows below with Client left empty),\n' +
+    '   select the first row, then 🧾 Invoices → Generate.');
 }
 
 function rebuildTemplate() {
@@ -149,42 +228,50 @@ function rebuildTemplate() {
 function generateInvoice() {
   const ss = SpreadsheetApp.getActive();
   const sheet = ss.getActiveSheet();
-  if (sheet.getName() !== SHEETS.invoices) throw new Error('Select row(s) on the "Invoices" sheet first.');
+  if (sheet.getName() !== SHEETS.invoices) throw new Error('Select a row on the "Invoices" sheet first.');
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) throw new Error('Add an invoice row first.');
 
-  const range = sheet.getActiveRange();
-  const firstRow = Math.max(range.getRow(), 2);
-  const lastRow = range.getLastRow();
-  if (lastRow < 2) throw new Error('Select the invoice row(s) (not the header).');
+  const data = sheet.getRange(2, 1, lastRow - 1, INVOICE_HEADERS.length).getValues();
+  const cell = (i, col) => data[i][col - 1];
 
-  // Every selected row is one line item; invoice-level fields come from the first row.
-  const rows = sheet.getRange(firstRow, 1, lastRow - firstRow + 1, INVOICE_HEADERS.length).getValues();
-  const head = rows[0];
-  const items = rows.filter(r => r[COL.description - 1] !== '').map(r => ({
-    desc: String(r[COL.description - 1]),
-    details: String(r[COL.details - 1] || ''),
-    sac: String(r[COL.sac - 1] || ''),
-    qty: Number(r[COL.qty - 1] || 1),
-    rate: Number(r[COL.rate - 1] || 0),
-  }));
-  if (!head[COL.client - 1]) throw new Error('The first selected row needs a Client.');
-  if (!items.length) throw new Error('Add at least one Description of Service.');
+  // The invoice starts at the nearest row (at or above the selection) that has a Client,
+  // and continues through the following rows that have a Service but no Client.
+  let start = sheet.getActiveRange().getRow() - 2;
+  if (start < 0) throw new Error('Select an invoice row (not the header).');
+  while (start > 0 && !cell(start, COL.client) && cell(start, COL.service)) start--;
+  if (!cell(start, COL.client)) throw new Error('The selected row needs a Client.');
+  let end = start;
+  while (end + 1 < data.length && !cell(end + 1, COL.client) && cell(end + 1, COL.service)) end++;
+
+  const items = [];
+  for (let i = start; i <= end; i++) {
+    if (!cell(i, COL.service)) continue;
+    items.push({
+      title: String(cell(i, COL.service)),
+      scope: String(cell(i, COL.scope) || ''),
+      period: String(cell(i, COL.period) || ''),
+      sac: String(cell(i, COL.sac) || ''),
+      qty: Number(cell(i, COL.qty) || 1),
+      rate: Number(cell(i, COL.rate) || 0),
+    });
+  }
+  if (!items.length) throw new Error('Add at least one Service.');
 
   const s = readSettings_();
-  const client = findClient_(String(head[COL.client - 1]));
-  const tz = Session.getScriptTimeZone();
-  const fmt = s['Date Format'] || 'dd/MM/yyyy';
-  const issueDate = head[COL.issueDate - 1] instanceof Date ? head[COL.issueDate - 1] : new Date();
-  const dueDate = head[COL.dueDate - 1] instanceof Date ? head[COL.dueDate - 1]
-    : new Date(issueDate.getTime() + Number(s['Default Due Days'] || 0) * 86400000);
-
-  // Reuse the number when regenerating a row; otherwise take the next one.
-  const invoiceNo = head[COL.number - 1] || nextInvoiceNumber_(issueDate);
-
-  const currency = (client.currency || 'USD').toUpperCase();
+  const client = findClient_(String(cell(start, COL.client)));
+  const currency = currencyFor_(client, s);
+  const bankLines = bankLinesFor_(currency);
   const money = n => formatMoney_(n, currency);
-  const cgstRate = Number(head[COL.cgst - 1] || 0);
-  const sgstRate = Number(head[COL.sgst - 1] || 0);
-  const igstRate = Number(head[COL.igst - 1] || 0);
+
+  const tz = Session.getScriptTimeZone();
+  const issueDate = cell(start, COL.issueDate) instanceof Date ? cell(start, COL.issueDate) : new Date();
+  // Reuse the number when regenerating; otherwise take the next one.
+  const invoiceNo = cell(start, COL.number) || nextInvoiceNumber_(issueDate);
+
+  const cgstRate = Number(cell(start, COL.cgst) || 0);
+  const sgstRate = Number(cell(start, COL.sgst) || 0);
+  const igstRate = Number(cell(start, COL.igst) || 0);
   const subtotal = items.reduce((sum, it) => sum + it.qty * it.rate, 0);
   const cgst = round2_(subtotal * cgstRate / 100);
   const sgst = round2_(subtotal * sgstRate / 100);
@@ -194,29 +281,32 @@ function generateInvoice() {
 
   const values = {
     INVOICE_NO: invoiceNo,
-    ISSUE_DATE: Utilities.formatDate(issueDate, tz, fmt),
-    DUE_DATE: Utilities.formatDate(dueDate, tz, fmt),
-    PLACE_OF_SUPPLY: String(head[COL.placeOfSupply - 1] || client.placeOfSupply || ''),
-    GSTIN: String(s['GSTIN'] || ''),
-    PAN: String(s['PAN'] || ''),
-    BANK_DETAILS: String(s['Bank Details'] || ''),
-    LUT_NOTE: lutNote,
-    CLIENT_NAME: client.name,
-    CLIENT_ATTN: client.attn,
-    CLIENT_ADDRESS_1: client.address1,
-    CLIENT_ADDRESS_2: client.address2,
-    CLIENT_EMAIL: client.email,
-    CLIENT_PHONE: client.phone,
+    ISSUE_DATE: Utilities.formatDate(issueDate, tz, s['Date Format'] || 'yyyy-MM-dd'),
+    PLACE_OF_SUPPLY: String(cell(start, COL.placeOfSupply) || client.placeOfSupply || ''),
     CURRENCY: currency,
+    CURRENCY_LABEL: currency + ' (' + (CURRENCY_SYMBOLS[currency] || currency).trim() + ')',
+    GSTIN: String(s['GSTIN'] || ''),
+    LUT_NOTE: lutNote,
     SUBTOTAL: money(subtotal),
     CGST_RATE: String(cgstRate),
     SGST_RATE: String(sgstRate),
     CGST: money(cgst),
     SGST: money(sgst),
-    IGST_LABEL: igstRate === 0 && lutNote ? 'IGST (Export under LUT)' : 'IGST (' + igstRate + '%)',
+    IGST_LABEL: igstRate === 0 ? 'IGST (Export under LUT 0%)' : 'IGST (' + igstRate + '%)',
     IGST: money(igst),
     TOTAL: money(total),
   };
+
+  const billTo = [
+    ['Company: ', client.name], ['Attention: ', client.attn], ['Address: ', client.address1],
+    ['', client.address2], ['', client.address3], ['', client.country],
+    ['Email: ', client.email], ['Phone: ', client.phone],
+  ].filter(([, v]) => v);
+  // Address lines 2+ hang under line 1 when line 1 is empty.
+  if (!client.address1) {
+    const firstAddr = billTo.findIndex(([label, v]) => label === '' && v);
+    if (firstAddr !== -1) billTo[firstAddr][0] = 'Address: ';
+  }
 
   // Copy the template and fill it.
   const folder = DriveApp.getFolderById(s['Output Folder ID']);
@@ -226,23 +316,45 @@ function generateInvoice() {
   const body = doc.getBody();
 
   fillItems_(body, items, money);
+  fillLines_(body, 'BILL_TO', billTo);
+  fillLines_(body, 'REMITTANCE', bankLines);
   if (!lutNote) removeEnclosingTable_(body, 'LUT_NOTE');
   Object.keys(values).forEach(k => replaceAll_(body, k, values[k]));
-  insertLogo_(body, s['Logo (Drive file URL or ID)'], Number(s['Logo Width (px)'] || 150));
+  insertImage_(body, 'LOGO', s['Logo (Drive file URL or ID)'], Number(s['Logo Width (px)'] || 140));
+  insertImage_(body, 'SIGNATURE', s['Signature Image (Drive file URL or ID)'], Number(s['Signature Width (px)'] || 140));
   doc.saveAndClose();
 
   const pdf = folder.createFile(copy.getAs(MimeType.PDF).setName(fileName + '.pdf'));
 
-  // Write results back to every selected row.
-  const n = lastRow - firstRow + 1;
+  // Write results back to every row of this invoice.
+  const firstRow = start + 2;
+  const n = end - start + 1;
   sheet.getRange(firstRow, COL.number, n, 1).setValue(invoiceNo);
   sheet.getRange(firstRow, COL.issueDate).setValue(issueDate);
-  sheet.getRange(firstRow, COL.dueDate).setValue(dueDate);
   sheet.getRange(firstRow, COL.status, n, 1).setValue('Generated');
   sheet.getRange(firstRow, COL.docLink, n, 1).setValue(doc.getUrl());
   sheet.getRange(firstRow, COL.pdfLink, n, 1).setValue(pdf.getUrl());
 
-  ss.toast(invoiceNo + ' created. PDF: ' + pdf.getUrl(), 'Invoices', 10);
+  ss.toast(invoiceNo + ' (' + currency + ' ' + money(total) + ') created.', 'Invoices', 10);
+}
+
+// ---------------------------------------------------------------------------
+// Currency & bank details
+// ---------------------------------------------------------------------------
+function currencyFor_(client, s) {
+  if (client.currency) return client.currency.toUpperCase();
+  const country = client.country.toLowerCase().replace(/[^a-z ]/g, '').replace(/\s+/g, ' ').trim();
+  const match = Object.keys(COUNTRY_CURRENCY).find(cur => COUNTRY_CURRENCY[cur].indexOf(country) !== -1);
+  return match || String(s['Default Currency'] || 'USD').toUpperCase();
+}
+
+function bankLinesFor_(currency) {
+  const rows = SpreadsheetApp.getActive().getSheetByName(SHEETS.banks).getDataRange().getValues().slice(1);
+  const lines = rows
+    .filter(r => String(r[0]).trim().toUpperCase() === currency && r[1] !== '')
+    .map(r => [String(r[1]).trim().replace(/:?$/, ': '), String(r[2])]);
+  if (!lines.length) throw new Error('No bank details for ' + currency + ' in the Banks sheet.');
+  return lines;
 }
 
 // ---------------------------------------------------------------------------
@@ -271,18 +383,20 @@ function nextInvoiceNumber_(issueDate) {
 // ---------------------------------------------------------------------------
 // Doc helpers
 // ---------------------------------------------------------------------------
+function placeholder_(key) {
+  return '\\{\\{' + key + '\\}\\}';
+}
 
 // Replaces {{KEY}} everywhere, keeping the placeholder's formatting.
 function replaceAll_(container, key, value) {
-  const pattern = '\\{\\{' + key + '\\}\\}';
-  let found = container.findText(pattern);
+  let found = container.findText(placeholder_(key));
   while (found) {
     const text = found.getElement().asText();
     const start = found.getStartOffset();
     const end = found.getEndOffsetInclusive();
     if (value) text.insertText(end + 1, String(value));
     text.deleteText(start, end);
-    found = container.findText(pattern);
+    found = container.findText(placeholder_(key));
   }
 }
 
@@ -292,48 +406,68 @@ function ancestor_(element, type) {
   return el;
 }
 
+function paragraphOf_(container, key) {
+  const found = container.findText(placeholder_(key));
+  return found ? ancestor_(found.getElement(), DocumentApp.ElementType.PARAGRAPH).asParagraph() : null;
+}
+
 function removeEnclosingTable_(body, key) {
-  const found = body.findText('\\{\\{' + key + '\\}\\}');
+  const found = body.findText(placeholder_(key));
   if (found) ancestor_(found.getElement(), DocumentApp.ElementType.TABLE).removeFromParent();
+}
+
+// Replaces the {{KEY}} paragraph with "Label: value" lines (label bold, brand green).
+function fillLines_(body, key, lines) {
+  const p = paragraphOf_(body, key);
+  if (!p) return;
+  const parent = p.getParent();
+  let idx = parent.getChildIndex(p);
+  lines.forEach(([label, value]) => {
+    const np = parent.insertParagraph(++idx, '');
+    paraLayout_(np, {});
+    if (label) np.appendText(label).setAttributes(attrs_({ bold: true, size: 9, color: GREEN }));
+    np.appendText(String(value)).setAttributes(attrs_({ bold: false, size: 9, color: TEXT }));
+  });
+  p.removeFromParent();
 }
 
 // Duplicates the template item row once per line item.
 function fillItems_(body, items, money) {
-  const found = body.findText('\\{\\{ITEM_DESC\\}\\}');
+  const found = body.findText(placeholder_('ITEM_TITLE'));
   const tplRow = ancestor_(found.getElement(), DocumentApp.ElementType.TABLE_ROW).asTableRow();
   const table = tplRow.getParentTable();
   const tplIndex = table.getChildIndex(tplRow);
 
   items.forEach((it, i) => {
     const row = table.insertTableRow(tplIndex + 1 + i, tplRow.copy());
-    replaceAll_(row, 'ITEM_DESC', it.desc);
-    replaceAll_(row, 'ITEM_DETAILS', it.details);
+    // Optional lines disappear when empty.
+    [['ITEM_SCOPE', it.scope], ['ITEM_PERIOD', it.period]].forEach(([key, value]) => {
+      if (!value) {
+        const p = paragraphOf_(row, key);
+        if (p) p.removeFromParent();
+      }
+    });
+    replaceAll_(row, 'ITEM_TITLE', it.title);
+    replaceAll_(row, 'ITEM_SCOPE', it.scope);
+    replaceAll_(row, 'ITEM_PERIOD', it.period);
     replaceAll_(row, 'ITEM_SAC', it.sac);
     replaceAll_(row, 'ITEM_QTY', String(it.qty));
     replaceAll_(row, 'ITEM_RATE', money(it.rate));
     replaceAll_(row, 'ITEM_TOTAL', money(it.qty * it.rate));
-    // Drop the empty "details" line when there is none.
-    const cell = row.getCell(0);
-    for (let c = cell.getNumChildren() - 1; c >= 0 && cell.getNumChildren() > 1; c--) {
-      const child = cell.getChild(c);
-      if (child.getType() === DocumentApp.ElementType.PARAGRAPH && child.asParagraph().getText() === '') {
-        child.removeFromParent();
-      }
-    }
   });
   table.removeRow(tplIndex);
 }
 
-function insertLogo_(body, logoSetting, width) {
-  const found = body.findText('\\{\\{LOGO\\}\\}');
-  if (!found) return;
-  const paragraph = ancestor_(found.getElement(), DocumentApp.ElementType.PARAGRAPH).asParagraph();
-  const id = extractDriveId_(logoSetting);
-  if (!id) {
+function insertImage_(body, key, setting, width) {
+  const paragraph = paragraphOf_(body, key);
+  if (!paragraph) return;
+  const id = extractDriveId_(setting);
+  if (!id && key === 'LOGO') {
     paragraph.removeFromParent();
     return;
   }
   paragraph.clear();
+  if (!id) return; // keep the empty line as space to sign by hand
   const img = paragraph.appendInlineImage(DriveApp.getFileById(id).getBlob());
   const ratio = img.getHeight() / img.getWidth();
   img.setWidth(width).setHeight(Math.round(width * ratio));
@@ -347,130 +481,124 @@ function extractDriveId_(value) {
 }
 
 // ---------------------------------------------------------------------------
-// Template builder – recreates the layout of the PESTO MARKETING invoice.
+// Template builder – the PESTO MARKETING layout in brand green.
+// Page: US Letter, 40pt margins → 532pt content width.
 // ---------------------------------------------------------------------------
 function buildTemplate_(folder) {
   const doc = DocumentApp.create(COMPANY.name + ' – Invoice Template');
   const body = doc.getBody();
-  body.setMarginTop(36).setMarginBottom(36).setMarginLeft(40).setMarginRight(40);
+  body.setMarginTop(32).setMarginBottom(32).setMarginLeft(40).setMarginRight(40);
+  const RIGHT = DocumentApp.HorizontalAlignment.RIGHT;
+  const CENTER = DocumentApp.HorizontalAlignment.CENTER;
+  const label = { bold: true, color: GREEN };
 
-  // Header: company (left) | INVOICE + meta (right)
+  // Header: logo + company (left) | INVOICE + meta (right)
   const header = body.appendTable([['', '']]);
   noBorders_(header);
-  header.setColumnWidth(0, 290).setColumnWidth(1, 242);
+  header.setColumnWidth(0, 330).setColumnWidth(1, 202);
   const left = header.getCell(0, 0);
   const right = header.getCell(0, 1);
 
-  para_(left, '{{LOGO}}', {});
-  para_(left, COMPANY.name, { bold: true, size: 20, color: NAVY });
-  COMPANY.address.forEach(line => para_(left, line, { size: 9, color: GREY }));
-  rich_(left, [['Email: ', { bold: true, color: NAVY }], [COMPANY.email, {}]], { size: 9, color: GREY, before: 6 });
-  rich_(left, [['Phone: ', { bold: true, color: NAVY }], [COMPANY.phone, {}]], { size: 9, color: GREY });
-  para_(left, 'GSTIN: {{GSTIN}}', { bold: true, size: 9, color: NAVY, before: 6 });
-  para_(left, 'PAN: {{PAN}}', { bold: true, size: 9, color: NAVY });
+  para_(left, '{{LOGO}}', { after: 6 });
+  para_(left, COMPANY.name, { bold: true, size: 13, color: GREEN });
+  para_(left, COMPANY.tagline, { bold: true, size: 10, color: MUTED, after: 8 });
+  COMPANY.lines.forEach(([l, v]) => rich_(left, [[l, label], [v, {}]], { size: 8.5, color: TEXT }));
+  rich_(left, [['GSTIN: ', label], ['{{GSTIN}}', {}]], { size: 8.5, color: TEXT });
+  rich_(left, [['Email: ', label], [COMPANY.email + ' | ', {}], ['Phone: ', label], [COMPANY.phone, {}]],
+    { size: 8.5, color: TEXT });
   dropFirst_(left);
 
-  para_(right, 'INVOICE', { bold: true, size: 20, color: NAVY, align: DocumentApp.HorizontalAlignment.RIGHT });
-  const meta = right.appendTable([
-    ['Invoice Number:', '{{INVOICE_NO}}'],
-    ['Date of Issue:', '{{ISSUE_DATE}}'],
-    ['Due Date:', '{{DUE_DATE}}'],
-    ['Place of Supply:', '{{PLACE_OF_SUPPLY}}'],
-  ]);
-  noBorders_(meta);
-  meta.setColumnWidth(0, 95).setColumnWidth(1, 135);
-  forEachCell_(meta, (cell, r, c) => styleCell_(cell, c === 0
-    ? { bold: true, size: 9, color: NAVY } : { size: 9, color: GREY }));
+  para_(right, 'INVOICE', { bold: true, size: 13, color: GREEN, after: 10 });
+  [['Invoice No: ', '{{INVOICE_NO}}'], ['Date of Issue: ', '{{ISSUE_DATE}}'],
+    ['Place of Supply: ', '{{PLACE_OF_SUPPLY}}'], ['Currency: ', '{{CURRENCY_LABEL}}']]
+    .forEach(([l, v]) => rich_(right, [[l, label], [v, {}]], { size: 8.5, color: TEXT }));
   dropFirst_(right);
 
   spacer_(body);
 
-  // LUT note box
+  // LUT note – light green highlight
   const lut = body.appendTable([['{{LUT_NOTE}}']]);
-  lut.setBorderColor(NAVY).setBorderWidth(1);
-  styleCell_(lut.getCell(0, 0), { bold: true, italic: true, size: 8, color: NAVY,
-    align: DocumentApp.HorizontalAlignment.CENTER });
-  pad_(lut.getCell(0, 0), 8);
+  lut.setBorderColor(MINT).setBorderWidth(0);
+  const lutCell = lut.getCell(0, 0).setBackgroundColor(MINT);
+  pad_(lutCell, 8);
+  styleCell_(lutCell, { bold: true, size: 7.5, color: GREEN, align: CENTER });
 
   spacer_(body);
 
-  // Bill to
-  const bill = body.appendTable([['']]);
-  bill.setBorderColor(LIGHT).setBorderWidth(1);
-  const billCell = bill.getCell(0, 0).setBackgroundColor('#f8fafc');
-  pad_(billCell, 8);
-  para_(billCell, 'BILL TO:', { bold: true, size: 9, color: NAVY, after: 6 });
-  para_(billCell, '{{CLIENT_NAME}}', { bold: true, size: 9, color: NAVY });
-  para_(billCell, 'Attn: {{CLIENT_ATTN}}', { size: 9, color: GREY });
-  para_(billCell, '{{CLIENT_ADDRESS_1}}', { size: 9, color: GREY });
-  para_(billCell, '{{CLIENT_ADDRESS_2}}', { size: 9, color: GREY });
-  para_(billCell, 'Email: {{CLIENT_EMAIL}} | Phone: {{CLIENT_PHONE}}', { size: 9, color: GREY });
-  dropFirst_(billCell);
+  // Bill to | Remittance instructions
+  const parties = body.appendTable([['', '']]);
+  noBorders_(parties);
+  parties.setColumnWidth(0, 250).setColumnWidth(1, 282);
+  const bill = parties.getCell(0, 0);
+  const remit = parties.getCell(0, 1);
+  para_(bill, 'BILL TO:', { bold: true, size: 9, color: GREEN, after: 3 });
+  para_(bill, '{{BILL_TO}}', { size: 9, color: TEXT });
+  dropFirst_(bill);
+  para_(remit, COMPANY.remittanceHeading, { bold: true, size: 9, color: GREEN, after: 3 });
+  para_(remit, '{{REMITTANCE}}', { size: 9, color: TEXT });
+  dropFirst_(remit);
 
   spacer_(body);
 
   // Line items: header row + one template row (duplicated per item on generate)
+  const widths = [262, 62, 38, 82, 88];
   const items = body.appendTable([
     ['Description of Services', 'SAC Code', 'Qty', 'Rate ({{CURRENCY}})', 'Total ({{CURRENCY}})'],
     ['', '{{ITEM_SAC}}', '{{ITEM_QTY}}', '{{ITEM_RATE}}', '{{ITEM_TOTAL}}'],
   ]);
-  items.setBorderColor(LIGHT).setBorderWidth(1);
-  [250, 70, 40, 85, 87].forEach((w, i) => items.setColumnWidth(i, w));
-  const right3 = c => (c >= 3 ? DocumentApp.HorizontalAlignment.RIGHT : DocumentApp.HorizontalAlignment.LEFT);
-  forEachCell_(items, (cell, r, c) => {
+  items.setBorderColor(LINE).setBorderWidth(1);
+  widths.forEach((w, i) => items.setColumnWidth(i, w));
+  forEachCell_(items, (cell, r) => {
     pad_(cell, 6);
+    cell.setVerticalAlignment(DocumentApp.VerticalAlignment.CENTER);
     if (r === 0) {
-      cell.setBackgroundColor(NAVY);
-      styleCell_(cell, { bold: true, size: 9, color: '#ffffff', align: right3(c) });
+      cell.setBackgroundColor(MINT);
+      styleCell_(cell, { bold: true, size: 8.5, color: GREEN });
     } else {
-      styleCell_(cell, { size: 9, color: NAVY, align: right3(c) });
+      styleCell_(cell, { size: 8.5, color: TEXT });
     }
   });
-  const descCell = items.getCell(1, 0);
-  para_(descCell, '{{ITEM_DESC}}', { bold: true, size: 9, color: NAVY });
-  para_(descCell, '{{ITEM_DETAILS}}', { size: 8, color: '#64748b' });
-  dropFirst_(descCell);
+  const desc = items.getCell(1, 0);
+  para_(desc, '{{ITEM_TITLE}}', { bold: true, size: 8.5, color: GREEN, after: 2 });
+  para_(desc, 'Scope: {{ITEM_SCOPE}}', { size: 7.5, color: MUTED });
+  para_(desc, 'Billing Period: {{ITEM_PERIOD}}', { size: 7.5, color: MUTED });
+  dropFirst_(desc);
 
-  spacer_(body);
-
-  // Totals, pushed to the right via a borderless wrapper table
-  const wrap = body.appendTable([['', '']]);
-  noBorders_(wrap);
-  wrap.setColumnWidth(0, 290).setColumnWidth(1, 242);
-  const totals = wrap.getCell(0, 1).appendTable([
+  // Totals, aligned to the items table's last column
+  const totals = body.appendTable([
     ['Subtotal:', '{{SUBTOTAL}}'],
     ['CGST ({{CGST_RATE}}%):', '{{CGST}}'],
     ['SGST ({{SGST_RATE}}%):', '{{SGST}}'],
     ['{{IGST_LABEL}}:', '{{IGST}}'],
-    ['Net Total Payable:', '{{TOTAL}}'],
+    ['Net Payable Amount:', '{{TOTAL}}'],
   ]);
-  totals.setBorderColor(LIGHT).setBorderWidth(1);
-  totals.setColumnWidth(0, 140).setColumnWidth(1, 90);
-  forEachCell_(totals, (cell, r, c) => {
-    pad_(cell, 4);
-    styleCell_(cell, { bold: r === 4, size: 9, color: NAVY,
-      align: c === 1 ? DocumentApp.HorizontalAlignment.RIGHT : DocumentApp.HorizontalAlignment.LEFT });
+  totals.setBorderColor(LINE).setBorderWidth(1);
+  totals.setColumnWidth(0, 532 - widths[4]).setColumnWidth(1, widths[4]);
+  forEachCell_(totals, (cell, r) => {
+    pad_(cell, 5);
+    const strong = r === 0 || r === 4;
+    if (r === 4) cell.setBackgroundColor(MINT);
+    styleCell_(cell, { bold: strong, size: 8.5, color: strong ? GREEN : TEXT });
   });
-  dropFirst_(wrap.getCell(0, 1));
 
-  // Terms
-  body.appendHorizontalRule();
-  para_(body, 'TERMS & REMITTANCE INSTRUCTIONS:', { bold: true, size: 9, color: NAVY, after: 4 });
-  const terms = { size: 9, color: GREY };
-  para_(body, '1. All credit card processing fees, intermediary bank commissions, and operational charges ' +
-    'shall be borne solely by the payer.', terms);
-  para_(body, '2. The Client is strictly responsible for ensuring that the full net invoiced amount ' +
-    '({{TOTAL}}) is safely realized by Pesto Marketing without deductions.', terms);
-  rich_(body, [['3. Inbound remittance must clear through Authorized Dealer channels utilizing RBI Purpose Code ', {}],
-    ['P1007', { bold: true }], ['.', {}]], terms);
-  rich_(body, [['4. ', {}], ['Bank Remittance Anchor: ', { bold: true }], ['{{BANK_DETAILS}}', {}]], terms);
+  spacer_(body);
+  spacer_(body);
 
-  // Signature
-  const rightAlign = DocumentApp.HorizontalAlignment.RIGHT;
-  rich_(body, [['For ', {}], [COMPANY.name, { bold: true }]], { size: 9, color: NAVY, align: rightAlign, before: 18 });
-  para_(body, '', { size: 9 });
-  para_(body, '', { size: 9 });
-  para_(body, 'Authorized Signatory', { size: 9, color: NAVY, align: rightAlign });
+  // Terms (left) | Signature (right)
+  const footer = body.appendTable([['', '']]);
+  noBorders_(footer);
+  footer.setColumnWidth(0, 320).setColumnWidth(1, 212);
+  const terms = footer.getCell(0, 0);
+  const sign = footer.getCell(0, 1);
+  para_(terms, 'Terms & Understandings:', { bold: true, size: 9, color: GREEN, after: 3 });
+  COMPANY.terms.forEach(t => para_(terms, t, { size: 8, color: TEXT }));
+  dropFirst_(terms);
+  sign.setVerticalAlignment(DocumentApp.VerticalAlignment.BOTTOM);
+  para_(sign, '{{SIGNATURE}}', { align: RIGHT });
+  para_(sign, '______________________________', { size: 9, color: GREEN, align: RIGHT, before: 4 });
+  para_(sign, 'Authorized Signatory', { bold: true, size: 9, color: GREEN, align: RIGHT, before: 4 });
+  para_(sign, COMPANY.signatory, { size: 8.5, color: TEXT, align: RIGHT });
+  dropFirst_(sign);
 
   // Shrink the empty paragraph every new Doc starts with.
   body.getChild(0).asParagraph().setAttributes(attrs_({ size: 1 })).setSpacingAfter(0);
@@ -483,7 +611,7 @@ function buildTemplate_(folder) {
 
 function attrs_(o) {
   const A = DocumentApp.Attribute;
-  const a = { [A.FONT_FAMILY]: 'Arial' };
+  const a = { [A.FONT_FAMILY]: FONT };
   if (o.bold !== undefined) a[A.BOLD] = o.bold;
   if (o.italic !== undefined) a[A.ITALIC] = o.italic;
   if (o.size) a[A.FONT_SIZE] = o.size;
@@ -493,7 +621,7 @@ function attrs_(o) {
 
 function paraLayout_(p, o) {
   if (o.align) p.setAlignment(o.align);
-  p.setSpacingBefore(o.before || 0).setSpacingAfter(o.after || 0).setLineSpacing(1.15);
+  p.setSpacingBefore(o.before || 0).setSpacingAfter(o.after || 0).setLineSpacing(1.2);
   return p;
 }
 
@@ -506,7 +634,7 @@ function para_(container, text, o) {
 // A paragraph made of differently-styled runs: [[text, style], ...]
 function rich_(container, runs, base) {
   const p = container.appendParagraph('');
-  runs.forEach(([text, o]) => p.appendText(text).setAttributes(attrs_(Object.assign({}, base, o))));
+  runs.forEach(([text, o]) => p.appendText(text).setAttributes(attrs_(Object.assign({ bold: false }, base, o))));
   return paraLayout_(p, base);
 }
 
@@ -532,7 +660,10 @@ function pad_(cell, pt) {
 
 function noBorders_(table) {
   table.setBorderWidth(0).setBorderColor('#ffffff');
-  forEachCell_(table, cell => cell.setPaddingLeft(0).setPaddingRight(0));
+  forEachCell_(table, cell => {
+    cell.setPaddingLeft(0).setPaddingRight(0).setPaddingTop(0).setPaddingBottom(0);
+    cell.setVerticalAlignment(DocumentApp.VerticalAlignment.TOP);
+  });
 }
 
 function spacer_(body) {
@@ -554,6 +685,7 @@ function dropFirst_(container) {
 function readSettings_() {
   const sheet = SpreadsheetApp.getActive().getSheetByName(SHEETS.settings);
   const out = {};
+  if (!sheet) return out;
   sheet.getDataRange().getValues().slice(1).forEach(r => { if (r[0]) out[String(r[0]).trim()] = r[1]; });
   return out;
 }
@@ -570,9 +702,10 @@ function findClient_(name) {
   const rows = SpreadsheetApp.getActive().getSheetByName(SHEETS.clients).getDataRange().getValues().slice(1);
   const r = rows.find(row => String(row[0]).trim() === name.trim());
   if (!r) throw new Error('Client "' + name + '" not found in the Clients sheet.');
+  const v = i => String(r[i] || '').trim();
   return {
-    name: String(r[0]), attn: String(r[1]), address1: String(r[2]), address2: String(r[3]),
-    email: String(r[4]), phone: String(r[5]), placeOfSupply: String(r[6]), currency: String(r[7]),
+    name: v(0), attn: v(1), address1: v(2), address2: v(3), address3: v(4), country: v(5),
+    email: v(6), phone: v(7), placeOfSupply: v(8), currency: v(9),
   };
 }
 

@@ -1,78 +1,80 @@
-# Pesto Marketing – Invoice Generator (Google Sheets + Docs)
+# Pesto Marketing – Invoice Generator v2 (Google Sheets + Docs)
 
-Generate invoices in your own Google Drive. The layout matches the
-PESTO MARKETING invoice. Each invoice gets an automatic number
-(`PM-2026-0033`, `PM-2026-0034`, …), and you only type the parts that change.
+Generate invoices in your own Google Drive. The layout matches the PESTO MARKETING
+invoice: brand green `#022d1d`, the **Plus Jakarta Sans** font and your logo in the
+top-left corner. Each invoice gets an automatic number (`PM-2026-0033`, …).
 
 ```
-Google Sheet (you type here)          Google Doc template           Output (Drive folder)
- ├─ Invoices  ← client, items, rate ─▶  {{placeholders}} + logo  ─▶  PM-2026-0033 - Client.gdoc
- ├─ Clients   ← saved once                                           PM-2026-0033 - Client.pdf
- └─ Settings  ← prefix, next number, logo, GSTIN, PAN, bank, LUT note
+Google Sheet (you type here)               Google Doc template            Output (Drive folder)
+ ├─ Invoices ← client, services, rates ─▶   {{placeholders}} + logo   ─▶   PM-2026-0033 - Client.gdoc
+ ├─ Clients  ← saved once, with Country                                    PM-2026-0033 - Client.pdf
+ ├─ Banks    ← bank details per currency (USD / EUR / AUD …)
+ └─ Settings ← prefix, next number, logo, signature, GSTIN, LUT note
 ```
 
-## One-time setup (about 5 minutes)
+## What changes automatically
 
-1. Go to <https://sheets.new> and name the sheet **Invoice Generator**.
-2. Open **Extensions → Apps Script**. Delete the starter code and paste the whole
-   [`Code.gs`](./Code.gs). Click **Save**.
-3. *(Optional)* Change the `COMPANY` block at the top of the script (name, address, email, phone).
-4. In the function dropdown, choose **`setup`** and click **Run**. Google asks for
-   permission to use your Sheets, Docs and Drive. Click **Allow**.
-   (You may see "Google hasn't verified this app". Choose *Advanced → Go to project*. You wrote this script yourself, so this is expected.)
-5. Go back to the Sheet and reload it. A **🧾 Invoices** menu appears.
-   Setup has created:
-   - the **Invoices**, **Clients** and **Settings** tabs,
-   - a Drive folder named **PESTO MARKETING – Invoices**,
-   - the **Invoice Template** Google Doc in that folder.
-6. Fill in the **Settings** tab:
-   | Setting | What to put |
-   |---|---|
-   | Next Invoice Number | Your next number. If your last invoice was `PM-2026-0032`, enter `33`. |
-   | Logo | Upload your logo (PNG/JPG) to Drive, then paste its **share link** |
-   | GSTIN / PAN | Your GSTIN and PAN |
-   | Bank Details | `State Bank of India, Current Account No: …, IFSC: …` |
-   | LUT Note | `SUPPLY OF SERVICES MEANT FOR EXPORT UNDER LETTER OF UNDERTAKING (LUT) WITHOUT PAYMENT OF INTEGRATED TAX UNDER ARN … DATED …` (leave blank for domestic invoices and the box disappears) |
+| Client country | Currency everywhere | Remittance instructions |
+|---|---|---|
+| USA / United States (of America) | USD ($) | the **USD** rows in the Banks tab (Citibank) |
+| Netherlands (and other Eurozone countries) | EUR (€) | the **EUR** rows (Banking Circle S.A.) |
+| Australia | AUD (A$) | the **AUD** rows (BC Payments) |
+| Anything else | *Default Currency* in Settings | that currency's rows |
 
-   These details stay in your private Sheet, not in the code.
+You can force a currency for one client in the Clients tab's **Currency (optional override)** column.
+To support another currency (for example GBP), add `GBP` rows to the Banks tab.
 
-## Creating an invoice
+These parts are always the same:
+- the green "SUPPLY OF SERVICES…" box (*LUT Note* in Settings)
+- the Terms & Understandings. The amount in term 2 always equals the invoice's Net Payable Amount.
+- the signature block. Add a signature image in Settings whenever you're ready.
 
-1. **Clients tab:** add each client once (name, Attn, two address lines, email, phone, place of supply, currency such as `USD` or `INR`).
-2. **Invoices tab:** fill one row:
-   - **Client** (pick from the dropdown), **Description**, **Details** (the small grey line), **SAC Code**, **Qty**, **Rate**
-   - **Date of Issue** is optional (blank means today).
-   - **Due Date** is optional (blank means today + *Default Due Days*).
-   - **CGST / SGST / IGST %** (use 0 for export invoices, or e.g. 9 / 9 / 0 for Haryana clients and 0 / 0 / 18 for other states)
-   - **Leave Invoice No empty.** It is filled in automatically.
-3. Select the row and click **🧾 Invoices → Generate invoice from selected row(s)**.
-4. The row gets the invoice number, **Status = Generated**, and links to the Google Doc and the PDF.
+## Install (new Sheet)
 
-**Several items on one invoice:** put each item on its own row, directly below
-each other, and fill the client, dates and tax % on the **first** row only. Select
-all those rows, then click Generate. Each selected row becomes one line in the items table.
+1. Go to <https://sheets.new> and open **Extensions → Apps Script**.
+2. Paste the whole `Code.gs`, then click **Save**.
+3. In the function dropdown, choose **`setup`** and click **▶ Run**. Click **Allow** when Google asks.
+   Then switch to the Sheet tab and click **OK** on "Setup complete!".
+4. Reload the Sheet. The **🧾 Invoices** menu appears.
 
-**Fixing a mistake:** edit the row, select it again and click Generate. Because
-the row already has an invoice number, that **same number** is used again. Delete
-the old Doc/PDF from the folder.
+## Upgrade from v1 (the Sheet you already have)
 
-## Invoice numbering
+1. Open **Extensions → Apps Script**, select all the old code, delete it, paste the new `Code.gs`, and click **Save**.
+2. Run **`setup`** again, then click OK in the Sheet tab.
+   - Your old tabs are kept and renamed to **Settings (v1)**, **Clients (v1)** and **Invoices (v1)**.
+   - New tabs are created. Your invoice counter, logo, GSTIN, LUT note and Drive folder are carried over.
+   - A new green template Doc is created in the same Drive folder.
+3. Re-enter your clients in the new **Clients** tab. It now has a **Country** column. Then delete the "(v1)" tabs whenever you like.
 
-- The format is `PREFIX-YEAR-NNNN` (prefix, digits and starting number are all in Settings).
-- The counter is locked during generation, so two clicks can never get the same number.
-- With *Reset Counter Every Year = Yes*, numbering starts again at `0001` on 1 January
-  (calendar year, based on the Date of Issue). Set it to `No` to keep counting.
+## Settings to check once
+
+| Setting | What to put |
+|---|---|
+| Next Invoice Number | Your next number. If your last invoice was `PM-2026-0032`, enter `33`. |
+| Logo | Upload your logo PNG to Drive, then paste its share link. It is placed in the top-left corner. |
+| Signature Image | Optional. A PNG of your signature, placed above the signature line. |
+| GSTIN / LUT Note | Your GSTIN and the "SUPPLY OF SERVICES … ARN … DATED …" sentence |
+| Banks tab | One row per line: `Currency` · `Field` (for example *IBAN*) · `Value` |
+
+## Creating an invoice (one or many services)
+
+On the **Invoices** tab:
+
+| Invoice No | Date | **Client** | … | **Service** | Scope / Details | Billing Period | SAC | Qty | Rate |
+|---|---|---|---|---|---|---|---|---|---|
+| *(auto)* | | Acme BV | | Web Development | Scope: 5-page site | Oct 6 – Nov 5 | 998311 | 1 | 1200 |
+| | | *(empty)* | | Google Ads | Scope: setup + bidding | Oct 6 – Nov 5 | 998311 | 1 | 400 |
+| | | *(empty)* | | SEO | Scope: on-page + links | Oct 6 – Nov 5 | 998311 | 1 | 600 |
+
+- Fill the **Client** only on the first row. Each row below it with a Service and an
+  empty Client becomes another line on the **same invoice**.
+- Put any **tax %** on the first row. Leave everything at 0 for export invoices.
+- Select any row of the invoice, then click **🧾 Invoices → Generate invoice from selected row**.
+- To fix a mistake, edit the rows and click Generate again. The same invoice number is used again.
 
 ## Changing the design
 
-Open **Invoice Template** in the Drive folder and edit it like any Google Doc
-(fonts, colours, terms text, signature). Keep the `{{PLACEHOLDERS}}`, and keep the
-items table's second row (`{{ITEM_DESC}}`…). That row is copied once for each item.
-To start over from the default design, use **🧾 Invoices → Rebuild template Doc**.
-
-Available placeholders:
-`{{LOGO}} {{INVOICE_NO}} {{ISSUE_DATE}} {{DUE_DATE}} {{PLACE_OF_SUPPLY}} {{GSTIN}} {{PAN}}
-{{BANK_DETAILS}} {{LUT_NOTE}} {{CLIENT_NAME}} {{CLIENT_ATTN}} {{CLIENT_ADDRESS_1}}
-{{CLIENT_ADDRESS_2}} {{CLIENT_EMAIL}} {{CLIENT_PHONE}} {{CURRENCY}} {{SUBTOTAL}}
-{{CGST_RATE}} {{CGST}} {{SGST_RATE}} {{SGST}} {{IGST_LABEL}} {{IGST}} {{TOTAL}}`
-and in the items row `{{ITEM_DESC}} {{ITEM_DETAILS}} {{ITEM_SAC}} {{ITEM_QTY}} {{ITEM_RATE}} {{ITEM_TOTAL}}`.
+Edit the `COMPANY` block or the brand colours at the top of `Code.gs`, then run
+**🧾 Invoices → Rebuild template Doc**. You can also open **Invoice Template** in the
+Drive folder and edit it directly. Keep the `{{PLACEHOLDERS}}`, and keep the items
+table's second row: it is copied once for each service.
