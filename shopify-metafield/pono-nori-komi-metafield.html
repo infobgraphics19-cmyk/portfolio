@@ -1,0 +1,309 @@
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap");
+.pono-pdp{
+  --navy:#101a33; --lime:#9cc31f; --lime-dk:#6f8f0e; --lime-soft:#f3f8e3;
+  --ink:#121212; --body:#3d3d3d; --muted:#6b6f78; --line:#e3e5e8; --paper:#ffffff; --tint:#f7f8f5;
+  --f:"Assistant",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --wrap:1180px;
+  background:var(--paper);color:var(--body);font-family:var(--f);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.pono-pdp *{box-sizing:border-box}
+.pono-pdp a{color:inherit}
+.pono-pdp img{max-width:100%;display:block;height:auto}
+.pono-pdp h2,.pono-pdp h3{color:var(--ink);line-height:1.2;text-wrap:balance;margin:0;font-family:var(--f);letter-spacing:normal;text-transform:none}
+.pono-pdp h2{font-size:clamp(1.5rem,1.2rem + 1.2vw,2rem);font-weight:700}
+.pono-pdp h3{font-size:1.125rem;font-weight:700}
+.pono-pdp p{margin:0}
+.pono-pdp :focus-visible{outline:2px solid var(--lime-dk);outline-offset:2px}
+.pono-pdp .wrap{max-width:var(--wrap);margin:0 auto;padding-left:16px;padding-right:16px}
+.pono-pdp section.band{padding-block:clamp(2.5rem,5vw,4rem)}
+.pono-pdp section.band.tint{background:var(--tint)}
+.pono-pdp .sec-head{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.75rem;max-width:68ch}
+.pono-pdp .eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--lime-dk)}
+.pono-pdp .lede{font-size:1.05rem}
+.pono-pdp .two{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:2.5rem;align-items:center}
+@media (max-width:820px){.pono-pdp .two{grid-template-columns:1fr}}
+.pono-pdp .two img{border-radius:8px;width:100%;aspect-ratio:4/3;object-fit:cover}
+.pono-pdp .prose{display:flex;flex-direction:column;gap:1rem;max-width:66ch}
+.pono-pdp .prose strong{color:var(--ink)}
+.pono-pdp .taste{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2.5rem;align-items:start}
+@media (max-width:820px){.pono-pdp .taste{grid-template-columns:1fr}}
+.pono-pdp .bars{display:grid;gap:.85rem}
+.pono-pdp .bar{display:grid;grid-template-columns:7.5rem minmax(0,1fr) 2.5rem;align-items:center;gap:.75rem;font-weight:600;color:var(--ink);font-size:.95rem}
+.pono-pdp .track{height:10px;background:#e7e9e2;border-radius:99px;overflow:hidden}
+.pono-pdp .fill{height:100%;background:var(--lime);border-radius:99px}
+.pono-pdp .bar small{color:var(--muted);font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.pono-pdp .tabs{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.pono-pdp .tablist{display:flex;border-bottom:1px solid var(--line);overflow-x:auto}
+.pono-pdp .tabs>input{position:absolute;opacity:0;pointer-events:none}
+.pono-pdp .tablist label{flex:1 0 auto;white-space:nowrap;background:#fff;border-bottom:3px solid transparent;padding:.9rem 1.1rem;font:700 .95rem var(--f);color:var(--muted);cursor:pointer;text-align:center}
+.pono-pdp .panel{display:none}
+.pono-pdp #pono-t1:checked~.p1,.pono-pdp #pono-t2:checked~.p2,.pono-pdp #pono-t3:checked~.p3{display:block}
+.pono-pdp #pono-t1:checked~.tablist label[for=pono-t1],.pono-pdp #pono-t2:checked~.tablist label[for=pono-t2],.pono-pdp #pono-t3:checked~.tablist label[for=pono-t3]{color:var(--navy);border-bottom-color:var(--lime)}
+.pono-pdp #pono-t1:focus-visible~.tablist label[for=pono-t1],.pono-pdp #pono-t2:focus-visible~.tablist label[for=pono-t2],.pono-pdp #pono-t3:focus-visible~.tablist label[for=pono-t3]{outline:2px solid var(--lime-dk);outline-offset:-2px}
+.pono-pdp .panel{padding:1.4rem}
+.pono-pdp .ingr{font-size:1.05rem;color:var(--ink)}
+.pono-pdp .facts{width:100%;max-width:420px;border:2px solid var(--ink);padding:.6rem .8rem;font-size:.9rem;color:var(--ink)}
+.pono-pdp .facts h3{font-size:1.6rem;font-weight:800;border-bottom:1px solid var(--ink);padding-bottom:.2rem}
+.pono-pdp .facts table{width:100%;border-collapse:collapse}
+.pono-pdp .facts td{border-top:1px solid #9a9a9a;padding:.3rem 0}
+.pono-pdp .facts td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.pono-pdp .facts tr.thick td{border-top:6px solid var(--ink)}
+.pono-pdp .diet{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.pono-pdp .chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid var(--line);border-radius:999px;padding:.3rem .75rem;font-size:.85rem;font-weight:600;color:var(--ink);background:#fff}
+.pono-pdp .chip svg{width:14px;height:14px;color:var(--lime-dk)}
+.pono-pdp .uses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+@media (max-width:820px){.pono-pdp .uses{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.pono-pdp .uses{grid-template-columns:1fr}}
+.pono-pdp .use{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.pono-pdp .use img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.pono-pdp .use .ph{aspect-ratio:16/10;background:var(--navy);display:flex;align-items:center;justify-content:center;color:var(--lime);font-weight:800;font-size:1.6rem;letter-spacing:.04em}
+.pono-pdp .use div.b{padding:1rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
+.pono-pdp .use p{font-size:.95rem}
+.pono-pdp .use a{margin-top:auto;padding-top:.4rem;font-weight:700;color:var(--lime-dk);text-decoration:none;font-size:.9rem}
+.pono-pdp .use a:hover{text-decoration:underline}
+.pono-pdp .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+.pono-pdp table.cmp{width:100%;border-collapse:collapse;min-width:640px;font-size:.95rem}
+.pono-pdp table.cmp th{background:var(--navy);color:#fff;text-align:left;font-weight:700;padding:.75rem .9rem;font-size:.85rem;letter-spacing:.03em}
+.pono-pdp table.cmp td{padding:.75rem .9rem;border-top:1px solid var(--line);vertical-align:top}
+.pono-pdp table.cmp td:first-child,.pono-pdp table.cmp th:first-child{position:sticky;left:0;background:inherit}
+.pono-pdp table.cmp th:first-child{background:var(--navy)}
+.pono-pdp table.cmp td:first-child{background:#fff;font-weight:700;color:var(--ink)}
+.pono-pdp table.cmp tr.me td{background:var(--lime-soft)}
+.pono-pdp table.cmp td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.pono-pdp .tbl-grid{display:grid;gap:2rem}
+.pono-pdp .tbl-grid>div{min-width:0}
+.pono-pdp .tbl-grid h3{margin-bottom:.75rem}
+.pono-pdp .story{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:2.5rem;align-items:center}
+@media (max-width:820px){.pono-pdp .story{grid-template-columns:1fr}}
+.pono-pdp .timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem;margin-top:.5rem}
+.pono-pdp .tl{border-top:3px solid var(--lime);padding-top:.5rem}
+.pono-pdp .tl b{display:block;color:var(--navy);font-size:1.3rem;font-variant-numeric:tabular-nums}
+.pono-pdp .tl span{font-size:.82rem;line-height:1.35;display:block}
+@media (max-width:520px){.pono-pdp .timeline{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:1rem}}
+.pono-pdp .quote{font-size:1.2rem;line-height:1.5;color:var(--navy);font-weight:600;border-left:3px solid var(--lime);padding-left:1rem}
+.pono-pdp .link-arrow{font-weight:700;color:var(--lime-dk);text-decoration:none}
+.pono-pdp .link-arrow:hover{text-decoration:underline}
+.pono-pdp .why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+@media (max-width:760px){.pono-pdp .why{grid-template-columns:1fr}}
+.pono-pdp .why div{border-top:3px solid var(--lime);padding-top:.9rem;display:flex;flex-direction:column;gap:.35rem}
+.pono-pdp .faq{display:grid;gap:.6rem;max-width:860px}
+.pono-pdp details{border:1px solid var(--line);border-radius:8px;background:#fff}
+.pono-pdp summary{list-style:none;cursor:pointer;padding:1rem 1.1rem;font-weight:700;color:var(--navy);display:flex;justify-content:space-between;gap:1rem;font-size:1.02rem}
+.pono-pdp summary::-webkit-details-marker{display:none}
+.pono-pdp summary::after{content:"+";color:var(--lime-dk);font-size:1.4rem;line-height:1;font-weight:600}
+.pono-pdp details[open] summary::after{content:"–"}
+.pono-pdp details .a{padding:0 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem}
+.pono-pdp .updated{font-size:.8rem;color:var(--muted);margin-top:1rem}
+.pono-pdp .guides{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.8rem}
+.pono-pdp .guide{display:flex;flex-direction:column;gap:.4rem;text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:1rem;background:#fff}
+.pono-pdp .guide:hover{border-color:var(--lime)}
+.pono-pdp .guide strong{color:var(--navy);line-height:1.3}
+.pono-pdp .guide span{color:var(--lime-dk);font-weight:700;font-size:.85rem;margin-top:auto}
+</style>
+
+<div class="pono-pdp">
+<section class="band tint" id="what">
+    <div class="wrap two">
+      <div class="prose">
+        <span class="eyebrow">Know your furikake</span>
+        <h2>What is Nori Komi Furikake?</h2>
+        <p><strong>Nori komi furikake is the classic, simplest style of furikake, a dry Japanese rice seasoning made with crisp nori seaweed and toasted sesame.</strong> Furikake means "to sprinkle over," and that's exactly how you use it: a shake over hot rice, poke, eggs or popcorn.</p>
+        <p>Unlike bonito (katsuo) or egg (noritama) blends, nori komi skips the fish and egg, so it stays mild, nutty and easy to put on everything. In Hawai'i it's a pantry staple, and our island-style blend is the one Braddah Tim grew up sprinkling on everything.</p>
+      </div>
+      <img src="https://cdn.shopify.com/s/files/REPLACE/rice-bowl.jpg" alt="Bowl of rice topped with Pono Nori Komi Furikake" loading="lazy">
+    </div>
+  </section>
+
+<section class="band" id="taste">
+    <div class="wrap taste">
+      <div class="prose">
+        <span class="eyebrow">Flavor profile</span>
+        <h2>What does it taste like?</h2>
+        <p class="lede">Slightly sweet, gently salty and full of toasty, sea-breeze umami, with a light crunch. No heat and no fishiness, just 'ono.</p>
+        <p>Customers describe it as a "very fresh ocean flavor perfectly balanced with sweet, sesame and slightly smoky flavors."</p>
+      </div>
+      <div class="bars" role="list" aria-label="Taste profile, out of 5">
+        <div class="bar" role="listitem">Umami<div class="track"><div class="fill" style="width:80%"></div></div><small>4/5</small></div>
+        <div class="bar" role="listitem">Sesame-nutty<div class="track"><div class="fill" style="width:80%"></div></div><small>4/5</small></div>
+        <div class="bar" role="listitem">Salty<div class="track"><div class="fill" style="width:60%"></div></div><small>3/5</small></div>
+        <div class="bar" role="listitem">Sweet<div class="track"><div class="fill" style="width:40%"></div></div><small>2/5</small></div>
+        <div class="bar" role="listitem">Heat<div class="track"><div class="fill" style="width:0%"></div></div><small>0/5</small></div>
+      </div>
+    </div>
+  </section>
+
+<section class="band tint" id="ingredients">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Label facts</span>
+        <h2>Ingredients, nutrition and allergens</h2>
+        <p class="lede">Everything printed on the jar, in plain text so you can check it before you buy.</p>
+      </div>
+      <div class="tabs">
+        <input type="radio" name="pono-tab" id="pono-t1" checked><input type="radio" name="pono-tab" id="pono-t2"><input type="radio" name="pono-tab" id="pono-t3">
+        <div class="tablist">
+          <label for="pono-t1">Ingredients</label>
+          <label for="pono-t2">Nutrition Facts</label>
+          <label for="pono-t3">Allergens &amp; storage</label>
+        </div>
+        <div class="panel p1">
+          <p class="ingr"><strong>Ingredients:</strong> Seaweed, Seaweed Powder, White Sesame, Salt, Sugar, Yeast Extract, Kale Powder, Rice Bran Oil.</p>
+          <div class="diet">
+            <span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>Plant-based ingredients</span>
+            <span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>Gluten-free</span>
+            <span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>Non-GMO ingredients</span>
+            <span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>No artificial colors or flavors</span>
+            <span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>No preservatives</span>
+          </div>
+        </div>
+        <div class="panel p2">
+          <div class="facts">
+            <h3>Nutrition Facts</h3>
+            <table>
+              <tbody>
+              <tr><td>Servings per container</td><td>[from label]</td></tr>
+              <tr><td><strong>Serving size</strong></td><td>[from label]</td></tr>
+              <tr class="thick"><td><strong>Calories</strong></td><td>[from label]</td></tr>
+              <tr><td>Total Fat</td><td>[g]</td></tr>
+              <tr><td>Sodium</td><td>[mg]</td></tr>
+              <tr><td>Total Carbohydrate</td><td>[g]</td></tr>
+              <tr><td>Total Sugars (incl. Added Sugars)</td><td>[g]</td></tr>
+              <tr><td>Protein</td><td>[g]</td></tr>
+            </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel p3">
+          <div class="prose">
+            <p><strong>Contains:</strong> Sesame.</p>
+            <p><strong>Storage:</strong> Keep the lid tight and store in a cool, dry place away from sunlight and steam. Use by the best-by date printed on the jar.</p>
+            <p><strong>Made in</strong> a GHP and HACCP-accredited facility registered with the USFDA.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="band" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">From our kitchen</span>
+        <h2>How to use Nori Komi Furikake</h2>
+        <p class="lede">Start with rice, then put it on everything. Here are six local-style favorites.</p>
+      </div>
+      <div class="uses">
+        <article class="use"><img src="https://cdn.shopify.com/s/files/REPLACE/rice-bowl.jpg" alt="Furikake on a rice bowl" loading="lazy"><div class="b"><h3>On rice</h3><p>Shake over hot white or brown rice. It's the classic for a reason.</p><a href="https://ponohawaiianfoods.com/blogs/news/how-to-use-furikake">How to use furikake →</a></div></article>
+        <article class="use"><div class="ph" aria-hidden="true">MUSUBI</div><div class="b"><h3>Musubi and onigiri</h3><p>Mix into rice or sprinkle between layers before wrapping with nori.</p><a href="https://ponohawaiianfoods.com/blogs/news/how-to-use-furikake-10-delicious-ways-to-go-beyond-rice">10 ways beyond rice →</a></div></article>
+        <article class="use"><img src="https://cdn.shopify.com/s/files/REPLACE/use-poke-sushi.jpg" alt="Nori komi furikake ready to sprinkle" loading="lazy"><div class="b"><h3>Poke bowls and sushi</h3><p>Finish ahi poke, sushi bakes and hand rolls with a pinch.</p><a href="https://ponohawaiianfoods.com/blogs/news/furikake-food-flavor-pairings">Flavor pairings →</a></div></article>
+        <article class="use"><img src="https://cdn.shopify.com/s/files/REPLACE/use-chex-mix.jpg" alt="Furikake Chex mix" loading="lazy"><div class="b"><h3>Furikake Chex mix</h3><p>Toss a whole jar into a buttery shoyu party mix. A potluck essential.</p><a href="https://ponohawaiianfoods.com/blogs/news/how-to-use-furikake-10-delicious-ways-to-go-beyond-rice">Get ideas →</a></div></article>
+        <article class="use"><div class="ph" aria-hidden="true">POPCORN</div><div class="b"><h3>Popcorn and fries</h3><p>Butter first, then furikake, so every piece gets coated.</p><a href="https://ponohawaiianfoods.com/blogs/news/what-does-furikake-taste-like">What it tastes like →</a></div></article>
+        <article class="use"><div class="ph" aria-hidden="true">SALMON</div><div class="b"><h3>Proteins and veggies</h3><p>Press onto salmon, chicken or tofu before baking, or shake over roasted veggies and eggs.</p><a href="https://ponohawaiianfoods.com/blogs/news/is-furikake-rice-seasoning-healthy">Is furikake healthy? →</a></div></article>
+      </div>
+    </div>
+  </section>
+
+<section class="band tint" id="compare">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Choose with confidence</span>
+        <h2>Nori Komi vs. other furikake</h2>
+        <p class="lede">Nori komi is the nori-and-sesame classic: no fish, no egg, no heat.</p>
+      </div>
+      <div class="tbl-grid">
+        <div>
+          <h3>Furikake types</h3>
+          <div class="tablewrap">
+            <table class="cmp">
+              <thead><tr><th scope="col">Type</th><th scope="col">Main ingredients</th><th scope="col">Fish or egg?</th><th scope="col">Flavor</th><th scope="col">Pono option</th></tr></thead>
+              <tbody>
+                <tr class="me"><td>Nori Komi</td><td>Nori seaweed, sesame, salt, sugar</td><td>No</td><td>Mild, nutty, umami</td><td><strong>This product</strong></td></tr>
+                <tr><td>Nori Goma</td><td>Nori and sesame ("goma" means sesame)</td><td>Usually no (check label)</td><td>Sesame-forward</td><td>Coming soon</td></tr>
+                <tr><td>Katsuo (bonito)</td><td>Bonito fish flakes, sesame, seaweed</td><td>Fish</td><td>Smoky, savory</td><td>—</td></tr>
+                <tr><td>Noritama</td><td>Nori and dried egg</td><td>Egg</td><td>Rich, savory</td><td>—</td></tr>
+                <tr><td>Wasabi Nori</td><td>Nori, sesame, wasabi</td><td>Varies by brand</td><td>Sharp heat</td><td><a href="https://ponohawaiianfoods.com/products/wasabi-nori-furikake-plant-based-gluten-free">Pono Wasabi Nori</a> (sold out)</td></tr>
+                <tr><td>Yuzu</td><td>Nori, sesame, citrus</td><td>Varies by brand</td><td>Bright, citrusy</td><td><a href="https://ponohawaiianfoods.com/products/pono-hawaiian-foods-island-yuzu-furikake-2-5-oz">Pono Island Yuzu</a> (sold out)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <h3>Pono Nori Komi sizes</h3>
+          <div class="tablewrap">
+            <table class="cmp">
+              <thead><tr><th scope="col">Size</th><th scope="col">Best for</th><th scope="col">Price</th><th scope="col">Per oz</th></tr></thead>
+              <tbody>
+                <tr><td><a href="https://ponohawaiianfoods.com/products/pono-hawaiian-nori-komi-furikake-rice-seasoning">Single 2.5 oz jar</a></td><td>Trying it out</td><td class="num">$10.99</td><td class="num">$4.40</td></tr>
+                <tr class="me"><td>Two pack (2 × 2.5 oz)</td><td>Kitchen plus a gift, or home plus office</td><td class="num">$19.99</td><td class="num">$4.00</td></tr>
+                <tr><td><a href="https://ponohawaiianfoods.com/products/furikake-seasoning">Bulk bag (17.64 oz)</a></td><td>Refilling jars, big families, Chex mix season</td><td class="num">$29.99</td><td class="num">$1.70</td></tr>
+                <tr><td><a href="https://ponohawaiianfoods.com/products/nori-komi-furikake-500g-1-1-bulk-case-pack-10-foil-1-1-bags">Case pack</a></td><td>Restaurants, poke shops and retail</td><td class="num">$165</td><td class="num">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="band" id="story">
+    <div class="wrap story">
+      <img src="https://cdn.shopify.com/s/files/REPLACE/story-jars-maui.jpg" alt="Pono Nori Komi Furikake jars with Maui mountains behind" loading="lazy" style="border-radius:8px;width:100%;aspect-ratio:4/3;object-fit:cover">
+      <div class="prose">
+        <span class="eyebrow">Recipes born in Hawai'i</span>
+        <h2>Howzit from Braddah Tim</h2>
+        <p class="quote">"I grew up on Maui learning my family's recipes, where a shake of furikake made every plate lunch better."</p>
+        <p>Furikake started in Japan. Hawai'i's Japanese community, with roots going back to the plantation era, helped make it an everyday local staple on rice, poke, musubi and even Chex mix. Our Nori Komi is our island-style take on that classic.</p>
+        <div class="timeline">
+          <div class="tl"><b>Maui</b><span>Learns the family recipes from Mom and Dad</span></div>
+          <div class="tl"><b>2004</b><span>Opens his first restaurant in Santa Cruz, CA</span></div>
+          <div class="tl"><b>2010</b><span>Launches Pono Hawaiian Grill</span></div>
+          <div class="tl"><b>2021</b><span>Bottles the recipes with a family-owned manufacturer</span></div>
+        </div>
+        <a class="link-arrow" href="https://ponohawaiianfoods.com/pages/about-us">Read our story →</a>
+      </div>
+    </div>
+  </section>
+
+<section class="band tint" id="why">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">Why the two pack</span><h2>One for you, one to share</h2></div>
+      <div class="why">
+        <div><h3>Save on your staple</h3><p>Two jars for $19.99, which is $1.99 less than buying two singles.</p></div>
+        <div><h3>An easy gift</h3><p>A hostess gift, care package or taste of home for friends living far from the islands.</p></div>
+        <div><h3>Never run out</h3><p>Keep one open and one sealed in the pantry, so there's always furikake for the rice.</p></div>
+      </div>
+    </div>
+  </section>
+
+<section class="band tint" id="faq">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">Good to know</span><h2>Nori Komi Furikake FAQs</h2></div>
+      <div class="faq">
+        <details open><summary>Is Pono Nori Komi Furikake gluten-free?</summary><div class="a"><p>Yes. It's labeled gluten-free and contains no wheat, soy sauce or barley ingredients. If you have celiac disease, always check the jar in hand, since recipes can change.</p></div></details>
+        <details><summary>Is it vegan?</summary><div class="a"><p>It's made with plant-based ingredients and contains no fish flakes, bonito or egg.</p></div></details>
+        <details><summary>Does it contain MSG?</summary><div class="a"><p>[Answer from the current label.] If the label lists MSG: "Yes, our Nori Komi includes a small amount of monosodium glutamate for that savory umami kick." If it lists yeast extract and no MSG: "There's no added MSG on our label. The umami comes from seaweed, sesame and yeast extract."</p></div></details>
+        <details><summary>How should I store it, and how long does it last?</summary><div class="a"><p>Keep the lid tight and store it in a cool, dry pantry away from sunlight and steam. Use it by the best-by date on the jar. For the crispiest crunch, finish an opened jar within a few months.</p></div></details>
+        <details><summary>What do you eat nori komi furikake with?</summary><div class="a"><p>Rice first and always, then musubi, poke, sushi, eggs, popcorn, salmon, chicken, roasted veggies, noodles and furikake Chex mix.</p></div></details>
+        <details><summary>What's the difference between nori komi and nori goma?</summary><div class="a"><p>Both are nori-and-sesame furikake. "Goma" means sesame, so nori goma blends tend to be more sesame-forward, while nori komi is the classic nori-forward blend. Recipes vary by brand. Our Nori Goma is coming soon.</p></div></details>
+        <details><summary>How fast does it ship?</summary><div class="a"><p>Orders process in 1–2 business days and ship via USPS Ground Advantage, usually arriving 3–5 days later. Shipping cost is calculated at checkout. For international orders, email ponohawaiianfoods@gmail.com for a quote.</p><p>Opened jars can't be returned for food safety, but if anything's wrong with your order, contact us within 14 days and we'll make it right.</p></div></details>
+        <details><summary>What's the difference between Hawaiian and Japanese furikake?</summary><div class="a"><p>Furikake is Japanese. In Hawai'i it became a local staple used island-style: on poke, musubi, plate-lunch rice, furikake chicken and furikake Chex mix. Some Hawaiian brands add local ingredients like Hawaiian sea salt. Ours is a nori komi blend from Braddah Tim's island recipes.</p></div></details>
+      </div>
+      <p class="updated">Last updated: October 2026</p>
+    </div>
+  </section>
+
+<section class="band tint" id="guides">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">Learn more</span><h2>Furikake guides from our kitchen</h2></div>
+      <div class="guides">
+        <a class="guide" href="https://ponohawaiianfoods.com/blogs/news/how-to-use-furikake"><strong>How to Use Furikake</strong><span>Read →</span></a>
+        <a class="guide" href="https://ponohawaiianfoods.com/blogs/news/what-does-furikake-taste-like"><strong>What Does Furikake Taste Like?</strong><span>Read →</span></a>
+        <a class="guide" href="https://ponohawaiianfoods.com/blogs/news/is-furikake-gluten-free"><strong>Is Furikake Gluten-Free?</strong><span>Read →</span></a>
+        <a class="guide" href="https://ponohawaiianfoods.com/blogs/news/how-to-use-furikake-10-delicious-ways-to-go-beyond-rice"><strong>10 Delicious Ways to Use Furikake Beyond Rice</strong><span>Read →</span></a>
+        <a class="guide" href="https://ponohawaiianfoods.com/blogs/news/furikake-food-flavor-pairings"><strong>Furikake Food and Flavor Pairings</strong><span>Read →</span></a>
+        <a class="guide" href="https://ponohawaiianfoods.com/blogs/news/is-furikake-rice-seasoning-healthy"><strong>Is Furikake Rice Seasoning Healthy?</strong><span>Read →</span></a>
+        <a class="guide" href="https://ponohawaiianfoods.com/blogs/news/taste-test-pono-s-furikake-flavors-nori-komi-vs-yuzu-vs-wasabi"><strong>Taste Test: Nori Komi vs. Yuzu vs. Wasabi</strong><span>Read →</span></a>
+      </div>
+    </div>
+  </section>
+</div>
