@@ -42,17 +42,11 @@
 .pono-pdp .tabs>input{position:absolute;opacity:0;pointer-events:none}
 .pono-pdp .tablist label{flex:1 0 auto;white-space:nowrap;background:#fff;border-bottom:3px solid transparent;padding:.9rem 1.1rem;font-weight:700;font-family:var(--f);color:var(--muted);cursor:pointer;text-align:center}
 .pono-pdp .panel{display:none}
-.pono-pdp #pono-t1:checked~.p1,.pono-pdp #pono-t2:checked~.p2,.pono-pdp #pono-t3:checked~.p3{display:block}
-.pono-pdp #pono-t1:checked~.tablist label[for=pono-t1],.pono-pdp #pono-t2:checked~.tablist label[for=pono-t2],.pono-pdp #pono-t3:checked~.tablist label[for=pono-t3]{color:var(--navy);border-bottom-color:var(--lime)}
-.pono-pdp #pono-t1:focus-visible~.tablist label[for=pono-t1],.pono-pdp #pono-t2:focus-visible~.tablist label[for=pono-t2],.pono-pdp #pono-t3:focus-visible~.tablist label[for=pono-t3]{outline:2px solid var(--lime-dk);outline-offset:-2px}
+.pono-pdp #pono-t1:checked~.p1,.pono-pdp #pono-t3:checked~.p3{display:block}
+.pono-pdp #pono-t1:checked~.tablist label[for=pono-t1],.pono-pdp #pono-t3:checked~.tablist label[for=pono-t3]{color:var(--navy);border-bottom-color:var(--lime)}
+.pono-pdp #pono-t1:focus-visible~.tablist label[for=pono-t1],.pono-pdp #pono-t3:focus-visible~.tablist label[for=pono-t3]{outline:2px solid var(--lime-dk);outline-offset:-2px}
 .pono-pdp .panel{padding:1.4rem}
 .pono-pdp .ingr{color:var(--ink)}
-.pono-pdp .facts{width:100%;max-width:420px;border:2px solid var(--ink);padding:.6rem .8rem;font-size:.9rem;color:var(--ink)}
-.pono-pdp .facts h3{font-size:1.6rem;font-weight:800;border-bottom:1px solid var(--ink);padding-bottom:.2rem}
-.pono-pdp .facts table{width:100%;border-collapse:collapse}
-.pono-pdp .facts td{border-top:1px solid #9a9a9a;padding:.3rem 0}
-.pono-pdp .facts td:last-child{text-align:right;font-variant-numeric:tabular-nums}
-.pono-pdp .facts tr.thick td{border-top:6px solid var(--ink)}
 .pono-pdp .diet{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
 .pono-pdp .chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid var(--line);border-radius:999px;padding:.3rem .75rem;font-weight:600;color:var(--ink);background:#fff}
 .pono-pdp .chip svg{width:14px;height:14px;color:var(--lime-dk)}
@@ -139,14 +133,13 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Label facts</span>
-        <h2>Ingredients, nutrition and allergens</h2>
+        <h2>Ingredients and allergens</h2>
         <p class="lede">Everything printed on the jar, in plain text so you can check it before you buy.</p>
       </div>
       <div class="tabs">
-        <input type="radio" name="pono-tab" id="pono-t1" checked><input type="radio" name="pono-tab" id="pono-t2"><input type="radio" name="pono-tab" id="pono-t3">
+        <input type="radio" name="pono-tab" id="pono-t1" checked><input type="radio" name="pono-tab" id="pono-t3">
         <div class="tablist">
           <label for="pono-t1">Ingredients</label>
-          <label for="pono-t2">Nutrition Facts</label>
           <label for="pono-t3">Allergens &amp; storage</label>
         </div>
         <div class="panel p1">
@@ -157,23 +150,6 @@
             <span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>Non-GMO ingredients</span>
             <span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>No artificial colors or flavors</span>
             <span class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>No preservatives</span>
-          </div>
-        </div>
-        <div class="panel p2">
-          <div class="facts">
-            <h3>Nutrition Facts</h3>
-            <table>
-              <tbody>
-              <tr><td>Servings per container</td><td>[from label]</td></tr>
-              <tr><td><strong>Serving size</strong></td><td>[from label]</td></tr>
-              <tr class="thick"><td><strong>Calories</strong></td><td>[from label]</td></tr>
-              <tr><td>Total Fat</td><td>[g]</td></tr>
-              <tr><td>Sodium</td><td>[mg]</td></tr>
-              <tr><td>Total Carbohydrate</td><td>[g]</td></tr>
-              <tr><td>Total Sugars (incl. Added Sugars)</td><td>[g]</td></tr>
-              <tr><td>Protein</td><td>[g]</td></tr>
-            </tbody>
-            </table>
           </div>
         </div>
         <div class="panel p3">
@@ -283,7 +259,6 @@
       <div class="faq">
         <details open><summary>Is Pono Nori Komi Furikake gluten-free?</summary><div class="a"><p>Yes. It's labeled gluten-free and contains no wheat, soy sauce or barley ingredients. If you have celiac disease, always check the jar in hand, since recipes can change.</p></div></details>
         <details><summary>Is it vegan?</summary><div class="a"><p>It's made with plant-based ingredients and contains no fish flakes, bonito or egg.</p></div></details>
-        <details><summary>Does it contain MSG?</summary><div class="a"><p>[Answer from the current label.] If the label lists MSG: "Yes, our Nori Komi includes a small amount of monosodium glutamate for that savory umami kick." If it lists yeast extract and no MSG: "There's no added MSG on our label. The umami comes from seaweed, sesame and yeast extract."</p></div></details>
         <details><summary>How should I store it, and how long does it last?</summary><div class="a"><p>Keep the lid tight and store it in a cool, dry pantry away from sunlight and steam. Use it by the best-by date on the jar. For the crispiest crunch, finish an opened jar within a few months.</p></div></details>
         <details><summary>What do you eat nori komi furikake with?</summary><div class="a"><p>Rice first and always, then musubi, poke, sushi, eggs, popcorn, salmon, chicken, roasted veggies, noodles and furikake Chex mix.</p></div></details>
         <details><summary>What's the difference between nori komi and nori goma?</summary><div class="a"><p>Both are nori-and-sesame furikake. "Goma" means sesame, so nori goma blends tend to be more sesame-forward, while nori komi is the classic nori-forward blend. Recipes vary by brand. Our Nori Goma is coming soon.</p></div></details>
