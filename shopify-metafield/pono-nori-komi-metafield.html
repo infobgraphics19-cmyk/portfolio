@@ -8,19 +8,19 @@
   background:var(--paper);color:var(--body);font-family:var(--f);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
 }
 .pono-pdp *{box-sizing:border-box}
+.pono-pdp .note,.pono-pdp .review-toggle{display:none!important}
 .pono-pdp a{color:inherit}
 .pono-pdp img{max-width:100%;display:block;height:auto}
 .pono-pdp h2,.pono-pdp h3{color:var(--ink);line-height:1.2;text-wrap:balance;margin:0;font-family:var(--f);letter-spacing:normal;text-transform:none}
 .pono-pdp h2{font-size:clamp(1.5rem,1.2rem + 1.2vw,2rem);font-weight:700}
-.pono-pdp h3{font-size:1.125rem;font-weight:700}
+.pono-pdp h3{font-weight:700}
 .pono-pdp p{margin:0}
 .pono-pdp :focus-visible{outline:2px solid var(--lime-dk);outline-offset:2px}
 .pono-pdp .wrap{max-width:var(--wrap);margin:0 auto;padding-left:16px;padding-right:16px}
 .pono-pdp section.band{padding-block:clamp(2.5rem,5vw,4rem)}
 .pono-pdp section.band.tint{background:var(--tint)}
 .pono-pdp .sec-head{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.75rem;max-width:68ch}
-.pono-pdp .eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--lime-dk)}
-.pono-pdp .lede{font-size:1.05rem}
+.pono-pdp .eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--lime-dk)}
 .pono-pdp .two{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:2.5rem;align-items:center}
 @media (max-width:820px){.pono-pdp .two{grid-template-columns:1fr}}
 .pono-pdp .two img{border-radius:8px;width:100%;aspect-ratio:4/3;object-fit:cover}
@@ -29,20 +29,20 @@
 .pono-pdp .taste{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2.5rem;align-items:start}
 @media (max-width:820px){.pono-pdp .taste{grid-template-columns:1fr}}
 .pono-pdp .bars{display:grid;gap:.85rem}
-.pono-pdp .bar{display:grid;grid-template-columns:7.5rem minmax(0,1fr) 2.5rem;align-items:center;gap:.75rem;font-weight:600;color:var(--ink);font-size:.95rem}
+.pono-pdp .bar{display:grid;grid-template-columns:7.5rem minmax(0,1fr) 2.5rem;align-items:center;gap:.75rem;font-weight:600;color:var(--ink);}
 .pono-pdp .track{height:10px;background:#e7e9e2;border-radius:99px;overflow:hidden}
 .pono-pdp .fill{height:100%;background:var(--lime);border-radius:99px}
 .pono-pdp .bar small{color:var(--muted);font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
 .pono-pdp .tabs{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
 .pono-pdp .tablist{display:flex;border-bottom:1px solid var(--line);overflow-x:auto}
 .pono-pdp .tabs>input{position:absolute;opacity:0;pointer-events:none}
-.pono-pdp .tablist label{flex:1 0 auto;white-space:nowrap;background:#fff;border-bottom:3px solid transparent;padding:.9rem 1.1rem;font:700 .95rem var(--f);color:var(--muted);cursor:pointer;text-align:center}
+.pono-pdp .tablist label{flex:1 0 auto;white-space:nowrap;background:#fff;border-bottom:3px solid transparent;padding:.9rem 1.1rem;font-weight:700;font-family:var(--f);color:var(--muted);cursor:pointer;text-align:center}
 .pono-pdp .panel{display:none}
 .pono-pdp #pono-t1:checked~.p1,.pono-pdp #pono-t2:checked~.p2,.pono-pdp #pono-t3:checked~.p3{display:block}
 .pono-pdp #pono-t1:checked~.tablist label[for=pono-t1],.pono-pdp #pono-t2:checked~.tablist label[for=pono-t2],.pono-pdp #pono-t3:checked~.tablist label[for=pono-t3]{color:var(--navy);border-bottom-color:var(--lime)}
 .pono-pdp #pono-t1:focus-visible~.tablist label[for=pono-t1],.pono-pdp #pono-t2:focus-visible~.tablist label[for=pono-t2],.pono-pdp #pono-t3:focus-visible~.tablist label[for=pono-t3]{outline:2px solid var(--lime-dk);outline-offset:-2px}
 .pono-pdp .panel{padding:1.4rem}
-.pono-pdp .ingr{font-size:1.05rem;color:var(--ink)}
+.pono-pdp .ingr{color:var(--ink)}
 .pono-pdp .facts{width:100%;max-width:420px;border:2px solid var(--ink);padding:.6rem .8rem;font-size:.9rem;color:var(--ink)}
 .pono-pdp .facts h3{font-size:1.6rem;font-weight:800;border-bottom:1px solid var(--ink);padding-bottom:.2rem}
 .pono-pdp .facts table{width:100%;border-collapse:collapse}
@@ -50,21 +50,19 @@
 .pono-pdp .facts td:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .pono-pdp .facts tr.thick td{border-top:6px solid var(--ink)}
 .pono-pdp .diet{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
-.pono-pdp .chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid var(--line);border-radius:999px;padding:.3rem .75rem;font-size:.85rem;font-weight:600;color:var(--ink);background:#fff}
+.pono-pdp .chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid var(--line);border-radius:999px;padding:.3rem .75rem;font-weight:600;color:var(--ink);background:#fff}
 .pono-pdp .chip svg{width:14px;height:14px;color:var(--lime-dk)}
 .pono-pdp .uses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
 @media (max-width:820px){.pono-pdp .uses{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.pono-pdp .uses{grid-template-columns:1fr}}
 .pono-pdp .use{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
 .pono-pdp .use img{width:100%;aspect-ratio:16/10;object-fit:cover}
-.pono-pdp .use .ph{aspect-ratio:16/10;background:var(--navy);display:flex;align-items:center;justify-content:center;color:var(--lime);font-weight:800;font-size:1.6rem;letter-spacing:.04em}
 .pono-pdp .use div.b{padding:1rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
-.pono-pdp .use p{font-size:.95rem}
-.pono-pdp .use a{margin-top:auto;padding-top:.4rem;font-weight:700;color:var(--lime-dk);text-decoration:none;font-size:.9rem}
+.pono-pdp .use a{margin-top:auto;padding-top:.4rem;font-weight:700;color:var(--lime-dk);text-decoration:none;}
 .pono-pdp .use a:hover{text-decoration:underline}
 .pono-pdp .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
-.pono-pdp table.cmp{width:100%;border-collapse:collapse;min-width:640px;font-size:.95rem}
-.pono-pdp table.cmp th{background:var(--navy);color:#fff;text-align:left;font-weight:700;padding:.75rem .9rem;font-size:.85rem;letter-spacing:.03em}
+.pono-pdp table.cmp{width:100%;border-collapse:collapse;min-width:640px;}
+.pono-pdp table.cmp th{background:var(--navy);color:#fff;text-align:left;font-weight:700;padding:.75rem .9rem;letter-spacing:.03em}
 .pono-pdp table.cmp td{padding:.75rem .9rem;border-top:1px solid var(--line);vertical-align:top}
 .pono-pdp table.cmp td:first-child,.pono-pdp table.cmp th:first-child{position:sticky;left:0;background:inherit}
 .pono-pdp table.cmp th:first-child{background:var(--navy)}
@@ -78,10 +76,10 @@
 @media (max-width:820px){.pono-pdp .story{grid-template-columns:1fr}}
 .pono-pdp .timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem;margin-top:.5rem}
 .pono-pdp .tl{border-top:3px solid var(--lime);padding-top:.5rem}
-.pono-pdp .tl b{display:block;color:var(--navy);font-size:1.3rem;font-variant-numeric:tabular-nums}
-.pono-pdp .tl span{font-size:.82rem;line-height:1.35;display:block}
+.pono-pdp .tl b{display:block;color:var(--navy);font-variant-numeric:tabular-nums}
+.pono-pdp .tl span{line-height:1.35;display:block}
 @media (max-width:520px){.pono-pdp .timeline{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:1rem}}
-.pono-pdp .quote{font-size:1.2rem;line-height:1.5;color:var(--navy);font-weight:600;border-left:3px solid var(--lime);padding-left:1rem}
+.pono-pdp .quote{line-height:1.5;color:var(--navy);font-weight:600;border-left:3px solid var(--lime);padding-left:1rem}
 .pono-pdp .link-arrow{font-weight:700;color:var(--lime-dk);text-decoration:none}
 .pono-pdp .link-arrow:hover{text-decoration:underline}
 .pono-pdp .why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
@@ -89,17 +87,17 @@
 .pono-pdp .why div{border-top:3px solid var(--lime);padding-top:.9rem;display:flex;flex-direction:column;gap:.35rem}
 .pono-pdp .faq{display:grid;gap:.6rem;max-width:860px}
 .pono-pdp details{border:1px solid var(--line);border-radius:8px;background:#fff}
-.pono-pdp summary{list-style:none;cursor:pointer;padding:1rem 1.1rem;font-weight:700;color:var(--navy);display:flex;justify-content:space-between;gap:1rem;font-size:1.02rem}
+.pono-pdp summary{list-style:none;cursor:pointer;padding:1rem 1.1rem;font-weight:700;color:var(--navy);display:flex;justify-content:space-between;gap:1rem;}
 .pono-pdp summary::-webkit-details-marker{display:none}
 .pono-pdp summary::after{content:"+";color:var(--lime-dk);font-size:1.4rem;line-height:1;font-weight:600}
 .pono-pdp details[open] summary::after{content:"–"}
 .pono-pdp details .a{padding:0 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem}
-.pono-pdp .updated{font-size:.8rem;color:var(--muted);margin-top:1rem}
+.pono-pdp .updated{color:var(--muted);margin-top:1rem}
 .pono-pdp .guides{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.8rem}
 .pono-pdp .guide{display:flex;flex-direction:column;gap:.4rem;text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:1rem;background:#fff}
 .pono-pdp .guide:hover{border-color:var(--lime)}
 .pono-pdp .guide strong{color:var(--navy);line-height:1.3}
-.pono-pdp .guide span{color:var(--lime-dk);font-weight:700;font-size:.85rem;margin-top:auto}
+.pono-pdp .guide span{color:var(--lime-dk);font-weight:700;margin-top:auto}
 </style>
 
 <div class="pono-pdp">
@@ -111,7 +109,7 @@
         <p><strong>Nori komi furikake is the classic, simplest style of furikake, a dry Japanese rice seasoning made with crisp nori seaweed and toasted sesame.</strong> Furikake means "to sprinkle over," and that's exactly how you use it: a shake over hot rice, poke, eggs or popcorn.</p>
         <p>Unlike bonito (katsuo) or egg (noritama) blends, nori komi skips the fish and egg, so it stays mild, nutty and easy to put on everything. In Hawai'i it's a pantry staple, and our island-style blend is the one Braddah Tim grew up sprinkling on everything.</p>
       </div>
-      <img src="https://cdn.shopify.com/s/files/REPLACE/rice-bowl.jpg" alt="Bowl of rice topped with Pono Nori Komi Furikake" loading="lazy">
+      <img src="https://ponohawaiianfoods.com/cdn/shop/files/IMG_7399.jpg" alt="Bowl of rice topped with Pono Nori Komi Furikake" loading="lazy">
     </div>
   </section>
 
@@ -193,12 +191,12 @@
         <p class="lede">Start with rice, then put it on everything. Here are six local-style favorites.</p>
       </div>
       <div class="uses">
-        <article class="use"><img src="https://cdn.shopify.com/s/files/REPLACE/rice-bowl.jpg" alt="Furikake on a rice bowl" loading="lazy"><div class="b"><h3>On rice</h3><p>Shake over hot white or brown rice. It's the classic for a reason.</p><a href="https://ponohawaiianfoods.com/blogs/news/how-to-use-furikake">How to use furikake →</a></div></article>
-        <article class="use"><div class="ph" aria-hidden="true">MUSUBI</div><div class="b"><h3>Musubi and onigiri</h3><p>Mix into rice or sprinkle between layers before wrapping with nori.</p><a href="https://ponohawaiianfoods.com/blogs/news/how-to-use-furikake-10-delicious-ways-to-go-beyond-rice">10 ways beyond rice →</a></div></article>
-        <article class="use"><img src="https://cdn.shopify.com/s/files/REPLACE/use-poke-sushi.jpg" alt="Nori komi furikake ready to sprinkle" loading="lazy"><div class="b"><h3>Poke bowls and sushi</h3><p>Finish ahi poke, sushi bakes and hand rolls with a pinch.</p><a href="https://ponohawaiianfoods.com/blogs/news/furikake-food-flavor-pairings">Flavor pairings →</a></div></article>
-        <article class="use"><img src="https://cdn.shopify.com/s/files/REPLACE/use-chex-mix.jpg" alt="Furikake Chex mix" loading="lazy"><div class="b"><h3>Furikake Chex mix</h3><p>Toss a whole jar into a buttery shoyu party mix. A potluck essential.</p><a href="https://ponohawaiianfoods.com/blogs/news/how-to-use-furikake-10-delicious-ways-to-go-beyond-rice">Get ideas →</a></div></article>
-        <article class="use"><div class="ph" aria-hidden="true">POPCORN</div><div class="b"><h3>Popcorn and fries</h3><p>Butter first, then furikake, so every piece gets coated.</p><a href="https://ponohawaiianfoods.com/blogs/news/what-does-furikake-taste-like">What it tastes like →</a></div></article>
-        <article class="use"><div class="ph" aria-hidden="true">SALMON</div><div class="b"><h3>Proteins and veggies</h3><p>Press onto salmon, chicken or tofu before baking, or shake over roasted veggies and eggs.</p><a href="https://ponohawaiianfoods.com/blogs/news/is-furikake-rice-seasoning-healthy">Is furikake healthy? →</a></div></article>
+        <article class="use"><img src="https://ponohawaiianfoods.com/cdn/shop/files/IMG_7399.jpg" alt="Furikake on a rice bowl" loading="lazy"><div class="b"><h3>On rice</h3><p>Shake over hot white or brown rice. It's the classic for a reason.</p><a href="https://ponohawaiianfoods.com/blogs/news/how-to-use-furikake">How to use furikake →</a></div></article>
+        <article class="use"><img src="https://ponohawaiianfoods.com/cdn/shop/articles/Gemini_Generated_Image_uf0c3zuf0c3zuf0c.png" alt="Musubi and onigiri with furikake seasoning" loading="lazy"><div class="b"><h3>Musubi and onigiri</h3><p>Mix into rice or sprinkle between layers before wrapping with nori.</p><a href="https://ponohawaiianfoods.com/blogs/news/how-to-use-furikake-10-delicious-ways-to-go-beyond-rice">10 ways beyond rice →</a></div></article>
+        <article class="use"><img src="https://ponohawaiianfoods.com/cdn/shop/files/FURIBOWL.jpg" alt="Nori komi furikake ready to sprinkle" loading="lazy"><div class="b"><h3>Poke bowls and sushi</h3><p>Finish ahi poke, sushi bakes and hand rolls with a pinch.</p><a href="https://ponohawaiianfoods.com/blogs/news/furikake-food-flavor-pairings">Flavor pairings →</a></div></article>
+        <article class="use"><img src="https://ponohawaiianfoods.com/cdn/shop/files/Furikake_CHEXMIX.jpg" alt="Furikake Chex mix" loading="lazy"><div class="b"><h3>Furikake Chex mix</h3><p>Toss a whole jar into a buttery shoyu party mix. A potluck essential.</p><a href="https://ponohawaiianfoods.com/blogs/news/how-to-use-furikake-10-delicious-ways-to-go-beyond-rice">Get ideas →</a></div></article>
+        <article class="use"><img src="https://ponohawaiianfoods.com/cdn/shop/articles/Gemini_Generated_Image_idskwtidskwtidsk.png" alt="Nori komi furikake on popcorn and fries" loading="lazy"><div class="b"><h3>Popcorn and fries</h3><p>Butter first, then furikake, so every piece gets coated.</p><a href="https://ponohawaiianfoods.com/blogs/news/what-does-furikake-taste-like">What it tastes like →</a></div></article>
+        <article class="use"><img src="https://ponohawaiianfoods.com/cdn/shop/articles/Is_Furikake_Rice_Seasoning_Healthy.png" alt="Furikake on proteins and veggies" loading="lazy"><div class="b"><h3>Proteins and veggies</h3><p>Press onto salmon, chicken or tofu before baking, or shake over roasted veggies and eggs.</p><a href="https://ponohawaiianfoods.com/blogs/news/is-furikake-rice-seasoning-healthy">Is furikake healthy? →</a></div></article>
       </div>
     </div>
   </section>
@@ -247,7 +245,7 @@
 
 <section class="band" id="story">
     <div class="wrap story">
-      <img src="https://cdn.shopify.com/s/files/REPLACE/story-jars-maui.jpg" alt="Pono Nori Komi Furikake jars with Maui mountains behind" loading="lazy" style="border-radius:8px;width:100%;aspect-ratio:4/3;object-fit:cover">
+      <img src="https://ponohawaiianfoods.com/cdn/shop/files/IMG_7108.jpg" alt="Pono Nori Komi Furikake jars with Maui mountains behind" loading="lazy" style="border-radius:8px;width:100%;aspect-ratio:4/3;object-fit:cover">
       <div class="prose">
         <span class="eyebrow">Recipes born in Hawai'i</span>
         <h2>Howzit from Braddah Tim</h2>
@@ -275,7 +273,7 @@
     </div>
   </section>
 
-<section class="band tint" id="faq">
+<section class="band" id="faq">
     <div class="wrap">
       <div class="sec-head"><span class="eyebrow">Good to know</span><h2>Nori Komi Furikake FAQs</h2></div>
       <div class="faq">
