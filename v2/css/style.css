@@ -651,3 +651,57 @@ html:not(.has-motion) .work-intro, html:not(.has-motion) .work-outro, html:not(.
   .new-kicker { font-size: 2.6cqw; } .new-h { font-size: 9cqw; } .new-p { font-size: 3.4cqw; } .new-cta { font-size: 3.2cqw; padding: 2cqw 4.4cqw; }
   .new-img { height: 36cqw; } .new-cards span { font-size: 2.6cqw; padding: 2cqw; } .new-cards i { height: 11cqw; }
 }
+
+/* Live screenshots fade in over the generated cover once they arrive */
+.project-inner .project-art { z-index: 0; }
+.project-inner img.shot { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity .8s ease; }
+img.shot.is-loaded { opacity: 1; }
+
+/* =========================================================
+   Responsive showcase: desktop, tablet and phone
+   ========================================================= */
+.devices { position: relative; overflow: clip; border-block: 1px solid var(--line); background: var(--bg-2); }
+.devices-pin { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: clamp(24px, 4vh, 48px); padding: 96px 0 40px; }
+.devices-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px 48px; flex-wrap: wrap; }
+.devices-head .label { margin-bottom: 14px; }
+.devices-head .split-heading { font-size: clamp(2.2rem, 5.4vw, 4.8rem); }
+.devices-side { max-width: 400px; display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+.devices-side strong { color: var(--text); }
+
+.devices-stage {
+  position: relative; width: min(calc(100% - 2 * var(--gutter)), calc((100svh - 330px) * 1.9), 1180px); aspect-ratio: 16 / 8.4;
+  margin-inline: auto; perspective: 1600px;
+}
+.dv { position: absolute; margin: 0; will-change: transform; }
+.dv-body { position: relative; background: #17171b; border: 1px solid #2c2c33; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .06); }
+.dv-screen { position: relative; overflow: hidden; background: #0e0e11; }
+.dv-art { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 8%; color: #fff; font: 600 clamp(.7rem, 1.4vw, 1.1rem)/1.2 var(--display); background: linear-gradient(135deg, var(--c1, #26262b), var(--c2, #3a3a42)); }
+.dv-img { position: absolute; left: 0; top: 0; width: 100%; height: auto; opacity: 0; transition: opacity .8s ease; will-change: transform; }
+.dv-label { position: absolute; left: 50%; translate: -50% 0; top: calc(100% + 12px); white-space: nowrap; font-size: .72rem; color: var(--dim); }
+.dv-label b { color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.dv-desktop { left: 15%; top: 0; width: 70%; }
+.dv-desktop .dv-body { padding: 1.2%; border-radius: 16px; }
+.dv-desktop .dv-screen { aspect-ratio: 16 / 10; border-radius: 6px; }
+.dv-stand { width: 18%; height: 7%; margin: 0 auto; background: linear-gradient(#222228, #141418); clip-path: polygon(22% 0, 78% 0, 100% 100%, 0 100%); aspect-ratio: 5 / 1; height: auto; }
+.dv-desktop .dv-label { top: calc(100% + 6px); }
+
+.dv-tablet { left: 0; bottom: 6%; width: 25%; z-index: 2; }
+.dv-tablet .dv-body { padding: 4.5%; border-radius: 22px; }
+.dv-tablet .dv-screen { aspect-ratio: 820 / 1180; border-radius: 8px; }
+
+.dv-phone { right: 2%; bottom: 6%; width: 13.5%; z-index: 3; }
+.dv-phone .dv-body { padding: 5%; border-radius: 26px; }
+.dv-phone .dv-screen { aspect-ratio: 390 / 844; border-radius: 18px; }
+.dv-notch { position: absolute; z-index: 2; top: 3.2%; left: 50%; translate: -50% 0; width: 32%; height: 2.4%; border-radius: 99px; background: #050506; }
+
+@media (max-width: 700px) {
+  .devices-pin { justify-content: flex-start; padding-top: 88px; gap: 24px; }
+  .devices-side { gap: 12px; }
+  .devices-stage { width: calc(100% - 2 * var(--gutter)); aspect-ratio: 4 / 5; }
+  .dv-desktop { left: 0; width: 100%; }
+  .dv-tablet { width: 44%; bottom: 4%; }
+  .dv-phone { width: 27%; right: 4%; bottom: 4%; }
+  .dv-label { font-size: .62rem; }
+  .dv-desktop .dv-label { display: none; }
+}

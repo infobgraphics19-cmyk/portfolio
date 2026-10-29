@@ -26,7 +26,7 @@ Accessibility and fallbacks:
 ## Two versions
 
 - **Option 1**: `index.html` (site root) is the original scroll-animated design.
-- **Option 2**: `v2/index.html` adds blurred aurora lighting, a glass navigation bar, blur-in text, floating WordPress/Shopify/Wix logos with depth-of-field parallax, smoother scrolling for every visitor, and a draggable **Before / After** redesign section.
+- **Option 2**: `v2/index.html` adds blurred aurora lighting, a glass navigation bar, blur-in text, floating WordPress/Shopify/Wix logos with depth-of-field parallax, smoother scrolling for every visitor, and a draggable **Before / After** redesign section, and a pinned **Responsive** showcase that shows one project on desktop, tablet and phone.
   - Edit the `REDESIGNS` list at the top of `v2/js/main.js`. Set `before` and `after` to your screenshots, for example `images/client-before.jpg`. Without screenshots, illustrated examples are shown.
 
 ## Structure
@@ -43,9 +43,10 @@ images/             project screenshots
 
 1. **Your details:** the name is set to Kishan; replace `hello@example.com` and the WhatsApp, LinkedIn, GitHub and Upwork links in `index.html`. Set `CONTACT_EMAIL` in `js/main.js`.
 2. **Stats:** set the `data-count` numbers in the About section to your real figures.
-3. **Projects:** edit the `PROJECTS` array at the top of `js/main.js`. `tarmalsteel.com` and `bazayan.ch` are already in; the other four are examples to replace. Each project's number and the horizontal-scroll length update automatically.
-4. **Screenshots:** save a full-width screenshot, for example `images/tarmalsteel.jpg` at about 1600×1050, and set `image: "images/tarmalsteel.jpg"`. Without one, a generated cover is shown.
-5. **Accent colour:** change `--accent` in `css/style.css`.
+3. **Projects:** edit the `PROJECTS` array at the top of `js/main.js` (and `v2/js/main.js`). It lists Tarmal Steel, Bazayan, Jafferji Developers, Swanya Pharma and Python Bull. Set each `platform` to `wordpress`, `shopify` or `wix` to show a platform badge. Each project's number and the horizontal-scroll length update automatically.
+4. **Screenshots:** by default each card loads a live screenshot of the site through WordPress.com's free mShots service. The first visit can take a few seconds while it captures; the coloured cover shows until then. To use your own image instead, save it as, for example, `images/tarmalsteel.jpg` at about 1600×1050 and set `image: "images/tarmalsteel.jpg"`.
+5. **Responsive section (Option 2):** `SHOWCASE` in `v2/js/main.js` picks which project appears on the desktop, tablet and phone mockups (0 = the first project).
+6. **Accent colour:** change `--accent` in `css/style.css`.
 
 ## Run / deploy
 

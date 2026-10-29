@@ -1,72 +1,64 @@
 /* ==========================================================================
    PROJECTS — edit this list to add, remove or update portfolio items.
    - platform: "wordpress" | "shopify" | "wix"
-   - image:    optional screenshot path, e.g. "images/tarmalsteel.jpg" (1600×1050 works well).
-               Leave empty to show a generated cover in the two `colors`.
+   - image:    optional local screenshot, e.g. "images/tarmalsteel.jpg" (1600×1050 works well).
+               Leave empty to load a live screenshot of the site automatically.
    ========================================================================== */
 const PROJECTS = [
   {
     title: "Tarmal Steel",
-    url: "https://tarmalsteel.com",
-    platform: "wordpress",
-    region: "Corporate website",
-    description: "Corporate website for a steel company, with a custom theme, product and service pages, and enquiry forms.",
-    stack: ["Custom theme", "ACF", "Contact forms", "SEO"],
+    url: "http://tarmalsteel.com/",
+    platform: "",
+    region: "Steel industry",
+    description: "Corporate website for a steel company, presenting its products and services with clear enquiry paths.",
+    stack: ["Corporate site", "Responsive", "Enquiry forms"],
     image: "",
     colors: ["#2b3442", "#5d6b80"],
   },
   {
     title: "Bazayan",
-    url: "https://bazayan.ch",
-    platform: "wordpress",
+    url: "https://bazayan.ch/",
+    platform: "",
     region: "Switzerland",
-    description: "Business website for a Swiss client, with a responsive custom layout and multilingual-ready content.",
-    stack: ["Custom theme", "Responsive", "Multilingual"],
+    description: "Business website for a Swiss client, built to look sharp on desktop, tablet and mobile.",
+    stack: ["Custom design", "Responsive"],
     image: "",
     colors: ["#8f1d1d", "#e0475a"],
   },
-  // ---- Add more of your projects below (examples to replace) ----
   {
-    title: "Your Shopify Store",
-    url: "https://example.com",
-    platform: "shopify",
-    region: "E-commerce",
-    description: "Custom Shopify 2.0 theme with Liquid sections, product filtering and a faster checkout flow.",
-    stack: ["Liquid", "Shopify 2.0", "Metafields"],
+    title: "Jafferji Developers",
+    url: "https://jafferjidevelopers.co.tz/",
+    platform: "",
+    region: "Tanzania",
+    description: "Website for a Tanzanian developer, presenting the company and its projects.",
+    stack: ["Company profile", "Project showcase", "Responsive"],
     image: "",
-    colors: ["#1f4d2b", "#5fa86b"],
+    colors: ["#1c3a5e", "#4f86c6"],
   },
   {
-    title: "Your Wix Website",
-    url: "https://example.com",
-    platform: "wix",
-    region: "Small business",
-    description: "Wix Studio website with dynamic pages, a booking system and custom Velo code.",
-    stack: ["Wix Studio", "Velo", "Bookings"],
+    title: "Swanya Pharma",
+    url: "https://swanyapharma.com/",
+    platform: "",
+    region: "Pharmaceuticals",
+    description: "Website for a pharmaceutical company, presenting its profile and products clearly.",
+    stack: ["Company profile", "Products", "Responsive"],
     image: "",
-    colors: ["#1c3a7a", "#4d8dff"],
+    colors: ["#0f5e57", "#3fb8a4"],
   },
   {
-    title: "Your WooCommerce Store",
-    url: "https://example.com",
-    platform: "wordpress",
-    region: "Online shop",
-    description: "WooCommerce store with custom product templates, payment gateway setup and speed tuning.",
-    stack: ["WooCommerce", "PHP", "Speed optimisation"],
+    title: "Python Bull",
+    url: "https://www.pythonbull.com/",
+    platform: "",
+    region: "Business website",
+    description: "Business website built to be fast, clear and easy to use on every screen.",
+    stack: ["Custom design", "Responsive"],
     image: "",
     colors: ["#43246e", "#9a6be0"],
   },
-  {
-    title: "Your Shopify Brand",
-    url: "https://example.com",
-    platform: "shopify",
-    region: "Fashion / DTC",
-    description: "Brand store build with custom landing sections, upsell apps and a mobile-first design.",
-    stack: ["Liquid", "Apps", "CRO"],
-    image: "",
-    colors: ["#7a3312", "#e98a4c"],
-  },
 ];
+
+/* Which project the "Responsive" section shows on desktop, tablet and phone (index in PROJECTS above) */
+const SHOWCASE = 0;
 
 /* Contact form: opens the visitor's email app with the message pre-filled.
    Swap for Formspree / Netlify Forms / your backend if you prefer. */
@@ -111,19 +103,42 @@ const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 const root = document.documentElement;
 const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
+/* Live screenshots: when a project has no local `image`, the visitor's browser loads a screenshot of the
+   live site from WordPress.com's free mShots service. A fresh capture can take a few seconds, so the
+   generated cover shows until the real screenshot arrives. */
+const shotUrl = (url, vpw, vph) => `https://s0.wp.com/mshots/v1/${encodeURIComponent(url)}?w=${vpw}&h=${vph}&vpw=${vpw}&vph=${vph}`;
+function loadShot(img) {
+  const src = img.dataset.shot, want = +img.dataset.w || 0;
+  let tries = 0;
+  const attempt = () => { img.src = tries ? `${src}&r=${tries}` : src; };
+  const retry = () => { if (++tries <= 10) setTimeout(attempt, 3500); };
+  img.addEventListener("load", () => {
+    // mShots answers with a small "generating" placeholder until the capture is ready
+    if (want && img.naturalWidth < want * 0.9) return retry();
+    img.classList.add("is-loaded");
+    window.ScrollTrigger?.refresh();
+  });
+  img.addEventListener("error", retry);
+  attempt();
+}
+
 function renderProjects() {
   const outro = $(".work-outro");
   const html = PROJECTS.map((p, i) => {
     const domain = domainOf(p.url);
     const [c1, c2] = p.colors || ["#222", "#444"];
-    const media = p.image
-      ? `<img src="${esc(p.image)}" alt="Screenshot of ${esc(p.title)}" loading="lazy">`
-      : `<div class="project-art" style="--c1:${esc(c1)};--c2:${esc(c2)}"><strong>${esc(p.title)}</strong><em>${esc(domain)}</em><div class="skel"><b></b><b></b><b></b></div></div>`;
+    const shot = p.image
+      ? `<img class="shot is-loaded" src="${esc(p.image)}" alt="Screenshot of ${esc(p.title)}" loading="lazy">`
+      : `<img class="shot" data-shot="${esc(shotUrl(p.url, 1440, 945))}" data-w="1440" alt="Screenshot of ${esc(p.title)}">`;
+    const tag = p.platform ? `<li class="platform ${esc(p.platform)}">${esc(PLATFORM_LABEL[p.platform] || p.platform)}</li>` : "";
     return `
       <article class="project" data-platform="${esc(p.platform)}">
         <a class="project-media" href="${esc(p.url)}" target="_blank" rel="noopener" data-cursor="view" aria-label="Visit ${esc(p.title)} (opens in a new tab)">
           <div class="browser"><i></i><i></i><i></i><span>${esc(domain)}</span></div>
-          <div class="project-inner">${media}</div>
+          <div class="project-inner">
+            <div class="project-art" style="--c1:${esc(c1)};--c2:${esc(c2)}"><strong>${esc(p.title)}</strong><em>${esc(domain)}</em><div class="skel"><b></b><b></b><b></b></div></div>
+            ${shot}
+          </div>
         </a>
         <div class="project-meta">
           <div>
@@ -131,7 +146,7 @@ function renderProjects() {
             <h3>${esc(p.title)}</h3>
             <p>${esc(p.description)}</p>
             <ul class="project-tags">
-              <li class="platform ${esc(p.platform)}">${esc(PLATFORM_LABEL[p.platform] || p.platform)}</li>
+              ${tag}
               ${(p.stack || []).map((s) => `<li>${esc(s)}</li>`).join("")}
             </ul>
           </div>
@@ -140,6 +155,7 @@ function renderProjects() {
       </article>`;
   }).join("");
   outro.insertAdjacentHTML("beforebegin", html);
+  $$("img[data-shot]").forEach(loadShot);
 }
 
 function setupMenu(lenis) {
@@ -233,6 +249,24 @@ function setupBeforeAfter() {
   $$(".ba-tab", tabs).forEach((t) => t.addEventListener("click", () => (BA.swap ? BA.swap(+t.dataset.i, show) : show(+t.dataset.i))));
   show(0);
   setPos(50);
+}
+
+function setupDevices() {
+  const p = PROJECTS[SHOWCASE];
+  if (!p || !$(".devices")) return;
+  $("#dv-name").textContent = p.title;
+  $("#dv-link").href = p.url;
+  $("#dv-link span").textContent = `Visit ${domainOf(p.url)} ↗`;
+  const [c1, c2] = p.colors || [];
+  [[".dv-desktop", 1440, 2700], [".dv-tablet", 820, 2400], [".dv-phone", 390, 2200]].forEach(([sel, w, h]) => {
+    const dev = $(sel), img = $(".dv-img", dev), art = $(".dv-art", dev);
+    art.style.setProperty("--c1", c1); art.style.setProperty("--c2", c2);
+    art.textContent = domainOf(p.url);
+    img.alt = `${p.title} at ${w}px wide`;
+    img.dataset.shot = shotUrl(p.url, w, h);
+    img.dataset.w = w;
+    loadShot(img);
+  });
 }
 
 function setupToolGlow() {
@@ -495,6 +529,24 @@ function initMotion() {
     ScrollTrigger.create({ trigger: sec, start: "top 50%", end: "bottom 50%", onToggle: (s) => a.classList.toggle("is-current", s.isActive) });
   });
 
+  // --- Responsive showcase: devices assemble, show their widths, then scroll through the live site together
+  const dvs = [".dv-desktop", ".dv-tablet", ".dv-phone"].map((sel) => $(sel));
+  const scrollDist = (dev) => () => -Math.max(0, $(".dv-img", dev).offsetHeight - $(".dv-screen", dev).clientHeight);
+  const widths = $$(".dv-label b"), wProxy = { p: 0 };
+  gsap.timeline({
+    defaults: { ease: "none" },
+    scrollTrigger: { trigger: ".devices", pin: ".devices-pin", start: "top top", end: "+=320%", scrub: 1, invalidateOnRefresh: true, anticipatePin: 1 },
+  })
+    .fromTo(dvs[0], { scale: 1.16, y: 30, rotateX: 12 }, { scale: 1, y: 0, rotateX: 0, duration: 1, ease: "power2.out" }, 0)
+    .fromTo(dvs[1], { xPercent: 110, scale: 0.7, autoAlpha: 0, filter: "blur(14px)" }, { xPercent: 0, scale: 1, autoAlpha: 1, filter: "blur(0px)", duration: 1, ease: "power2.out" }, 0.5)
+    .fromTo(dvs[2], { xPercent: -160, scale: 0.7, autoAlpha: 0, filter: "blur(14px)" }, { xPercent: 0, scale: 1, autoAlpha: 1, filter: "blur(0px)", duration: 1, ease: "power2.out" }, 0.7)
+    .fromTo(".dv-label", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.1 }, 1.4)
+    .fromTo(wProxy, { p: 0 }, { p: 1, duration: 0.8, ease: "power2.out", onUpdate: () => widths.forEach((b) => (b.textContent = Math.round(+b.dataset.to * wProxy.p))) }, 1.4)
+    .fromTo(dvs.map((d) => $(".dv-img", d)), { y: 0 }, { y: (i) => scrollDist(dvs[i])(), duration: 3 }, 1.9)
+    .to(dvs[2], { rotate: -5, y: -16, duration: 0.8, ease: "power2.inOut" }, 3.6)
+    .to(dvs[1], { rotate: 3, duration: 0.8, ease: "power2.inOut" }, 3.6)
+    .to({}, { duration: 0.6 });
+
   // --- Glass header once the page is scrolled
   ScrollTrigger.create({ start: 80, end: "max", toggleClass: { targets: ".site-header", className: "scrolled" } });
 
@@ -532,6 +584,9 @@ function initMotion() {
       .add(() => { const p = { v: 85 }; gsap.to(p, { v: 50, duration: 0.9, ease: "power3.out", onUpdate: () => BA.setPos(p.v) }); }, "-=0.3");
   };
 
+  // pins were created out of page order; sort so each one accounts for the pins above it
+  ScrollTrigger.sort();
+  ScrollTrigger.refresh();
   window.addEventListener("load", () => ScrollTrigger.refresh());
 }
 
@@ -540,6 +595,7 @@ function boot() {
   $("#year").textContent = new Date().getFullYear();
   renderProjects();
   setupBeforeAfter();
+  setupDevices();
   setupForm();
   setupToolGlow();
 
