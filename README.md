@@ -41,11 +41,12 @@ images/             project screenshots
 
 ## Customise
 
-1. **Your details:** the name is set to Kishan; replace `hello@example.com` and the WhatsApp, LinkedIn, GitHub and Upwork links in `index.html`. Set `CONTACT_EMAIL` in `js/main.js`.
+1. **Your details:** the name is set to Kishan. Replace the visible `hello@example.com` and the WhatsApp, LinkedIn, GitHub and Upwork links in `index.html`.
+   - **Contact form:** messages are emailed to `CONTACT_EMAIL` (infobgraphics19@gmail.com) through FormSubmit. The first submission sends an activation email to that inbox; click **Activate Form** once.
 2. **Stats:** set the `data-count` numbers in the About section to your real figures.
-3. **Projects:** edit the `PROJECTS` array at the top of `js/main.js` (and `v2/js/main.js`). It lists Tarmal Steel, Bazayan, Jafferji Developers, Swanya Pharma and Python Bull. Set each `platform` to `wordpress`, `shopify` or `wix` to show a platform badge. Each project's number and the horizontal-scroll length update automatically.
+3. **Projects:** edit the `PROJECTS` array at the top of `js/main.js` (and `v2/js/main.js`). It lists Bazayan & Co., Jafferji Developers, Swanya Pharmaceuticals, Python Bull Consultancy and Tarmal Steel, using the screenshots in `images/` (Tarmal Steel loads a live screenshot). Set each `platform` to `wordpress`, `shopify` or `wix` to show a platform badge. Each project's number and the horizontal-scroll length update automatically.
 4. **Screenshots:** by default each card loads a live screenshot of the site through WordPress.com's free mShots service. The first visit can take a few seconds while it captures; the coloured cover shows until then. To use your own image instead, save it as, for example, `images/tarmalsteel.jpg` at about 1600×1050 and set `image: "images/tarmalsteel.jpg"`.
-5. **Responsive section (Option 2):** `SHOWCASE` in `v2/js/main.js` picks which project appears on the desktop, tablet and phone mockups (0 = the first project).
+5. **Responsive section (Option 2):** `SHOWCASE` in `v2/js/main.js` picks which project appears on the desktop, tablet and phone mockups (currently 1 = Jafferji Developers).
 6. **Accent colour:** change `--accent` in `css/style.css`.
 
 ## Run / deploy

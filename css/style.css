@@ -515,3 +515,7 @@ html:not(.has-motion) .work-intro, html:not(.has-motion) .work-outro, html:not(.
 .project-inner .project-art { z-index: 0; }
 .project-inner img.shot { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity .8s ease; }
 img.shot.is-loaded { opacity: 1; }
+
+/* spam honeypot: hidden from people, filled only by bots */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.contact-form .btn:disabled { opacity: .6; pointer-events: none; }

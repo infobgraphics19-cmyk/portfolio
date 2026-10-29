@@ -705,3 +705,7 @@ img.shot.is-loaded { opacity: 1; }
   .dv-label { font-size: .62rem; }
   .dv-desktop .dv-label { display: none; }
 }
+
+/* spam honeypot: hidden from people, filled only by bots */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.contact-form .btn:disabled { opacity: .6; pointer-events: none; }

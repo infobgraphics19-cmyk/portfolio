@@ -6,6 +6,46 @@
    ========================================================================== */
 const PROJECTS = [
   {
+    title: "Bazayan & Co.",
+    url: "https://bazayan.ch/",
+    platform: "",
+    region: "Pharma APIs · Switzerland",
+    description: "Website for a Swiss supplier of CEP-certified veterinary and human APIs, with an API portfolio, excipients and quotation requests.",
+    stack: ["API portfolio", "Quote requests", "Responsive"],
+    image: "../images/bazayan.webp",
+    colors: ["#0f3d34", "#2f6f5f"],
+  },
+  {
+    title: "Jafferji Developers",
+    url: "https://jafferjidevelopers.co.tz/",
+    platform: "",
+    region: "Real estate · Tanzania",
+    description: "Website for a Dar es Salaam property developer, showcasing premium residences like Jafferji Arise and Regal Skyline with enquiry flows.",
+    stack: ["Project showcase", "Enquiry forms", "WhatsApp chat"],
+    image: "../images/jafferji.webp",
+    colors: ["#8a6a2a", "#d8c49a"],
+  },
+  {
+    title: "Swanya Pharmaceuticals",
+    url: "https://swanyapharma.com/",
+    platform: "",
+    region: "Pharma manufacturing · India",
+    description: "Website for a sterile liquid manufacturer in Baddi, presenting its Form-Fill-Seal facility, products and contract manufacturing.",
+    stack: ["Product catalogue", "Quote requests", "WhatsApp chat"],
+    image: "../images/swanya.webp",
+    colors: ["#0b2a4a", "#1f7fc8"],
+  },
+  {
+    title: "Python Bull Consultancy",
+    url: "https://www.pythonbull.com/",
+    platform: "",
+    region: "Brand consultancy",
+    description: "Cinematic website for a brand-growth consultancy covering branding, visual production, digital marketing and outdoor media.",
+    stack: ["Video hero", "Service pages", "Editorial design"],
+    image: "../images/pythonbull.webp",
+    colors: ["#3d5a52", "#a8532f"],
+  },
+  {
     title: "Tarmal Steel",
     url: "http://tarmalsteel.com/",
     platform: "",
@@ -15,54 +55,16 @@ const PROJECTS = [
     image: "",
     colors: ["#2b3442", "#5d6b80"],
   },
-  {
-    title: "Bazayan",
-    url: "https://bazayan.ch/",
-    platform: "",
-    region: "Switzerland",
-    description: "Business website for a Swiss client, built to look sharp on desktop, tablet and mobile.",
-    stack: ["Custom design", "Responsive"],
-    image: "",
-    colors: ["#8f1d1d", "#e0475a"],
-  },
-  {
-    title: "Jafferji Developers",
-    url: "https://jafferjidevelopers.co.tz/",
-    platform: "",
-    region: "Tanzania",
-    description: "Website for a Tanzanian developer, presenting the company and its projects.",
-    stack: ["Company profile", "Project showcase", "Responsive"],
-    image: "",
-    colors: ["#1c3a5e", "#4f86c6"],
-  },
-  {
-    title: "Swanya Pharma",
-    url: "https://swanyapharma.com/",
-    platform: "",
-    region: "Pharmaceuticals",
-    description: "Website for a pharmaceutical company, presenting its profile and products clearly.",
-    stack: ["Company profile", "Products", "Responsive"],
-    image: "",
-    colors: ["#0f5e57", "#3fb8a4"],
-  },
-  {
-    title: "Python Bull",
-    url: "https://www.pythonbull.com/",
-    platform: "",
-    region: "Business website",
-    description: "Business website built to be fast, clear and easy to use on every screen.",
-    stack: ["Custom design", "Responsive"],
-    image: "",
-    colors: ["#43246e", "#9a6be0"],
-  },
 ];
 
 /* Which project the "Responsive" section shows on desktop, tablet and phone (index in PROJECTS above) */
-const SHOWCASE = 0;
+const SHOWCASE = 1; // Jafferji Developers
 
-/* Contact form: opens the visitor's email app with the message pre-filled.
-   Swap for Formspree / Netlify Forms / your backend if you prefer. */
-const CONTACT_EMAIL = "hello@example.com";
+/* Contact form: submissions are emailed to CONTACT_EMAIL through FormSubmit (formsubmit.co).
+   The very first submission sends an activation email to that inbox; click "Activate Form" once
+   and every message after that is delivered. */
+const CONTACT_EMAIL = "infobgraphics19@gmail.com";
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
 
 /* ==========================================================================
    REDESIGNS — before/after comparisons.
@@ -128,7 +130,7 @@ function renderProjects() {
     const domain = domainOf(p.url);
     const [c1, c2] = p.colors || ["#222", "#444"];
     const shot = p.image
-      ? `<img class="shot is-loaded" src="${esc(p.image)}" alt="Screenshot of ${esc(p.title)}" loading="lazy">`
+      ? `<img class="shot is-loaded" src="${esc(p.image)}" alt="Screenshot of ${esc(p.title)}">`
       : `<img class="shot" data-shot="${esc(shotUrl(p.url, 1440, 945))}" data-w="1440" alt="Screenshot of ${esc(p.title)}">`;
     const tag = p.platform ? `<li class="platform ${esc(p.platform)}">${esc(PLATFORM_LABEL[p.platform] || p.platform)}</li>` : "";
     return `
@@ -190,15 +192,33 @@ function showPane(i) {
 }
 
 function setupForm() {
-  const form = $("#contact-form"), note = $("#form-note");
-  form.addEventListener("submit", (e) => {
+  const form = $("#contact-form"), note = $("#form-note"), btn = $("button[type=submit]", form), label = $("span", btn);
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!form.checkValidity()) { note.textContent = "› Please add your name, a valid email and a few project details."; form.reportValidity(); return; }
-    const d = new FormData(form);
-    const subject = `New ${d.get("platform")} project enquiry from ${d.get("name")}`;
-    const body = `Name: ${d.get("name")}\nEmail: ${d.get("email")}\nPlatform: ${d.get("platform")}\n\n${d.get("message")}`;
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    note.textContent = "› Opening your email app… thanks for reaching out!";
+    const d = Object.fromEntries(new FormData(form));
+    if (d._honey) return; // bot filled the hidden field
+    btn.disabled = true; label.textContent = "Sending…"; note.textContent = "";
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: d.name, email: d.email, platform: d.platform, message: d.message,
+          _subject: `New ${d.platform} project enquiry from ${d.name}`,
+          _replyto: d.email, _template: "table", _captcha: "false",
+        }),
+      });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok || out.success === false || out.success === "false") throw new Error(out.message || res.status);
+      form.reset();
+      note.textContent = "› Thanks! Your message has been sent. I'll reply within 24 hours.";
+    } catch (err) {
+      console.error(err);
+      note.textContent = `› Sorry, your message couldn't be sent. Please try again, or email ${CONTACT_EMAIL} directly.`;
+    } finally {
+      btn.disabled = false; label.textContent = "Send message";
+    }
   });
 }
 
