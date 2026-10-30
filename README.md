@@ -33,9 +33,9 @@ Accessibility and fallbacks:
   5. Before / After redesigns.
   6. About, Services, Live build, Process, Code, Toolbox.
   7. Contact.
-  - **Featured slider:** `PROJECTS` in `v2/js/main.js`. Keep it to 4–5 projects.
-  - **All websites grid:** shows `PROJECTS` followed by `MORE_SITES`. Add any number of extra sites to `MORE_SITES`, with screenshots in `images/`.
-  - **Responsive section:** `SHOWCASE` sets the project and an optional screenshot per device. A device without a screenshot shows the live website at that device's real width (desktop 1440, tablet 820, mobile 390px), scaled to fit.
+  - **Featured slider:** `PROJECTS` in `v2/js/main.js` (keep it to 4–5). It autoplays every `SLIDE_MS` milliseconds (3.6 s) with a "blinds" transition, and pauses while the pointer rests on the screenshot.
+  - **All websites grid:** shows `PROJECTS` followed by `MORE_SITES` (25 sites now), with filter chips per platform (`wordpress`, `shopify`, `wix`, `opencart`). A site without `image` loads a live screenshot; a site without `url` shows as a card with no link.
+  - **Responsive section:** `SHOWCASE.project` is a project title, and `SHOWCASE.screens` takes a screenshot per device. Devices without a screenshot load a capture of the live site at 820×1180 (tablet) or 390×844 (mobile). For a guaranteed result, add real tablet and mobile screenshots.
   - **Before / After:** edit `REDESIGNS` and set `before` and `after` to your screenshots.
 - **Option 1**: `index.html` (site root) is the earlier design, kept for reference.
 

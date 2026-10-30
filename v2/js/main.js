@@ -5,68 +5,92 @@
                Leave empty to load a live screenshot of the site automatically.
    ========================================================================== */
 const PROJECTS = [
-  {
-    title: "Bazayan & Co.",
-    url: "https://bazayan.ch/",
-    platform: "",
-    region: "Pharma APIs · Switzerland",
-    description: "Website for a Swiss supplier of CEP-certified veterinary and human APIs, with an API portfolio, excipients and quotation requests.",
-    stack: ["API portfolio", "Quote requests", "Responsive"],
-    image: "../images/bazayan.webp",
-    colors: ["#0f3d34", "#2f6f5f"],
-  },
-  {
-    title: "Jafferji Developers",
-    url: "https://jafferjidevelopers.co.tz/",
-    platform: "",
-    region: "Real estate · Tanzania",
-    description: "Website for a Dar es Salaam property developer, showcasing premium residences like Jafferji Arise and Regal Skyline with enquiry flows.",
-    stack: ["Project showcase", "Enquiry forms", "WhatsApp chat"],
-    image: "../images/jafferji.webp",
-    colors: ["#8a6a2a", "#d8c49a"],
-  },
-  {
-    title: "Swanya Pharmaceuticals",
-    url: "https://swanyapharma.com/",
-    platform: "",
-    region: "Pharma manufacturing · India",
-    description: "Website for a sterile liquid manufacturer in Baddi, presenting its Form-Fill-Seal facility, products and contract manufacturing.",
-    stack: ["Product catalogue", "Quote requests", "WhatsApp chat"],
-    image: "../images/swanya.webp",
-    colors: ["#0b2a4a", "#1f7fc8"],
-  },
-  {
-    title: "Python Bull Consultancy",
-    url: "https://www.pythonbull.com/",
-    platform: "",
-    region: "Brand consultancy",
+  { title: "Python Bull Consultancy", url: "https://www.pythonbull.com/", platform: "", region: "Brand consultancy",
     description: "Cinematic website for a brand-growth consultancy covering branding, visual production, digital marketing and outdoor media.",
-    stack: ["Video hero", "Service pages", "Editorial design"],
-    image: "../images/pythonbull.webp",
-    colors: ["#3d5a52", "#a8532f"],
-  },
-  {
-    title: "Tarmal Steel",
-    url: "http://tarmalsteel.com/",
-    platform: "",
-    region: "Steel industry",
-    description: "Corporate website for a steel company, presenting its products and services with clear enquiry paths.",
-    stack: ["Corporate site", "Responsive", "Enquiry forms"],
-    image: "",
-    colors: ["#2b3442", "#5d6b80"],
-  },
+    stack: ["Video hero", "Service pages", "Editorial design"], image: "../images/pythonbull.webp", colors: ["#3d5a52", "#a8532f"] },
+  { title: "Swanya Pharmaceuticals", url: "https://swanyapharma.com/", platform: "", region: "Pharma manufacturing · India",
+    description: "Website for a sterile liquid manufacturer in Baddi, presenting its Form-Fill-Seal facility, products and contract manufacturing.",
+    stack: ["Product catalogue", "Quote requests", "WhatsApp chat"], image: "../images/swanya.webp", colors: ["#0b2a4a", "#1f7fc8"] },
+  { title: "Jafferji Developers", url: "https://jafferjidevelopers.co.tz/", platform: "", region: "Real estate · Tanzania",
+    description: "Website for a Dar es Salaam property developer, showcasing premium residences like Jafferji Arise and Regal Skyline with enquiry flows.",
+    stack: ["Project showcase", "Enquiry forms", "WhatsApp chat"], image: "../images/jafferji.webp", colors: ["#8a6a2a", "#d8c49a"] },
+  { title: "Pangiwinkel", url: "https://pangiwinkel.nl/", platform: "wordpress", region: "Multi-vendor marketplace",
+    description: "Amazon-style marketplace where sellers register, list and manage products, with search and filters, secure payments, order tracking and vendor dashboards.",
+    stack: ["WooCommerce", "WCFM multi-vendor", "Payments"], image: "../images/pangiwinkel.webp", colors: ["#f2a516", "#c0392b"] },
+  { title: "House of Sarabella", url: "https://houseofsarabella.com/", platform: "shopify", region: "Candles & fragrance",
+    description: "Elegant Shopify store for scented candle collections, with rich imagery, scent categories, product filtering, variants and an optimised checkout.",
+    stack: ["Shopify", "Product filters", "Variants"], image: "../images/houseofsarabella.webp", colors: ["#e9c46a", "#c9a227"] },
 ];
 
 /* MORE_SITES: extra websites that appear only in the "All websites" grid (same fields as PROJECTS).
    PROJECTS above are the featured slider; the grid shows PROJECTS followed by MORE_SITES. */
 const MORE_SITES = [
-  // { title: "Client name", url: "https://example.com/", region: "Industry", image: "../images/client.webp", colors: ["#222", "#555"] },
+  { title: "Bazayan & Co.", url: "https://bazayan.ch/", platform: "", region: "Pharma APIs · Switzerland",
+    description: "Website for a Swiss supplier of CEP-certified veterinary and human APIs, with an API portfolio, excipients and quotation requests.",
+    stack: ["API portfolio", "Quote requests"], image: "../images/bazayan.webp", colors: ["#0f3d34", "#2f6f5f"] },
+  { title: "Medville", url: "https://medville.ellomed.com/", platform: "wordpress", region: "Healthcare clinic",
+    description: "Built from a Figma design with WordPress and Elementor, with a custom appointment-booking widget integrated from the Ellomed platform (SvelteKit + Python).",
+    stack: ["Elementor", "Figma to WordPress", "Booking widget"], image: "../images/medville.webp", colors: ["#2e8b57", "#a8d5ba"] },
+  { title: "Seerat Migration", url: "https://seeratmigration.com/", platform: "wordpress", region: "Visa consultancy",
+    description: "Pixel-perfect WordPress + Elementor build from Figma for a study and migration consultancy, with interactive sections and consultation forms.",
+    stack: ["Elementor", "Figma to WordPress", "Lead forms"], image: "../images/seerat.webp", colors: ["#1b2a6b", "#f59e0b"] },
+  { title: "Elixir Engineering", url: "https://elixirengg.com/", platform: "wordpress", region: "Fire & safety engineering",
+    description: "Fast, responsive Elementor website for a fire-fighting and technical facility management company, highlighting services, certifications and projects.",
+    stack: ["Elementor", "Performance", "Service pages"], image: "../images/elixir.webp", colors: ["#7f1d1d", "#ef4444"] },
+  { title: "Panchnada", url: "", platform: "opencart", region: "Ayurvedic eCommerce",
+    description: "Complete OpenCart store with a custom front end in HTML, CSS, Twig and Bootstrap: product listings, cart and checkout, order management and payments.",
+    stack: ["OpenCart", "Twig", "Bootstrap"], image: "../images/panchnada.webp", colors: ["#7f1d1d", "#d97706"] },
+  { title: "Webincline", url: "https://webincline.com/", platform: "wix", region: "Digital marketing agency",
+    description: "Custom Wix website with bespoke icons and promotional banners, built fully responsive for a digital marketing company.",
+    stack: ["Wix", "Custom icons", "Responsive"], image: "../images/webincline.webp", colors: ["#111827", "#4f46e5"] },
+  { title: "Yalla Renovation", url: "https://yallarenovation.com/", platform: "wix", region: "Home renovation",
+    description: "Moved a renovation company from Shopify to Wix so the team can update projects and content themselves, with better performance.",
+    stack: ["Shopify → Wix", "CMS", "Gallery"], image: "../images/yalla.webp", colors: ["#4c1d95", "#a855f7"] },
+  { title: "Wheel Movers", url: "https://wheelmovers.com/", platform: "wix", region: "Automotive parts manufacturer",
+    description: "Brand identity, logo and website for an automotive components manufacturer, showcasing catalogues, capabilities and quality standards.",
+    stack: ["Branding", "Logo design", "Catalogues"], image: "../images/wheelmovers.webp", colors: ["#7c2d12", "#ea580c"] },
+  { title: "Russian Biotech", url: "https://russian-biotech.com/", platform: "wix", region: "Healthcare products",
+    description: "Secure Wix website for medical products with a custom authentication system that verifies products by unique code.",
+    stack: ["Wix", "Product verification", "Multilingual"], image: "../images/russianbiotech.webp", colors: ["#5b21b6", "#c4b5fd"] },
+  { title: "RSK Fragrance", url: "https://rskfragrance.com/", platform: "shopify", region: "Perfume store",
+    description: "Shopify store for multiple perfume brands with scent categories, product filtering, variants and an optimised checkout.",
+    stack: ["Shopify", "Collections", "Filters"], image: "../images/rskfragrance.webp", colors: ["#1e1b4b", "#c9a227"] },
+  { title: "Fiorio Salon", url: "https://www.fioriosalon.com/", platform: "wordpress", region: "Beauty salon",
+    description: "WordPress website for a beauty salon with services, gallery, blog and online appointment booking.",
+    stack: ["WordPress", "Appointments"], image: "../images/fiorio.webp", colors: ["#3f3f46", "#a8a29e"] },
+  { title: "G S Jimmi", url: "https://www.gsjimmi.com/", platform: "wordpress", region: "Music composer",
+    description: "Portfolio website for a music composer, presenting his projects and how to get in touch.",
+    stack: ["WordPress", "Portfolio"], image: "../images/gsjimmi.webp", colors: ["#1f2937", "#6b7280"] },
+  { title: "Buildwell Builders", url: "https://www.buildwellbuilders.com/", platform: "wordpress", region: "Construction · since 1981",
+    description: "Website for a builder with four decades of history, presenting the company, services and projects.",
+    stack: ["WordPress", "Company profile"], image: "../images/buildwell.webp", colors: ["#1e3a5f", "#64748b"] },
+  { title: "Tarmal Steel", url: "http://tarmalsteel.com/", platform: "", region: "Steel industry",
+    description: "Corporate website for a steel company, presenting its products and services with clear enquiry paths.",
+    stack: ["Corporate site", "Enquiry forms"], image: "", colors: ["#2b3442", "#5d6b80"] },
+  { title: "Trumould", url: "https://www.trumould.com/", platform: "wordpress", region: "Business website",
+    description: "WordPress website.",
+    stack: ["WordPress"], image: "", colors: ["#334155", "#64748b"] },
+  { title: "Bharat Logic", url: "https://www.bharatlogic.com/", platform: "wordpress", region: "Business website",
+    description: "WordPress website.",
+    stack: ["WordPress"], image: "", colors: ["#1e3a8a", "#3b82f6"] },
+  { title: "The Barna", url: "https://www.thebarna.co/", platform: "wordpress", region: "Business website",
+    description: "WordPress website.",
+    stack: ["WordPress"], image: "", colors: ["#3f2a1d", "#a16207"] },
+  { title: "Carpetland", url: "https://www.carpetlandme.com/", platform: "wordpress", region: "Flooring & carpets",
+    description: "WordPress website.",
+    stack: ["WordPress"], image: "", colors: ["#4a1d1d", "#b45309"] },
+  { title: "Haffizji", url: "https://www.haffizji.com/", platform: "wordpress", region: "Business website",
+    description: "WordPress website.",
+    stack: ["WordPress"], image: "", colors: ["#14532d", "#65a30d"] },
+  { title: "Beauty Baskets", url: "https://www.beautybaskets.in/", platform: "wordpress", region: "Beauty products",
+    description: "WordPress website.",
+    stack: ["WordPress"], image: "", colors: ["#831843", "#f472b6"] },
 ];
 
 /* The "Responsive" section: which project to show, and an optional screenshot per device.
    A device with no screenshot shows the live website, rendered at that device's real width and scaled to fit. */
 const SHOWCASE = {
-  project: 2, // Swanya Pharmaceuticals
+  project: "Swanya Pharmaceuticals", // title from PROJECTS or MORE_SITES
   screens: { desktop: "../images/swanya.webp", tablet: "", mobile: "" },
 };
 
@@ -107,7 +131,7 @@ const REDESIGNS = [
 
 /* ========================================================================== */
 
-const PLATFORM_LABEL = { wordpress: "WordPress", shopify: "Shopify", wix: "Wix" };
+const PLATFORM_LABEL = { wordpress: "WordPress", shopify: "Shopify", wix: "Wix", opencart: "OpenCart" };
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const domainOf = (url) => { try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return url; } };
 const $ = (s, root = document) => root.querySelector(s);
@@ -143,10 +167,12 @@ const coverHTML = (p, w = 1440, h = 945) => {
   return art + img;
 };
 
-/* Featured slider: arrows, thumbnails, swipe/drag and autoplay, with a clip-and-blur transition */
+/* Featured slider: autoplays every few seconds. The incoming screenshot drops in as vertical "blinds"
+   from alternating directions while the old one sinks back and blurs; arrows, thumbnails, swipe and keys work too. */
+const SLIDE_MS = 3600;
 function setupSlider() {
   const items = PROJECTS.filter((p) => p.featured !== false);
-  const imgs = $("#sl-imgs"), thumbs = $("#sl-thumbs"), info = $(".sl-info"), G = window.gsap;
+  const imgs = $("#sl-imgs"), thumbs = $("#sl-thumbs"), info = $(".sl-info"), media = $(".sl-media"), big = $("#sl-big"), G = window.gsap;
   if (!imgs || !items.length) return;
   const pad = (n) => String(n).padStart(2, "0");
   $("#sl-total").textContent = pad(items.length);
@@ -161,73 +187,119 @@ function setupSlider() {
   $$("img[data-shot]", thumbs).forEach(loadShot);
 
   const slides = $$(".sl-slide", imgs), tbs = $$(".sl-thumb", thumbs);
-  let cur = -1, bar = null, visible = false, hovering = false;
+  let cur = -1, bar = null, visible = false, hovering = false, busy = false;
   const fill = (p, i) => {
     $("#sl-meta").textContent = `${pad(i + 1)} / ${pad(items.length)} — ${p.region || ""}`;
     $("#sl-title").textContent = p.title;
     $("#sl-desc").textContent = p.description || "";
-    $("#sl-tags").innerHTML = (p.stack || []).map((t) => `<li>${esc(t)}</li>`).join("");
+    const tag = p.platform ? `<li class="platform ${esc(p.platform)}">${esc(PLATFORM_LABEL[p.platform] || p.platform)}</li>` : "";
+    $("#sl-tags").innerHTML = tag + (p.stack || []).map((t) => `<li>${esc(t)}</li>`).join("");
     $("#sl-url").textContent = domainOf(p.url);
     const v = $("#sl-visit"); v.href = p.url; $("span", v).textContent = `Visit ${domainOf(p.url)} ↗`;
   };
   const autoplay = () => {
     bar?.kill();
     if (!G) return;
-    bar = G.fromTo($(".sl-bar b", tbs[cur]), { scaleX: 0 }, { scaleX: 1, duration: 6, ease: "none", onComplete: () => go(cur + 1, 1) });
+    bar = G.fromTo($(".sl-bar b", tbs[cur]), { scaleX: 0 }, { scaleX: 1, duration: SLIDE_MS / 1000, ease: "none", onComplete: () => go(cur + 1, 1) });
     if (!visible || hovering) bar.pause();
+  };
+  // vertical strips that each show their slice of the incoming screenshot
+  const blinds = (src, n) => {
+    const W = media.clientWidth, box = document.createElement("div");
+    box.className = "sl-blinds";
+    for (let k = 0; k < n; k++) {
+      const x = Math.floor((k * W) / n), w = Math.ceil(W / n) + 1;
+      box.insertAdjacentHTML("beforeend", `<i style="left:${x}px;width:${w}px"><b style="left:${-x}px;width:${W}px;background-image:url('${src}')"></b></i>`);
+    }
+    imgs.appendChild(box);
+    return box;
   };
   function go(i, dir = 1) {
     i = (i + items.length) % items.length;
     if (i === cur) return;
-    const inc = slides[i], out = cur >= 0 ? slides[cur] : null, first = cur < 0;
+    if (busy) { G?.delayedCall(0.25, () => go(i, dir)); return; }
+    const inc = slides[i], out = cur >= 0 ? slides[cur] : null, first = cur < 0, p = items[i];
     cur = i;
     tbs.forEach((t, k) => { t.classList.toggle("is-active", k === i); t.setAttribute("aria-selected", k === i); if (G && k !== i) G.set($(".sl-bar b", t), { scaleX: 0 }); });
     $("#sl-cur").textContent = pad(i + 1);
-    slides.forEach((sl) => { if (sl !== inc && sl !== out) { sl.style.zIndex = 0; sl.style.visibility = "hidden"; } });
-    inc.style.zIndex = 2; inc.style.visibility = "visible";
-    if (out) out.style.zIndex = 1;
-    if (!G || first) { fill(items[i], i); if (out) out.style.visibility = "hidden"; autoplay(); return; }
-    G.fromTo(inc, { clipPath: dir > 0 ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0%)", duration: 1.1, ease: "expo.inOut", overwrite: true });
-    G.fromTo($(".sl-cover", inc), { scale: 1.16, filter: "blur(10px)" }, { scale: 1, filter: "blur(0px)", duration: 1.4, ease: "expo.out", clearProps: "filter,transform", overwrite: true });
-    G.to($(".sl-cover", out), { scale: 0.94, xPercent: -6 * dir, filter: "blur(8px)", duration: 1.1, ease: "expo.inOut", overwrite: true,
-      onComplete: () => { out.style.visibility = "hidden"; G.set($(".sl-cover", out), { clearProps: "all" }); } });
-    const parts = [...info.children];
-    G.to(parts, { autoAlpha: 0, y: -14, filter: "blur(6px)", duration: 0.3, stagger: 0.03, ease: "power2.in", overwrite: true,
-      onComplete: () => { fill(items[i], i);
-        G.fromTo([...info.children], { autoAlpha: 0, y: 24, filter: "blur(8px)" }, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.7, stagger: 0.06, ease: "expo.out", clearProps: "filter" }); } });
+    const show = () => { slides.forEach((sl) => { sl.style.visibility = sl === inc ? "visible" : "hidden"; }); if (G) G.set($$(".sl-cover", imgs), { clearProps: "all" }); };
+    if (!G || first) { show(); fill(p, i); big.textContent = pad(i + 1); autoplay(); return; }
+
+    busy = true;
+    const n = media.clientWidth < 600 ? 5 : 8;
+    const src = $("img.shot.is-loaded", inc)?.getAttribute("src");
+    const tl = G.timeline({ onComplete: () => { show(); box?.remove(); busy = false; } });
+    let box = null;
+    if (src) {
+      box = blinds(src, n);
+      const strips = $$("i", box);
+      tl.fromTo(strips, { yPercent: (k) => (k % 2 ? -102 : 102) }, { yPercent: 0, duration: 0.85, ease: "expo.inOut", stagger: { each: 0.045, from: dir > 0 ? "start" : "end" } }, 0)
+        .fromTo($$("b", box), { scale: 1.12, filter: "blur(8px)" }, { scale: 1, filter: "blur(0px)", duration: 1.1, ease: "expo.out", stagger: { each: 0.045, from: dir > 0 ? "start" : "end" } }, 0.1);
+    } else {
+      inc.style.visibility = "visible"; inc.style.zIndex = 3;
+      tl.fromTo(inc, { clipPath: dir > 0 ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0%)", duration: 0.9, ease: "expo.inOut", clearProps: "clipPath,zIndex" }, 0);
+    }
+    if (out) tl.to($(".sl-cover", out), { scale: 0.88, filter: "blur(10px) brightness(.55)", duration: 0.9, ease: "expo.inOut" }, 0);
+    // giant index number rolls over
+    tl.to(big, { yPercent: -60 * dir, autoAlpha: 0, duration: 0.35, ease: "power2.in" }, 0)
+      .add(() => { big.textContent = pad(i + 1); }, 0.35)
+      .fromTo(big, { yPercent: 60 * dir, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.6, ease: "expo.out" }, 0.35);
+    // text blurs out and back in, line by line
+    tl.to([...info.children], { autoAlpha: 0, y: -12, filter: "blur(6px)", duration: 0.25, stagger: 0.025, ease: "power2.in" }, 0)
+      .add(() => fill(p, i), 0.4)
+      .fromTo([...info.children], { autoAlpha: 0, y: 22, filter: "blur(8px)" }, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.6, stagger: 0.05, ease: "expo.out", clearProps: "filter" }, 0.42);
     autoplay();
   }
   $("#sl-prev").addEventListener("click", () => go(cur - 1, -1));
   $("#sl-next").addEventListener("click", () => go(cur + 1, 1));
   tbs.forEach((t) => t.addEventListener("click", () => { const i = +t.dataset.i; go(i, i > cur ? 1 : -1); }));
   $("#slider").addEventListener("keydown", (e) => { if (e.key === "ArrowRight") go(cur + 1, 1); if (e.key === "ArrowLeft") go(cur - 1, -1); });
-  // swipe / drag
-  const media = $(".sl-media"); let x0 = null;
+  // swipe / drag on the screenshot
+  let x0 = null;
   media.addEventListener("pointerdown", (e) => { x0 = e.clientX; });
   window.addEventListener("pointerup", (e) => { if (x0 === null) return; const dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); });
-  // pause while hovered or off screen
-  const sliderEl = $(".work");
-  sliderEl.addEventListener("pointerenter", () => { hovering = true; bar?.pause(); });
-  sliderEl.addEventListener("pointerleave", () => { hovering = false; if (visible) bar?.resume(); });
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible && !hovering ? bar?.resume() : bar?.pause(); }, { threshold: 0.35 }).observe(sliderEl);
+  // pause only while the pointer rests on the screenshot, or the slider is off screen
+  media.addEventListener("pointerenter", () => { hovering = true; bar?.pause(); });
+  media.addEventListener("pointerleave", () => { hovering = false; if (visible) bar?.resume(); });
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible && !hovering ? bar?.resume() : bar?.pause(); }, { threshold: 0.35 }).observe($(".work"));
   go(0);
 }
 
-/* All websites grid */
+/* All websites grid, with platform filters */
 function renderSites() {
-  const grid = $("#sites-grid");
+  const grid = $("#sites-grid"), filters = $("#sites-filters");
   if (!grid) return;
   const all = [...PROJECTS, ...MORE_SITES];
   $("#sites-count").textContent = `(${String(all.length).padStart(2, "0")})`;
-  grid.innerHTML = all.map((p) => `
-    <a class="site-card" href="${esc(p.url)}" target="_blank" rel="noopener" data-cursor="view" aria-label="Open ${esc(p.title)} (new tab)">
-      <span class="site-shot">${coverHTML(p, 1280, 840)}</span>
+  grid.innerHTML = all.map((p) => {
+    const tag = p.platform ? `<span class="site-tag ${esc(p.platform)} mono">${esc(PLATFORM_LABEL[p.platform] || p.platform)}</span>` : "";
+    const inner = `
+      <span class="site-shot">${coverHTML(p, 1280, 840)}${tag}</span>
       <span class="site-meta">
         <span><b>${esc(p.title)}</b><em class="mono">${esc(p.region || domainOf(p.url))}</em></span>
-        <i aria-hidden="true">↗</i>
-      </span>
-    </a>`).join("");
+        ${p.url ? '<i aria-hidden="true">↗</i>' : ""}
+      </span>`;
+    return p.url
+      ? `<a class="site-card" data-platform="${esc(p.platform)}" href="${esc(p.url)}" target="_blank" rel="noopener" data-cursor="view" aria-label="Open ${esc(p.title)} (new tab)">${inner}</a>`
+      : `<div class="site-card" data-platform="${esc(p.platform)}">${inner}</div>`;
+  }).join("");
   $$("img[data-shot]", grid).forEach(loadShot);
+
+  // filter chips for the platforms that appear in the list
+  const used = Object.keys(PLATFORM_LABEL).filter((k) => all.some((p) => p.platform === k));
+  filters.innerHTML = [["all", "All"], ...used.map((k) => [k, PLATFORM_LABEL[k]])]
+    .map(([k, label]) => `<button type="button" class="sf${k === "all" ? " is-active" : ""}" data-f="${k}">${label} <sup>${k === "all" ? all.length : all.filter((p) => p.platform === k).length}</sup></button>`).join("");
+  $$(".sf", filters).forEach((btn) => btn.addEventListener("click", () => {
+    $$(".sf", filters).forEach((b) => b.classList.toggle("is-active", b === btn));
+    const f = btn.dataset.f, cards = $$(".site-card", grid);
+    const apply = () => cards.forEach((c) => (c.hidden = f !== "all" && c.dataset.platform !== f));
+    if (!window.gsap) return apply();
+    gsap.to(cards, { autoAlpha: 0, y: 16, filter: "blur(6px)", duration: 0.2, stagger: 0.01, onComplete: () => {
+      apply();
+      gsap.fromTo(cards.filter((c) => !c.hidden), { autoAlpha: 0, y: 24, filter: "blur(8px)" }, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.6, stagger: 0.04, ease: "expo.out", clearProps: "filter" });
+      window.ScrollTrigger?.refresh();
+    } });
+  }));
 }
 
 function setupMenu(lenis) {
@@ -346,14 +418,13 @@ function setupBeforeAfter() {
 }
 
 function setupDevices() {
-  const p = PROJECTS[SHOWCASE.project];
+  const p = [...PROJECTS, ...MORE_SITES].find((x) => x.title === SHOWCASE.project);
   if (!p || !$(".devices")) return;
   $("#dv-name").textContent = p.title;
   $("#dv-link").href = p.url;
   $("#dv-link span").textContent = `Visit ${domainOf(p.url)} ↗`;
   const [c1, c2] = p.colors || [];
-  const frames = [];
-  [[".dv-desktop", "desktop", 1440], [".dv-tablet", "tablet", 820], [".dv-phone", "mobile", 390]].forEach(([sel, key, vw]) => {
+  [[".dv-desktop", "desktop", 1440, 900], [".dv-tablet", "tablet", 820, 1180], [".dv-phone", "mobile", 390, 844]].forEach(([sel, key, vw, vh]) => {
     const screen = $(".dv-screen", $(sel)), art = $(".dv-art", screen), src = SHOWCASE.screens[key];
     art.style.setProperty("--c1", c1); art.style.setProperty("--c2", c2);
     art.textContent = domainOf(p.url);
@@ -361,22 +432,13 @@ function setupDevices() {
       screen.insertAdjacentHTML("beforeend", `<img class="dv-shot" src="${esc(src)}" alt="${esc(p.title)} on ${key}">`);
       return;
     }
-    // live site at the device's real width, scaled down to fit the screen exactly
-    const f = document.createElement("iframe");
-    Object.assign(f, { className: "dv-frame", title: `${p.title} on ${key}`, loading: "lazy", tabIndex: -1, src: p.url });
-    f.setAttribute("sandbox", "allow-scripts allow-same-origin");
-    f.setAttribute("aria-hidden", "true");
-    screen.appendChild(f);
-    frames.push({ f, screen, vw });
+    // no screenshot supplied: load a capture of the live site at this device's real viewport size
+    screen.insertAdjacentHTML("beforeend", `<img class="dv-shot shot" alt="${esc(p.title)} on ${key}">`);
+    const img = $("img", screen);
+    img.dataset.shot = shotUrl(p.url, vw, vh);
+    img.dataset.w = vw;
+    loadShot(img);
   });
-  const fit = () => frames.forEach(({ f, screen, vw }) => {
-    const s = screen.clientWidth / vw;
-    f.style.width = `${vw}px`;
-    f.style.height = `${screen.clientHeight / s}px`;
-    f.style.transform = `scale(${s})`;
-  });
-  fit();
-  if ("ResizeObserver" in window) new ResizeObserver(fit).observe($(".devices-stage"));
 }
 
 function setupToolGlow() {
