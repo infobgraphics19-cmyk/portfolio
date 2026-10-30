@@ -25,9 +25,19 @@ Accessibility and fallbacks:
 
 ## Two versions
 
-- **Option 1**: `index.html` (site root) is the original scroll-animated design.
-- **Option 2**: `v2/index.html` adds blurred aurora lighting, a glass navigation bar, blur-in text, floating WordPress/Shopify/Wix logos with depth-of-field parallax, smoother scrolling for every visitor, and a draggable **Before / After** redesign section, and a pinned **Responsive** showcase that shows one project on desktop, tablet and phone.
-  - Edit the `REDESIGNS` list at the top of `v2/js/main.js`. Set `before` and `after` to your screenshots, for example `images/client-before.jpg`. Without screenshots, illustrated examples are shown.
+- **Option 2 (main)**: `v2/index.html`. It's built around the portfolio, in this order:
+  1. Hero
+  2. **Featured projects slider**: arrows, thumbnails, swipe and autoplay.
+  3. **All websites** grid.
+  4. **Responsive** showcase: Swanya Pharmaceuticals on desktop, tablet and phone.
+  5. Before / After redesigns.
+  6. About, Services, Live build, Process, Code, Toolbox.
+  7. Contact.
+  - **Featured slider:** `PROJECTS` in `v2/js/main.js`. Keep it to 4–5 projects.
+  - **All websites grid:** shows `PROJECTS` followed by `MORE_SITES`. Add any number of extra sites to `MORE_SITES`, with screenshots in `images/`.
+  - **Responsive section:** `SHOWCASE` sets the project and an optional screenshot per device. A device without a screenshot shows the live website at that device's real width (desktop 1440, tablet 820, mobile 390px), scaled to fit.
+  - **Before / After:** edit `REDESIGNS` and set `before` and `after` to your screenshots.
+- **Option 1**: `index.html` (site root) is the earlier design, kept for reference.
 
 ## Structure
 
@@ -46,8 +56,7 @@ images/             project screenshots
 2. **Stats:** set the `data-count` numbers in the About section to your real figures.
 3. **Projects:** edit the `PROJECTS` array at the top of `js/main.js` (and `v2/js/main.js`). It lists Bazayan & Co., Jafferji Developers, Swanya Pharmaceuticals, Python Bull Consultancy and Tarmal Steel, using the screenshots in `images/` (Tarmal Steel loads a live screenshot). Set each `platform` to `wordpress`, `shopify` or `wix` to show a platform badge. Each project's number and the horizontal-scroll length update automatically.
 4. **Screenshots:** by default each card loads a live screenshot of the site through WordPress.com's free mShots service. The first visit can take a few seconds while it captures; the coloured cover shows until then. To use your own image instead, save it as, for example, `images/tarmalsteel.jpg` at about 1600×1050 and set `image: "images/tarmalsteel.jpg"`.
-5. **Responsive section (Option 2):** `SHOWCASE` in `v2/js/main.js` picks which project appears on the desktop, tablet and phone mockups (currently 1 = Jafferji Developers).
-6. **Accent colour:** change `--accent` in `css/style.css`.
+5. **Accent colour:** change `--accent` in `css/style.css`.
 
 ## Run / deploy
 

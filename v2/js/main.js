@@ -57,8 +57,18 @@ const PROJECTS = [
   },
 ];
 
-/* Which project the "Responsive" section shows on desktop, tablet and phone (index in PROJECTS above) */
-const SHOWCASE = 1; // Jafferji Developers
+/* MORE_SITES: extra websites that appear only in the "All websites" grid (same fields as PROJECTS).
+   PROJECTS above are the featured slider; the grid shows PROJECTS followed by MORE_SITES. */
+const MORE_SITES = [
+  // { title: "Client name", url: "https://example.com/", region: "Industry", image: "../images/client.webp", colors: ["#222", "#555"] },
+];
+
+/* The "Responsive" section: which project to show, and an optional screenshot per device.
+   A device with no screenshot shows the live website, rendered at that device's real width and scaled to fit. */
+const SHOWCASE = {
+  project: 2, // Swanya Pharmaceuticals
+  screens: { desktop: "../images/swanya.webp", tablet: "", mobile: "" },
+};
 
 /* Contact form: submissions are emailed to CONTACT_EMAIL through FormSubmit (formsubmit.co).
    The very first submission sends an activation email to that inbox; click "Activate Form" once
@@ -124,40 +134,100 @@ function loadShot(img) {
   attempt();
 }
 
-function renderProjects() {
-  const outro = $(".work-outro");
-  const html = PROJECTS.map((p, i) => {
-    const domain = domainOf(p.url);
-    const [c1, c2] = p.colors || ["#222", "#444"];
-    const shot = p.image
-      ? `<img class="shot is-loaded" src="${esc(p.image)}" alt="Screenshot of ${esc(p.title)}">`
-      : `<img class="shot" data-shot="${esc(shotUrl(p.url, 1440, 945))}" data-w="1440" alt="Screenshot of ${esc(p.title)}">`;
-    const tag = p.platform ? `<li class="platform ${esc(p.platform)}">${esc(PLATFORM_LABEL[p.platform] || p.platform)}</li>` : "";
-    return `
-      <article class="project" data-platform="${esc(p.platform)}">
-        <a class="project-media" href="${esc(p.url)}" target="_blank" rel="noopener" data-cursor="view" aria-label="Visit ${esc(p.title)} (opens in a new tab)">
-          <div class="browser"><i></i><i></i><i></i><span>${esc(domain)}</span></div>
-          <div class="project-inner">
-            <div class="project-art" style="--c1:${esc(c1)};--c2:${esc(c2)}"><strong>${esc(p.title)}</strong><em>${esc(domain)}</em><div class="skel"><b></b><b></b><b></b></div></div>
-            ${shot}
-          </div>
-        </a>
-        <div class="project-meta">
-          <div>
-            <span class="project-idx">${String(i + 1).padStart(2, "0")} / ${String(PROJECTS.length).padStart(2, "0")} — ${esc(p.region || "")}</span>
-            <h3>${esc(p.title)}</h3>
-            <p>${esc(p.description)}</p>
-            <ul class="project-tags">
-              ${tag}
-              ${(p.stack || []).map((s) => `<li>${esc(s)}</li>`).join("")}
-            </ul>
-          </div>
-          <a class="project-visit" href="${esc(p.url)}" target="_blank" rel="noopener" aria-label="Open ${esc(domain)}" data-magnetic>↗</a>
-        </div>
-      </article>`;
-  }).join("");
-  outro.insertAdjacentHTML("beforebegin", html);
-  $$("img[data-shot]").forEach(loadShot);
+const coverHTML = (p, w = 1440, h = 945) => {
+  const [c1, c2] = p.colors || ["#222", "#444"];
+  const art = `<div class="project-art" style="--c1:${esc(c1)};--c2:${esc(c2)}"><strong>${esc(p.title)}</strong><em>${esc(domainOf(p.url))}</em></div>`;
+  const img = p.image
+    ? `<img class="shot is-loaded" src="${esc(p.image)}" alt="Screenshot of ${esc(p.title)}">`
+    : `<img class="shot" data-shot="${esc(shotUrl(p.url, w, h))}" data-w="${w}" alt="Screenshot of ${esc(p.title)}">`;
+  return art + img;
+};
+
+/* Featured slider: arrows, thumbnails, swipe/drag and autoplay, with a clip-and-blur transition */
+function setupSlider() {
+  const items = PROJECTS.filter((p) => p.featured !== false);
+  const imgs = $("#sl-imgs"), thumbs = $("#sl-thumbs"), info = $(".sl-info"), G = window.gsap;
+  if (!imgs || !items.length) return;
+  const pad = (n) => String(n).padStart(2, "0");
+  $("#sl-total").textContent = pad(items.length);
+  imgs.innerHTML = items.map((p, i) => `<div class="sl-slide" data-i="${i}"><div class="sl-cover">${coverHTML(p)}</div></div>`).join("");
+  thumbs.innerHTML = items.map((p, i) => `
+    <button class="sl-thumb" type="button" role="tab" data-i="${i}" aria-label="Show ${esc(p.title)}">
+      <span class="sl-thumb-img">${coverHTML(p, 640, 420)}</span>
+      <span class="sl-thumb-t mono">${pad(i + 1)} ${esc(p.title)}</span>
+      <i class="sl-bar"><b></b></i>
+    </button>`).join("");
+  $$("img[data-shot]", imgs).forEach(loadShot);
+  $$("img[data-shot]", thumbs).forEach(loadShot);
+
+  const slides = $$(".sl-slide", imgs), tbs = $$(".sl-thumb", thumbs);
+  let cur = -1, bar = null, visible = false, hovering = false;
+  const fill = (p, i) => {
+    $("#sl-meta").textContent = `${pad(i + 1)} / ${pad(items.length)} — ${p.region || ""}`;
+    $("#sl-title").textContent = p.title;
+    $("#sl-desc").textContent = p.description || "";
+    $("#sl-tags").innerHTML = (p.stack || []).map((t) => `<li>${esc(t)}</li>`).join("");
+    $("#sl-url").textContent = domainOf(p.url);
+    const v = $("#sl-visit"); v.href = p.url; $("span", v).textContent = `Visit ${domainOf(p.url)} ↗`;
+  };
+  const autoplay = () => {
+    bar?.kill();
+    if (!G) return;
+    bar = G.fromTo($(".sl-bar b", tbs[cur]), { scaleX: 0 }, { scaleX: 1, duration: 6, ease: "none", onComplete: () => go(cur + 1, 1) });
+    if (!visible || hovering) bar.pause();
+  };
+  function go(i, dir = 1) {
+    i = (i + items.length) % items.length;
+    if (i === cur) return;
+    const inc = slides[i], out = cur >= 0 ? slides[cur] : null, first = cur < 0;
+    cur = i;
+    tbs.forEach((t, k) => { t.classList.toggle("is-active", k === i); t.setAttribute("aria-selected", k === i); if (G && k !== i) G.set($(".sl-bar b", t), { scaleX: 0 }); });
+    $("#sl-cur").textContent = pad(i + 1);
+    slides.forEach((sl) => { if (sl !== inc && sl !== out) { sl.style.zIndex = 0; sl.style.visibility = "hidden"; } });
+    inc.style.zIndex = 2; inc.style.visibility = "visible";
+    if (out) out.style.zIndex = 1;
+    if (!G || first) { fill(items[i], i); if (out) out.style.visibility = "hidden"; autoplay(); return; }
+    G.fromTo(inc, { clipPath: dir > 0 ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0%)", duration: 1.1, ease: "expo.inOut", overwrite: true });
+    G.fromTo($(".sl-cover", inc), { scale: 1.16, filter: "blur(10px)" }, { scale: 1, filter: "blur(0px)", duration: 1.4, ease: "expo.out", clearProps: "filter,transform", overwrite: true });
+    G.to($(".sl-cover", out), { scale: 0.94, xPercent: -6 * dir, filter: "blur(8px)", duration: 1.1, ease: "expo.inOut", overwrite: true,
+      onComplete: () => { out.style.visibility = "hidden"; G.set($(".sl-cover", out), { clearProps: "all" }); } });
+    const parts = [...info.children];
+    G.to(parts, { autoAlpha: 0, y: -14, filter: "blur(6px)", duration: 0.3, stagger: 0.03, ease: "power2.in", overwrite: true,
+      onComplete: () => { fill(items[i], i);
+        G.fromTo([...info.children], { autoAlpha: 0, y: 24, filter: "blur(8px)" }, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.7, stagger: 0.06, ease: "expo.out", clearProps: "filter" }); } });
+    autoplay();
+  }
+  $("#sl-prev").addEventListener("click", () => go(cur - 1, -1));
+  $("#sl-next").addEventListener("click", () => go(cur + 1, 1));
+  tbs.forEach((t) => t.addEventListener("click", () => { const i = +t.dataset.i; go(i, i > cur ? 1 : -1); }));
+  $("#slider").addEventListener("keydown", (e) => { if (e.key === "ArrowRight") go(cur + 1, 1); if (e.key === "ArrowLeft") go(cur - 1, -1); });
+  // swipe / drag
+  const media = $(".sl-media"); let x0 = null;
+  media.addEventListener("pointerdown", (e) => { x0 = e.clientX; });
+  window.addEventListener("pointerup", (e) => { if (x0 === null) return; const dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); });
+  // pause while hovered or off screen
+  const sliderEl = $(".work");
+  sliderEl.addEventListener("pointerenter", () => { hovering = true; bar?.pause(); });
+  sliderEl.addEventListener("pointerleave", () => { hovering = false; if (visible) bar?.resume(); });
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible && !hovering ? bar?.resume() : bar?.pause(); }, { threshold: 0.35 }).observe(sliderEl);
+  go(0);
+}
+
+/* All websites grid */
+function renderSites() {
+  const grid = $("#sites-grid");
+  if (!grid) return;
+  const all = [...PROJECTS, ...MORE_SITES];
+  $("#sites-count").textContent = `(${String(all.length).padStart(2, "0")})`;
+  grid.innerHTML = all.map((p) => `
+    <a class="site-card" href="${esc(p.url)}" target="_blank" rel="noopener" data-cursor="view" aria-label="Open ${esc(p.title)} (new tab)">
+      <span class="site-shot">${coverHTML(p, 1280, 840)}</span>
+      <span class="site-meta">
+        <span><b>${esc(p.title)}</b><em class="mono">${esc(p.region || domainOf(p.url))}</em></span>
+        <i aria-hidden="true">↗</i>
+      </span>
+    </a>`).join("");
+  $$("img[data-shot]", grid).forEach(loadShot);
 }
 
 function setupMenu(lenis) {
@@ -210,7 +280,11 @@ function setupForm() {
         }),
       });
       const out = await res.json().catch(() => ({}));
-      if (!res.ok || out.success === false || out.success === "false") throw new Error(out.message || res.status);
+      if (!res.ok || out.success === false || out.success === "false") {
+        // FormSubmit's first reply asks the inbox owner to activate the form
+        if (/activat/i.test(out.message || "")) { note.textContent = "› Thanks! Your message is waiting: this form is being activated and will be delivered shortly."; form.reset(); return; }
+        throw new Error(out.message || res.status);
+      }
       form.reset();
       note.textContent = "› Thanks! Your message has been sent. I'll reply within 24 hours.";
     } catch (err) {
@@ -272,21 +346,37 @@ function setupBeforeAfter() {
 }
 
 function setupDevices() {
-  const p = PROJECTS[SHOWCASE];
+  const p = PROJECTS[SHOWCASE.project];
   if (!p || !$(".devices")) return;
   $("#dv-name").textContent = p.title;
   $("#dv-link").href = p.url;
   $("#dv-link span").textContent = `Visit ${domainOf(p.url)} ↗`;
   const [c1, c2] = p.colors || [];
-  [[".dv-desktop", 1440, 2700], [".dv-tablet", 820, 2400], [".dv-phone", 390, 2200]].forEach(([sel, w, h]) => {
-    const dev = $(sel), img = $(".dv-img", dev), art = $(".dv-art", dev);
+  const frames = [];
+  [[".dv-desktop", "desktop", 1440], [".dv-tablet", "tablet", 820], [".dv-phone", "mobile", 390]].forEach(([sel, key, vw]) => {
+    const screen = $(".dv-screen", $(sel)), art = $(".dv-art", screen), src = SHOWCASE.screens[key];
     art.style.setProperty("--c1", c1); art.style.setProperty("--c2", c2);
     art.textContent = domainOf(p.url);
-    img.alt = `${p.title} at ${w}px wide`;
-    img.dataset.shot = shotUrl(p.url, w, h);
-    img.dataset.w = w;
-    loadShot(img);
+    if (src) {
+      screen.insertAdjacentHTML("beforeend", `<img class="dv-shot" src="${esc(src)}" alt="${esc(p.title)} on ${key}">`);
+      return;
+    }
+    // live site at the device's real width, scaled down to fit the screen exactly
+    const f = document.createElement("iframe");
+    Object.assign(f, { className: "dv-frame", title: `${p.title} on ${key}`, loading: "lazy", tabIndex: -1, src: p.url });
+    f.setAttribute("sandbox", "allow-scripts allow-same-origin");
+    f.setAttribute("aria-hidden", "true");
+    screen.appendChild(f);
+    frames.push({ f, screen, vw });
   });
+  const fit = () => frames.forEach(({ f, screen, vw }) => {
+    const s = screen.clientWidth / vw;
+    f.style.width = `${vw}px`;
+    f.style.height = `${screen.clientHeight / s}px`;
+    f.style.transform = `scale(${s})`;
+  });
+  fit();
+  if ("ResizeObserver" in window) new ResizeObserver(fit).observe($(".devices-stage"));
 }
 
 function setupToolGlow() {
@@ -485,20 +575,6 @@ function initMotion() {
   const mm = gsap.matchMedia();
 
   mm.add("(min-width: 900px)", () => {
-    // Work: pin and scroll horizontally
-    const track = $("#work-track");
-    const dist = () => track.scrollWidth - window.innerWidth;
-    const horiz = gsap.to(track, { x: () => -dist(), ease: "none",
-      scrollTrigger: { trigger: ".work", pin: ".work-pin", start: "top top", end: () => `+=${dist()}`, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1 } });
-
-    // Parallax inside each project image, tied to the horizontal movement
-    $$(".project").forEach((p) => {
-      gsap.fromTo($(".project-inner", p), { xPercent: -6, scale: 1.12 }, { xPercent: 6, scale: 1.12, ease: "none",
-        scrollTrigger: { trigger: p, containerAnimation: horiz, start: "left right", end: "right left", scrub: true } });
-      gsap.from($(".project-meta", p), { y: 40, autoAlpha: 0, filter: "blur(8px)", clearProps: "filter", duration: 1, ease: "expo.out",
-        scrollTrigger: { trigger: p, containerAnimation: horiz, start: "left 80%" } });
-    });
-
     // Code: pin the editor and switch files as you scroll
     const st = ScrollTrigger.create({
       trigger: ".code", start: "top top", end: "+=180%", pin: ".code-pin", scrub: true,
@@ -514,9 +590,6 @@ function initMotion() {
     return () => { onTab = showPane; };
   });
 
-  mm.add("(max-width: 899px)", () => {
-    $$(".project").forEach((p) => gsap.from(p, { y: 60, autoAlpha: 0, duration: 1, ease: "expo.out", scrollTrigger: { trigger: p, start: "top 85%" } }));
-  });
 
   // Code lines type in when a pane appears
   function revealPane(i) {
@@ -549,9 +622,8 @@ function initMotion() {
     ScrollTrigger.create({ trigger: sec, start: "top 50%", end: "bottom 50%", onToggle: (s) => a.classList.toggle("is-current", s.isActive) });
   });
 
-  // --- Responsive showcase: devices assemble, show their widths, then scroll through the live site together
+  // --- Responsive showcase: devices assemble, count up their widths, then drift apart in depth
   const dvs = [".dv-desktop", ".dv-tablet", ".dv-phone"].map((sel) => $(sel));
-  const scrollDist = (dev) => () => -Math.max(0, $(".dv-img", dev).offsetHeight - $(".dv-screen", dev).clientHeight);
   const widths = $$(".dv-label b"), wProxy = { p: 0 };
   gsap.timeline({
     defaults: { ease: "none" },
@@ -562,10 +634,19 @@ function initMotion() {
     .fromTo(dvs[2], { xPercent: -160, scale: 0.7, autoAlpha: 0, filter: "blur(14px)" }, { xPercent: 0, scale: 1, autoAlpha: 1, filter: "blur(0px)", duration: 1, ease: "power2.out" }, 0.7)
     .fromTo(".dv-label", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.1 }, 1.4)
     .fromTo(wProxy, { p: 0 }, { p: 1, duration: 0.8, ease: "power2.out", onUpdate: () => widths.forEach((b) => (b.textContent = Math.round(+b.dataset.to * wProxy.p))) }, 1.4)
-    .fromTo(dvs.map((d) => $(".dv-img", d)), { y: 0 }, { y: (i) => scrollDist(dvs[i])(), duration: 3 }, 1.9)
+    .to(dvs, { y: (i) => [-10, -26, -38][i], duration: 2.4, ease: "sine.inOut" }, 1.9)
     .to(dvs[2], { rotate: -5, y: -16, duration: 0.8, ease: "power2.inOut" }, 3.6)
     .to(dvs[1], { rotate: 3, duration: 0.8, ease: "power2.inOut" }, 3.6)
     .to({}, { duration: 0.6 });
+
+  // --- Slider and website grid reveal
+  gsap.from(".slider", { y: 60, autoAlpha: 0, filter: "blur(14px)", duration: 1.3, ease: "expo.out", clearProps: "filter", scrollTrigger: { trigger: ".slider", start: "top 85%" } });
+  gsap.from(".sl-thumb", { y: 30, autoAlpha: 0, duration: 0.9, stagger: 0.07, ease: "expo.out", scrollTrigger: { trigger: ".sl-thumbs", start: "top 92%" } });
+  gsap.set(".site-card", { autoAlpha: 0 });
+  ScrollTrigger.batch(".site-card", {
+    start: "top 88%", once: true,
+    onEnter: (els) => gsap.fromTo(els, { y: 50, autoAlpha: 0, filter: "blur(10px)" }, { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: 1, stagger: 0.08, ease: "expo.out", clearProps: "filter" }),
+  });
 
   // --- Glass header once the page is scrolled
   ScrollTrigger.create({ start: 80, end: "max", toggleClass: { targets: ".site-header", className: "scrolled" } });
@@ -613,7 +694,8 @@ function initMotion() {
 /* ========================================================================== */
 function boot() {
   $("#year").textContent = new Date().getFullYear();
-  renderProjects();
+  setupSlider();
+  renderSites();
   setupBeforeAfter();
   setupDevices();
   setupForm();

@@ -44,10 +44,10 @@
     <nav class="nav" aria-label="Main">
       <a href="#top" class="logo" data-magnetic>&lt;Kishan<span>/</span>&gt;</a>
       <ul class="nav-links" id="nav-links">
-        <li><a href="#about"><span>01</span>About</a></li>
-        <li><a href="#services"><span>02</span>Services</a></li>
-        <li><a href="#work"><span>03</span>Work</a></li>
-        <li><a href="#redesigns"><span>04</span>Redesigns</a></li>
+        <li><a href="#work"><span>01</span>Work</a></li>
+        <li><a href="#websites"><span>02</span>Websites</a></li>
+        <li><a href="#redesigns"><span>03</span>Redesigns</a></li>
+        <li><a href="#about"><span>04</span>About</a></li>
         <li><a href="#contact"><span>05</span>Contact</a></li>
       </ul>
       <div class="nav-right">
@@ -86,6 +86,117 @@
       <div class="hero-scroll mono" aria-hidden="true"><span>scroll</span><i></i></div>
     </section>
 
+    <!-- ============ WORK (featured slider) ============ -->
+    <section class="work section" id="work">
+      <div class="wrap">
+        <div class="work-head">
+          <div>
+            <p class="label mono"><span>01</span> Selected work</p>
+            <h2 class="split-heading">Featured <em class="outline">projects</em></h2>
+          </div>
+          <div class="sl-ctrl">
+            <span class="sl-count mono"><b id="sl-cur">01</b> / <span id="sl-total">05</span></span>
+            <button class="sl-btn" id="sl-prev" type="button" aria-label="Previous project" data-magnetic><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="sl-btn" id="sl-next" type="button" aria-label="Next project" data-magnetic><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+        <div class="slider" id="slider" aria-roledescription="carousel" aria-label="Featured projects">
+          <div class="sl-media" data-cursor="drag">
+            <div class="browser"><i></i><i></i><i></i><span id="sl-url"></span></div>
+            <div class="sl-imgs" id="sl-imgs"></div>
+          </div>
+          <div class="sl-info" aria-live="polite">
+            <span class="sl-meta mono" id="sl-meta"></span>
+            <h3 id="sl-title"></h3>
+            <p id="sl-desc"></p>
+            <ul class="project-tags" id="sl-tags"></ul>
+            <a id="sl-visit" class="btn btn-accent" href="#" target="_blank" rel="noopener" data-magnetic><span>Visit website ↗</span></a>
+          </div>
+        </div>
+        <div class="sl-thumbs" id="sl-thumbs" role="tablist" aria-label="Choose a project"></div>
+      </div>
+    </section>
+
+    <!-- ============ ALL WEBSITES (grid) ============ -->
+    <section class="sites section" id="websites">
+      <div class="wrap">
+        <div class="work-head">
+          <div>
+            <p class="label mono"><span>02</span> Portfolio</p>
+            <h2 class="split-heading">All websites <sup class="sites-count mono" id="sites-count"></sup></h2>
+          </div>
+          <p class="dim sites-intro">Every site below is live. Click any card to open it in a new tab.</p>
+        </div>
+        <div class="sites-grid" id="sites-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============ RESPONSIVE (pinned device showcase) ============ -->
+    <section class="devices" id="responsive">
+      <div class="devices-pin">
+        <div class="wrap devices-head">
+          <div>
+            <p class="label mono"><span>&#9638;</span> Responsive by default</p>
+            <h2 class="split-heading">One website.<br><em class="outline">Every</em> screen.</h2>
+          </div>
+          <div class="devices-side">
+            <p class="dim">Every site I build is designed and tested on desktop, tablet and mobile. Here's <strong id="dv-name">a recent project</strong> on all three, live.</p>
+            <a id="dv-link" class="btn btn-line" href="#" target="_blank" rel="noopener" data-magnetic><span>Visit live site ↗</span></a>
+          </div>
+        </div>
+        <div class="devices-stage">
+          <figure class="dv dv-desktop">
+            <div class="dv-body"><div class="dv-screen"><div class="dv-art"></div></div></div>
+            <div class="dv-stand" aria-hidden="true"></div>
+            <figcaption class="dv-label mono">Desktop · <b data-to="1440">1440</b>px</figcaption>
+          </figure>
+          <figure class="dv dv-tablet">
+            <div class="dv-body"><div class="dv-screen"><div class="dv-art"></div></div></div>
+            <figcaption class="dv-label mono">Tablet · <b data-to="820">820</b>px</figcaption>
+          </figure>
+          <figure class="dv dv-phone">
+            <div class="dv-body"><i class="dv-notch" aria-hidden="true"></i><div class="dv-screen"><div class="dv-art"></div></div></div>
+            <figcaption class="dv-label mono">Mobile · <b data-to="390">390</b>px</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BEFORE / AFTER ============ -->
+    <section class="redesigns section" id="redesigns">
+      <div class="floaters">
+        <div class="fb fb--wix fb--far fb--hide-sm" data-speed="0.35" style="--x:6%;--y:8%" aria-hidden="true"><div class="fb-in"><svg viewBox="0 0 64 48" aria-hidden="true"><text x="32" y="33" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="24" fill="currentColor">Wix</text></svg><span class="mono">Wix</span></div></div>
+        <div class="fb fb--elementor fb--mid fb--hide-sm" data-speed="0.6" style="--x:94%;--y:6%" aria-hidden="true"><div class="fb-in"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="currentColor"/><rect x="16" y="14" width="4" height="20" fill="#0a0a0b"/><rect x="23" y="14" width="10" height="4" fill="#0a0a0b"/><rect x="23" y="22" width="10" height="4" fill="#0a0a0b"/><rect x="23" y="30" width="10" height="4" fill="#0a0a0b"/></svg><span class="mono">Elementor</span></div></div>
+      </div>
+      <div class="wrap">
+        <div class="ba-head">
+          <div>
+            <p class="label mono"><span>&harr;</span> Before / After</p>
+            <h2 class="split-heading">Redesigns that<br>pay for themselves.</h2>
+          </div>
+          <p class="dim ba-intro">Drag the handle to compare a client's old website with the version I rebuilt.</p>
+        </div>
+        <div class="ba-tabs mono" role="tablist" aria-label="Redesign projects" id="ba-tabs"></div>
+        <div class="ba" id="ba">
+          <div class="ba-frame" data-cursor="drag">
+            <div class="ba-layer ba-after" id="ba-after"></div>
+            <div class="ba-layer ba-before" id="ba-before"></div>
+            <span class="ba-tag ba-tag--before mono">Before</span>
+            <span class="ba-tag ba-tag--after mono">After</span>
+            <div class="ba-handle" aria-hidden="true"><span><svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 6 3 12l6 6M15 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <input class="ba-range" id="ba-range" type="range" min="0" max="100" value="50" aria-label="Move the slider to compare before and after">
+          </div>
+          <div class="ba-info">
+            <div>
+              <h3 id="ba-title"></h3>
+              <a id="ba-link" class="ba-link mono" href="#" target="_blank" rel="noopener"></a>
+            </div>
+            <ul class="ba-notes" id="ba-notes"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ MARQUEE ============ -->
     <section class="marquee" aria-label="Platforms and technologies">
       <div class="marquee-row" data-dir="-1">
@@ -107,13 +218,70 @@
         <div class="fb fb--code fb--far fb--hide-sm" data-speed="0.4" style="--x:92%;--y:46%" aria-hidden="true"><div class="fb-in"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M17 14 7 24l10 10M31 14l10 10-10 10M27 10l-6 28" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="mono">Custom code</span></div></div>
       </div>
       <div class="wrap">
-        <p class="label mono"><span>01</span> About</p>
+        <p class="label mono"><span>04</span> About</p>
         <p class="about-text" data-reveal-words>For more than five years I've been turning ideas and designs into fast websites. I write custom code where it matters and use page builders where they save you money, so you get a site that's easy to edit and built to grow your business.</p>
         <div class="stats">
           <div class="stat"><span class="stat-num" data-count="5" data-suffix="+">5+</span><span class="stat-label mono">years experience</span><i class="stat-bar"></i></div>
           <div class="stat"><span class="stat-num" data-count="100" data-suffix="+">100+</span><span class="stat-label mono">websites shipped</span><i class="stat-bar"></i></div>
           <div class="stat"><span class="stat-num" data-count="3" data-suffix="+">3+</span><span class="stat-label mono">platforms mastered</span><i class="stat-bar"></i></div>
           <div class="stat"><span class="stat-num" data-count="95" data-suffix="+">95+</span><span class="stat-label mono">target PageSpeed score</span><i class="stat-bar"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES (stacking cards) ============ -->
+    <section class="services section" id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="label mono"><span>05</span> Services</p>
+          <h2 class="split-heading">What I build for you</h2>
+        </div>
+        <div class="stack">
+          <article class="stack-card" style="--c: var(--wp)">
+            <div class="sc-top"><span class="sc-num mono">/01</span><span class="sc-pill mono">PHP · ACF · WooCommerce</span></div>
+            <h3>Custom WordPress Development</h3>
+            <div class="sc-body">
+              <p>Themes coded from scratch, custom plugins, Gutenberg blocks and flexible ACF layouts. Your team can edit everything without breaking the design.</p>
+              <ul class="mono">
+                <li>Custom themes &amp; child themes</li>
+                <li>Plugin &amp; REST API development</li>
+                <li>Elementor / Gutenberg / ACF builds</li>
+                <li>WooCommerce stores</li>
+                <li>Speed &amp; security hardening</li>
+              </ul>
+            </div>
+            <span class="sc-big" aria-hidden="true">WP</span>
+          </article>
+          <article class="stack-card" style="--c: var(--shopify)">
+            <div class="sc-top"><span class="sc-num mono">/02</span><span class="sc-pill mono">Liquid · OS 2.0 · Apps</span></div>
+            <h3>Shopify Store Development</h3>
+            <div class="sc-body">
+              <p>Stores built to sell, with custom Liquid sections, metafield-driven content, clean product pages and the right apps.</p>
+              <ul class="mono">
+                <li>Custom Online Store 2.0 themes</li>
+                <li>Sections, blocks &amp; metafields</li>
+                <li>Collections, filters &amp; checkout setup</li>
+                <li>Store migration &amp; app integration</li>
+                <li>Conversion-focused UX</li>
+              </ul>
+            </div>
+            <span class="sc-big" aria-hidden="true">SH</span>
+          </article>
+          <article class="stack-card" style="--c: var(--wix)">
+            <div class="sc-top"><span class="sc-num mono">/03</span><span class="sc-pill mono">Wix Studio · Velo</span></div>
+            <h3>Wix Website Design</h3>
+            <div class="sc-body">
+              <p>Polished Wix sites you can update yourself, with Velo code when you need custom features the editor can't do.</p>
+              <ul class="mono">
+                <li>Wix Studio layouts</li>
+                <li>Velo code &amp; dynamic pages</li>
+                <li>Stores &amp; Bookings</li>
+                <li>Multilingual websites</li>
+                <li>On-page SEO setup</li>
+              </ul>
+            </div>
+            <span class="sc-big" aria-hidden="true">WX</span>
+          </article>
         </div>
       </div>
     </section>
@@ -181,144 +349,22 @@
       </div>
     </section>
 
-    <!-- ============ SERVICES (stacking cards) ============ -->
-    <section class="services section" id="services">
+    <!-- ============ PROCESS ============ -->
+    <section class="process section" id="process">
       <div class="wrap">
         <div class="section-head">
-          <p class="label mono"><span>02</span> Services</p>
-          <h2 class="split-heading">What I build for you</h2>
+          <p class="label mono"><span>06</span> Process</p>
+          <h2 class="split-heading">From brief to launch</h2>
         </div>
-        <div class="stack">
-          <article class="stack-card" style="--c: var(--wp)">
-            <div class="sc-top"><span class="sc-num mono">/01</span><span class="sc-pill mono">PHP · ACF · WooCommerce</span></div>
-            <h3>Custom WordPress Development</h3>
-            <div class="sc-body">
-              <p>Themes coded from scratch, custom plugins, Gutenberg blocks and flexible ACF layouts. Your team can edit everything without breaking the design.</p>
-              <ul class="mono">
-                <li>Custom themes &amp; child themes</li>
-                <li>Plugin &amp; REST API development</li>
-                <li>Elementor / Gutenberg / ACF builds</li>
-                <li>WooCommerce stores</li>
-                <li>Speed &amp; security hardening</li>
-              </ul>
-            </div>
-            <span class="sc-big" aria-hidden="true">WP</span>
-          </article>
-          <article class="stack-card" style="--c: var(--shopify)">
-            <div class="sc-top"><span class="sc-num mono">/02</span><span class="sc-pill mono">Liquid · OS 2.0 · Apps</span></div>
-            <h3>Shopify Store Development</h3>
-            <div class="sc-body">
-              <p>Stores built to sell, with custom Liquid sections, metafield-driven content, clean product pages and the right apps.</p>
-              <ul class="mono">
-                <li>Custom Online Store 2.0 themes</li>
-                <li>Sections, blocks &amp; metafields</li>
-                <li>Collections, filters &amp; checkout setup</li>
-                <li>Store migration &amp; app integration</li>
-                <li>Conversion-focused UX</li>
-              </ul>
-            </div>
-            <span class="sc-big" aria-hidden="true">SH</span>
-          </article>
-          <article class="stack-card" style="--c: var(--wix)">
-            <div class="sc-top"><span class="sc-num mono">/03</span><span class="sc-pill mono">Wix Studio · Velo</span></div>
-            <h3>Wix Website Design</h3>
-            <div class="sc-body">
-              <p>Polished Wix sites you can update yourself, with Velo code when you need custom features the editor can't do.</p>
-              <ul class="mono">
-                <li>Wix Studio layouts</li>
-                <li>Velo code &amp; dynamic pages</li>
-                <li>Stores &amp; Bookings</li>
-                <li>Multilingual websites</li>
-                <li>On-page SEO setup</li>
-              </ul>
-            </div>
-            <span class="sc-big" aria-hidden="true">WX</span>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ WORK (horizontal scroll) ============ -->
-    <section class="work" id="work">
-      <div class="work-pin">
-        <div class="work-track" id="work-track">
-          <div class="work-intro">
-            <p class="label mono"><span>03</span> Selected work</p>
-            <h2 class="work-title">Recent<br><em class="outline">projects</em></h2>
-            <p class="work-hint mono">Scroll to explore <span aria-hidden="true">→</span></p>
-          </div>
-          <!-- Project cards are rendered here from the PROJECTS list in js/main.js -->
-          <div class="work-outro">
-            <p class="mono dim">// and many more…</p>
-            <h3>Your project<br>could be next.</h3>
-            <a href="#contact" class="btn btn-accent" data-magnetic><span>Let's talk</span></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ RESPONSIVE (pinned device showcase) ============ -->
-    <section class="devices" id="responsive">
-      <div class="devices-pin">
-        <div class="wrap devices-head">
-          <div>
-            <p class="label mono"><span>&#9638;</span> Responsive by default</p>
-            <h2 class="split-heading">One website.<br><em class="outline">Every</em> screen.</h2>
-          </div>
-          <div class="devices-side">
-            <p class="dim">Every site I build is designed and tested on desktop, tablet and mobile. Here's <strong id="dv-name">a recent project</strong> on all three, live.</p>
-            <a id="dv-link" class="btn btn-line" href="#" target="_blank" rel="noopener" data-magnetic><span>Visit live site ↗</span></a>
-          </div>
-        </div>
-        <div class="devices-stage">
-          <figure class="dv dv-desktop">
-            <div class="dv-body"><div class="dv-screen"><div class="dv-art"></div><img class="shot dv-img" alt=""></div></div>
-            <div class="dv-stand" aria-hidden="true"></div>
-            <figcaption class="dv-label mono">Desktop · <b data-to="1440">1440</b>px</figcaption>
-          </figure>
-          <figure class="dv dv-tablet">
-            <div class="dv-body"><div class="dv-screen"><div class="dv-art"></div><img class="shot dv-img" alt=""></div></div>
-            <figcaption class="dv-label mono">Tablet · <b data-to="820">820</b>px</figcaption>
-          </figure>
-          <figure class="dv dv-phone">
-            <div class="dv-body"><i class="dv-notch" aria-hidden="true"></i><div class="dv-screen"><div class="dv-art"></div><img class="shot dv-img" alt=""></div></div>
-            <figcaption class="dv-label mono">Mobile · <b data-to="390">390</b>px</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ BEFORE / AFTER ============ -->
-    <section class="redesigns section" id="redesigns">
-      <div class="floaters">
-        <div class="fb fb--wix fb--far fb--hide-sm" data-speed="0.35" style="--x:6%;--y:8%" aria-hidden="true"><div class="fb-in"><svg viewBox="0 0 64 48" aria-hidden="true"><text x="32" y="33" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="24" fill="currentColor">Wix</text></svg><span class="mono">Wix</span></div></div>
-        <div class="fb fb--elementor fb--mid fb--hide-sm" data-speed="0.6" style="--x:94%;--y:6%" aria-hidden="true"><div class="fb-in"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="currentColor"/><rect x="16" y="14" width="4" height="20" fill="#0a0a0b"/><rect x="23" y="14" width="10" height="4" fill="#0a0a0b"/><rect x="23" y="22" width="10" height="4" fill="#0a0a0b"/><rect x="23" y="30" width="10" height="4" fill="#0a0a0b"/></svg><span class="mono">Elementor</span></div></div>
-      </div>
-      <div class="wrap">
-        <div class="ba-head">
-          <div>
-            <p class="label mono"><span>&harr;</span> Before / After</p>
-            <h2 class="split-heading">Redesigns that<br>pay for themselves.</h2>
-          </div>
-          <p class="dim ba-intro">Drag the handle to compare a client's old website with the version I rebuilt.</p>
-        </div>
-        <div class="ba-tabs mono" role="tablist" aria-label="Redesign projects" id="ba-tabs"></div>
-        <div class="ba" id="ba">
-          <div class="ba-frame" data-cursor="drag">
-            <div class="ba-layer ba-after" id="ba-after"></div>
-            <div class="ba-layer ba-before" id="ba-before"></div>
-            <span class="ba-tag ba-tag--before mono">Before</span>
-            <span class="ba-tag ba-tag--after mono">After</span>
-            <div class="ba-handle" aria-hidden="true"><span><svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 6 3 12l6 6M15 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-            <input class="ba-range" id="ba-range" type="range" min="0" max="100" value="50" aria-label="Move the slider to compare before and after">
-          </div>
-          <div class="ba-info">
-            <div>
-              <h3 id="ba-title"></h3>
-              <a id="ba-link" class="ba-link mono" href="#" target="_blank" rel="noopener"></a>
-            </div>
-            <ul class="ba-notes" id="ba-notes"></ul>
-          </div>
+        <div class="timeline">
+          <svg class="timeline-line" viewBox="0 0 4 1000" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="2" y1="0" x2="2" y2="1000" class="tl-base"/>
+            <line x1="2" y1="0" x2="2" y2="1000" class="tl-fill" pathLength="1"/>
+          </svg>
+          <div class="tl-step"><span class="tl-dot"></span><span class="mono tl-num">01 — Discover</span><h3>Understand your goals</h3><p>We talk about your business, audience and the features you need. Then I recommend the right platform for your budget.</p></div>
+          <div class="tl-step"><span class="tl-dot"></span><span class="mono tl-num">02 — Plan</span><h3>Structure &amp; design</h3><p>Sitemap, wireframes and design direction, or I build pixel-perfect from your Figma, XD or PSD files.</p></div>
+          <div class="tl-step"><span class="tl-dot"></span><span class="mono tl-num">03 — Build</span><h3>Clean, responsive development</h3><p>Built on a staging link you can check anytime, with regular progress updates.</p></div>
+          <div class="tl-step"><span class="tl-dot"></span><span class="mono tl-num">04 — Launch</span><h3>Test, ship &amp; support</h3><p>Cross-device testing, SEO basics, speed tuning, go-live and training, plus support after launch.</p></div>
         </div>
       </div>
     </section>
@@ -383,26 +429,6 @@
       </div>
     </section>
 
-    <!-- ============ PROCESS ============ -->
-    <section class="process section" id="process">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="label mono"><span>04</span> Process</p>
-          <h2 class="split-heading">From brief to launch</h2>
-        </div>
-        <div class="timeline">
-          <svg class="timeline-line" viewBox="0 0 4 1000" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="2" y1="0" x2="2" y2="1000" class="tl-base"/>
-            <line x1="2" y1="0" x2="2" y2="1000" class="tl-fill" pathLength="1"/>
-          </svg>
-          <div class="tl-step"><span class="tl-dot"></span><span class="mono tl-num">01 — Discover</span><h3>Understand your goals</h3><p>We talk about your business, audience and the features you need. Then I recommend the right platform for your budget.</p></div>
-          <div class="tl-step"><span class="tl-dot"></span><span class="mono tl-num">02 — Plan</span><h3>Structure &amp; design</h3><p>Sitemap, wireframes and design direction, or I build pixel-perfect from your Figma, XD or PSD files.</p></div>
-          <div class="tl-step"><span class="tl-dot"></span><span class="mono tl-num">03 — Build</span><h3>Clean, responsive development</h3><p>Built on a staging link you can check anytime, with regular progress updates.</p></div>
-          <div class="tl-step"><span class="tl-dot"></span><span class="mono tl-num">04 — Launch</span><h3>Test, ship &amp; support</h3><p>Cross-device testing, SEO basics, speed tuning, go-live and training, plus support after launch.</p></div>
-        </div>
-      </div>
-    </section>
-
     <!-- ============ STACK ============ -->
     <section class="toolbox section" id="stack">
       <div class="wrap">
@@ -439,7 +465,7 @@
         <div class="fb fb--shopify fb--near fb--hide-sm" data-speed="0.8" style="--x:92%;--y:34%" aria-hidden="true"><div class="fb-in"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M17 17v-3.5a7 7 0 0 1 14 0V17" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M10 17h28l-2.4 25H12.4z" fill="currentColor"/><text x="24" y="37" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="17" fill="#0a0a0b">S</text></svg><span class="mono">Shopify</span></div></div>
       </div>
       <div class="wrap">
-        <p class="label mono"><span>05</span> Contact</p>
+        <p class="label mono"><span>07</span> Contact</p>
         <h2 class="contact-big"><span>Let's build</span><span class="outline">something</span><span class="accent">great.</span></h2>
         <div class="contact-grid">
           <div class="contact-info">
@@ -469,6 +495,7 @@
         </div>
       </div>
     </section>
+
   </main>
 
   <footer class="site-footer">
