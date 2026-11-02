@@ -14,6 +14,10 @@
 .pono-pdp h3{font-size:1.125rem;font-weight:700}
 .pono-pdp p{margin:0}
 .pono-pdp ul{margin:0;padding:0;list-style:none}
+.pono-pdp img{max-width:100%;display:block;height:auto}
+.pono-pdp .two{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:2.5rem;align-items:center}
+@media (max-width:820px){.pono-pdp .two{grid-template-columns:1fr}}
+.pono-pdp .two img{border-radius:8px;width:100%;aspect-ratio:4/3;object-fit:cover}
 .pono-pdp :focus-visible{outline:2px solid var(--lime-dk);outline-offset:2px}
 .pono-pdp .wrap{max-width:var(--wrap);margin:0 auto;padding-left:16px;padding-right:16px}
 .pono-pdp section.band{padding-block:clamp(2.5rem,5vw,4rem)}
@@ -34,7 +38,9 @@
 .pono-pdp .love svg{width:20px;height:20px;flex:none;margin-top:.15rem;color:var(--lime-dk)}
 .pono-pdp .uses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
 @media (max-width:760px){.pono-pdp .uses{grid-template-columns:1fr}}
-.pono-pdp .use{background:#fff;border:1px solid var(--line);border-radius:10px;padding:1.2rem;display:flex;flex-direction:column;gap:.8rem}
+.pono-pdp .use{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.pono-pdp .use img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.pono-pdp .use .b{padding:1.2rem;display:flex;flex-direction:column;gap:.8rem}
 .pono-pdp .foods{display:flex;flex-wrap:wrap;gap:.5rem}
 .pono-pdp .foods li{background:var(--lime-soft);color:var(--navy);border-radius:999px;padding:.3rem .8rem;font-size:.9rem;font-weight:700}
 .pono-pdp .label-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
@@ -52,7 +58,8 @@
 
 <div class="pono-pdp">
 <section class="band tint" id="about">
-    <div class="wrap">
+    <div class="wrap two">
+      <div>
       <div class="prose">
         <span class="eyebrow">Island-style furikake</span>
         <h2>Nori Goma Furikake</h2>
@@ -64,6 +71,8 @@
         <li class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>Maui recipe</li>
         <li class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>Ships in 1–2 business days</li>
       </ul>
+      </div>
+      <img src="https://ponohawaiianfoods.com/cdn/shop/files/C90698A6-24F2-42A4-B1C8-788438E95F11.png" alt="Pono Hawaiian Nori Goma Furikake" loading="lazy">
     </div>
   </section>
 
@@ -84,12 +93,18 @@
       <div class="sec-head"><span class="eyebrow">From our kitchen</span><h2>How to use it</h2></div>
       <div class="uses">
         <div class="use">
-          <h3>Shake it over</h3>
-          <ul class="foods"><li>Hot rice</li><li>Musubi</li><li>Poke bowls</li><li>Sushi</li></ul>
+          <img src="https://ponohawaiianfoods.com/cdn/shop/files/7BC67F11-D27F-428D-B36A-665D36057417.png" alt="Nori Goma Furikake on rice, musubi, poke and sushi" loading="lazy">
+          <div class="b">
+            <h3>Shake it over</h3>
+            <ul class="foods"><li>Hot rice</li><li>Musubi</li><li>Poke bowls</li><li>Sushi</li></ul>
+          </div>
         </div>
         <div class="use">
-          <h3>Try it on</h3>
-          <ul class="foods"><li>Popcorn</li><li>Avocado toast</li><li>Eggs</li><li>Salmon</li><li>Ramen</li><li>Roasted veggies</li><li>Furikake Chex Mix</li></ul>
+          <img src="https://ponohawaiianfoods.com/cdn/shop/files/DE30C72C-2EA3-4DF0-BE51-55B06F58070E.png" alt="Nori Goma Furikake on everyday dishes" loading="lazy">
+          <div class="b">
+            <h3>Try it on</h3>
+            <ul class="foods"><li>Popcorn</li><li>Avocado toast</li><li>Eggs</li><li>Salmon</li><li>Ramen</li><li>Roasted veggies</li><li>Furikake Chex Mix</li></ul>
+          </div>
         </div>
       </div>
     </div>
