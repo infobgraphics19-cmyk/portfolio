@@ -172,7 +172,14 @@ function tda_start_checkout() {
         wp_send_json_error('Invalid plan.');
     }
 
-    $inserted = $wpdb->insert($table, [
+    // Fail early (before creating a pending row) if Stripe isn't configured.
+    try {
+        tda_load_stripe();
+    } catch (Throwable $e) {
+        tda_checkout_fail($e->getMessage());
+    }
+
+    $row = [
         'user_id'        => $user_id ?: null,
         'email'          => $email,
         'plan_days'      => $pricing['days'],
@@ -181,19 +188,24 @@ function tda_start_checkout() {
         'vehicle_type'   => $vehicle,
         'payment_status' => 'pending',
         'created_at'     => current_time('mysql'),
-    ]);
+    ];
+
+    $inserted = $wpdb->insert($table, $row);
 
     if (!$inserted) {
-        error_log('TDA CHECKOUT: insert failed: ' . $wpdb->last_error);
-        wp_send_json_error('Could not start checkout. Please try again.');
+        // Table missing or outdated (e.g. deleted manually): rebuild and retry once.
+        tda_create_payment_table();
+        $inserted = $wpdb->insert($table, $row);
+    }
+
+    if (!$inserted) {
+        tda_checkout_fail('Database insert failed: ' . $wpdb->last_error, 'Could not start checkout. Please try again.');
     }
 
     $payment_id = (int) $wpdb->insert_id;
     $plan       = tda_get_plans()[$plan_key];
 
     try {
-        tda_load_stripe();
-
         $session = \Stripe\Checkout\Session::create([
             'mode'                 => 'payment',
             'payment_method_types' => ['card'],
@@ -218,19 +230,46 @@ function tda_start_checkout() {
                 'metadata' => ['payment_id' => $payment_id],
             ],
         ]);
-    } catch (Exception $e) {
-        error_log('TDA CHECKOUT: Stripe error: ' . $e->getMessage());
+    } catch (Throwable $e) {
         $wpdb->update($table, ['payment_status' => 'failed'], ['id' => $payment_id]);
-        wp_send_json_error('Payment could not be started. Please try again.');
+        tda_checkout_fail('Stripe error: ' . $e->getMessage());
     }
 
     $wpdb->update($table, ['stripe_session_id' => $session->id], ['id' => $payment_id]);
+    delete_option('tda_last_checkout_error');
 
     wp_send_json_success([
         'payment_id' => $payment_id,
         'url'        => $session->url,
     ]);
 }
+
+/**
+ * Log a checkout failure, keep it for the wp-admin notice, and stop the
+ * AJAX request. Visitors get a generic message; admins (or WP_DEBUG) see
+ * the real reason.
+ */
+function tda_checkout_fail($reason, $public_message = 'Payment could not be started. Please try again.') {
+    error_log('TDA CHECKOUT: ' . $reason);
+    update_option('tda_last_checkout_error', [
+        'time'    => time(),
+        'message' => $reason,
+    ], false);
+
+    $show_detail = (defined('WP_DEBUG') && WP_DEBUG) || current_user_can('manage_options');
+    wp_send_json_error($show_detail ? $public_message . ' (' . $reason . ')' : $public_message);
+}
+
+add_action('admin_notices', function () {
+    $err = get_option('tda_last_checkout_error');
+    if (!current_user_can('manage_options') || empty($err['message'])) return;
+
+    printf(
+        '<div class="notice notice-warning"><p><strong>TDA Custom Plans – last checkout error</strong> (%s): <code>%s</code></p></div>',
+        esc_html(wp_date('d M Y H:i', (int) $err['time'])),
+        esc_html($err['message'])
+    );
+});
 
 /* -----------------------------
  * Fulfillment (shared by webhook + success page)
