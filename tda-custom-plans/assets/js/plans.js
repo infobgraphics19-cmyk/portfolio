@@ -103,7 +103,7 @@ window.addEventListener('load', function () {
         }
         if (seconds <= 0) {
             clearInterval(timer);
-            window.location.href = '/lp-profile/';
+            window.location.href = (window.TDA && TDA.my_tests_url) || '/lp-profile/';
         }
     }, 1000);
 });

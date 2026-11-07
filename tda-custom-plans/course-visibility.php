@@ -133,7 +133,15 @@ add_action('template_redirect', function () {
     if (!$course_id) return;
 
     $item_slug = get_query_var('course-item');
-    if (!$item_slug) return;
+
+    // Course landing page is disabled for customers: send them to "My Practice Tests".
+    if (!$item_slug) {
+        if (!tda_user_bypasses_restrictions()) {
+            wp_safe_redirect(tda_get_my_quizzes_page_url());
+            exit;
+        }
+        return;
+    }
 
     $quiz = get_page_by_path($item_slug, OBJECT, 'lp_quiz');
     if ($quiz && tda_quiz_is_hidden_for_current_user($quiz->ID, $course_id)) {
@@ -223,6 +231,27 @@ add_action('wp_footer', function () {
 </script>
     <?php
 }, 99);
+
+/*
+ * LearnPress profile "My Courses" table: hide the course name for the paid
+ * courses (the plan is shown on "My Practice Tests" instead) and point the
+ * thumbnail at that page.
+ */
+add_action('wp_head', function () {
+    if (!function_exists('learn_press_is_profile') || !learn_press_is_profile()) return;
+
+    $rules = [];
+    foreach (tda_get_managed_course_ids() as $course_id) {
+        $url = get_permalink($course_id);
+        if (!$url) continue;
+        $url = esc_attr($url);
+        $rules[] = ".lp_profile_course_progress td:nth-child(2) a[href=\"{$url}\"]";
+        $rules[] = ".lp_profile_course_progress td:nth-child(2) a[href=\"" . esc_attr(untrailingslashit($url)) . "\"]";
+    }
+    if ($rules) {
+        echo '<style id="tda-profile-courses">' . implode(',', $rules) . '{display:none !important;}</style>';
+    }
+});
 
 /** All quiz IDs in a course's curriculum. */
 function tda_get_course_quiz_ids($course_id) {

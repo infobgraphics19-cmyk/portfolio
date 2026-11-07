@@ -281,3 +281,22 @@
         transform: translateY(0);
     }
 }
+/* ---------- My Practice Tests [tda_my_quizzes] ---------- */
+.tda-myq { font-family: "Archivo", Sans-serif; max-width: 960px; margin: 0 auto; }
+.tda-myq-plan { background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 24px; margin: 24px 0; }
+.tda-myq-plan-head h2 { margin: 0 0 6px; font-size: 24px; }
+.tda-myq-plan-head p { margin: 0; color: #555; }
+.tda-myq-class { margin: 24px 0 8px; font-size: 18px; color: #E61937; }
+.tda-myq-list { list-style: none; margin: 0; padding: 0; }
+.tda-myq-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #eee; }
+.tda-myq-title { flex: 1; font-weight: 600; }
+.tda-myq-status { font-size: 13px; padding: 3px 10px; border-radius: 20px; background: #f1f1f1; color: #555; white-space: nowrap; }
+.tda-myq-status--passed { background: #e6f6ea; color: #1b7a33; }
+.tda-myq-status--failed { background: #fdecee; color: #b3122a; }
+.tda-myq-btn { display: inline-block; padding: 8px 16px; border-radius: 8px; background: #E61937; color: #fff !important; text-decoration: none; white-space: nowrap; }
+.tda-myq-btn:hover { background: #000; }
+.tda-myq-notice { padding: 16px; border-radius: 10px; background: #fff4e5; margin: 16px 0; }
+@media (max-width: 600px) {
+    .tda-myq-item { flex-wrap: wrap; }
+    .tda-myq-title { flex-basis: 100%; }
+}

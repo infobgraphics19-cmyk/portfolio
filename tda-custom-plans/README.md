@@ -1,4 +1,4 @@
-# TDA Custom Plans (v2.0)
+# TDA Custom Plans (v2.1)
 
 WordPress plugin for thedriveracademy.ca: plan pricing table, Stripe Checkout,
 account creation + welcome email, LearnPress quiz assignment by licence class,
@@ -24,6 +24,16 @@ per-user quiz visibility, and plan-expiry reminders.
 | Vehicle → classes, class → quiz IDs (AB + BC) | `quiz-mapping.php` |
 | Welcome + reminder emails | `email-template.php` |
 | Reminder timing (2 days) | `expiry-reminder.php` (`TDA_REMINDER_DAYS_BEFORE`) |
-| Hide instructor / unassigned quizzes | `course-visibility.php` |
+| Hide instructor / unassigned quizzes, course page redirect | `course-visibility.php` |
+| "My Practice Tests" page `[tda_my_quizzes]`, profile expiry date | `my-quizzes.php` |
 
 Vehicle is stored as `car`, `bike`, `truck`; the frontend shows Car, Motorcycle, Commercial.
+
+## My Practice Tests page
+A page **My Practice Tests** (`/my-practice-tests/`) with `[tda_my_quizzes]` is created
+automatically. Customers only see the quizzes in their active plan(s) there. The paid
+course landing pages (e.g. `/courses/alberta-paid-2/`) redirect customers to it; admins
+and instructors can still open them. Quiz pages themselves keep working.
+
+LearnPress course setting: keep **Block content when expired** off for the paid courses
+(plan expiry is handled by this plugin). Setting the course Duration to 0 is fine too.

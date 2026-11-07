@@ -58,7 +58,7 @@ function tda_send_payment_success_email($payment_id) {
     $classes    = tda_classes_label($payment->vehicle_type);
     $plan_label = tda_plan_label_from_days($payment->plan_days);
 
-    $login_url       = site_url('/lp-profile/');
+    $login_url       = tda_get_my_quizzes_page_url();
     $change_pass_url = wp_lostpassword_url();
 
     $subject = $is_new_user

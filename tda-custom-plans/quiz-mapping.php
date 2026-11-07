@@ -153,7 +153,7 @@ function tda_now_gmt() {
 
 /** Paid rows that have not expired yet. */
 function tda_get_active_grants($user_id) {
-    static $cache = [];
+    $cache   = &$GLOBALS['tda_active_grants_cache'];
     $user_id = (int) $user_id;
     if (!$user_id) return [];
     if (isset($cache[$user_id])) return $cache[$user_id];
@@ -170,6 +170,15 @@ function tda_get_active_grants($user_id) {
         )
     );
     return $cache[$user_id];
+}
+
+/** Forget cached grants (after a payment changes them). */
+function tda_flush_grant_cache($user_id = 0) {
+    if ($user_id) {
+        unset($GLOBALS['tda_active_grants_cache'][(int) $user_id]);
+    } else {
+        $GLOBALS['tda_active_grants_cache'] = [];
+    }
 }
 
 /** Most recent paid row, active or not (null if the user never paid). */

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TDA Custom Plans
  * Description: Custom plan system (24h trial, 9, 30, 90 days) with Stripe Checkout, LearnPress quiz assignment and expiry reminders.
- * Version: 2.0
+ * Version: 2.1
  * Author: Kishan
  */
 
@@ -11,8 +11,8 @@ if (!defined('ABSPATH')) exit;
 /* -----------------------------
  * Constants
  * ----------------------------- */
-define('TDA_PLANS_VERSION', '2.0');
-define('TDA_PLANS_DB_VERSION', '2.0');
+define('TDA_PLANS_VERSION', '2.1');
+define('TDA_PLANS_DB_VERSION', '2.1');
 define('TDA_PLANS_URL', plugin_dir_url(__FILE__));
 define('TDA_PLANS_PATH', plugin_dir_path(__FILE__));
 
@@ -31,6 +31,7 @@ require_once TDA_PLANS_PATH . 'user-registration.php';
 require_once TDA_PLANS_PATH . 'email-template.php';
 require_once TDA_PLANS_PATH . 'expiry-reminder.php';
 require_once TDA_PLANS_PATH . 'course-visibility.php';
+require_once TDA_PLANS_PATH . 'my-quizzes.php';
 
 function tda_load_stripe() {
     if (!defined('TDA_STRIPE_SECRET') || !TDA_STRIPE_SECRET) {
@@ -57,8 +58,9 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script('tda-plans-js', TDA_PLANS_URL . 'assets/js/plans.js', ['jquery'], TDA_PLANS_VERSION, true);
 
     wp_localize_script('tda-plans-js', 'TDA', [
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce'    => wp_create_nonce('tda_plans_nonce'),
+        'ajax_url'     => admin_url('admin-ajax.php'),
+        'nonce'        => wp_create_nonce('tda_plans_nonce'),
+        'my_tests_url' => tda_get_my_quizzes_page_url(),
     ]);
 });
 
@@ -361,6 +363,7 @@ function tda_complete_payment($payment_id, $transaction_id) {
 
     $wpdb->update($table, ['expires_at' => $expires_at], ['id' => $payment_id]);
     $payment->expires_at = $expires_at;
+    tda_flush_grant_cache($user_id);
 
     // 3. LearnPress course + quizzes
     tda_assign_learnpress_items_after_payment($user_id, $payment);
