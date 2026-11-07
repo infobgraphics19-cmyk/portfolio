@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TDA Custom Plans
  * Description: Custom plan system (24h trial, 9, 30, 90 days) with Stripe Checkout, LearnPress quiz assignment and expiry reminders.
- * Version: 2.1
+ * Version: 2.1.1
  * Author: Kishan
  */
 
@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) exit;
 /* -----------------------------
  * Constants
  * ----------------------------- */
-define('TDA_PLANS_VERSION', '2.1');
+define('TDA_PLANS_VERSION', '2.1.1');
 define('TDA_PLANS_DB_VERSION', '2.1');
 define('TDA_PLANS_URL', plugin_dir_url(__FILE__));
 define('TDA_PLANS_PATH', plugin_dir_path(__FILE__));

@@ -233,25 +233,42 @@ add_action('wp_footer', function () {
 }, 99);
 
 /*
- * LearnPress profile "My Courses" table: hide the course name for the paid
- * courses (the plan is shown on "My Practice Tests" instead) and point the
- * thumbnail at that page.
+ * LearnPress profile "My Courses" table: the course name and image of the
+ * paid courses link to "My Practice Tests" instead of the course page.
+ * (Without JS the course page redirects there anyway.)
  */
-add_action('wp_head', function () {
+add_action('wp_footer', function () {
     if (!function_exists('learn_press_is_profile') || !learn_press_is_profile()) return;
+    if (tda_user_bypasses_restrictions()) return;
 
-    $rules = [];
+    $urls = [];
     foreach (tda_get_managed_course_ids() as $course_id) {
         $url = get_permalink($course_id);
-        if (!$url) continue;
-        $url = esc_attr($url);
-        $rules[] = ".lp_profile_course_progress td:nth-child(2) a[href=\"{$url}\"]";
-        $rules[] = ".lp_profile_course_progress td:nth-child(2) a[href=\"" . esc_attr(untrailingslashit($url)) . "\"]";
+        if ($url) $urls[] = untrailingslashit($url);
     }
-    if ($rules) {
-        echo '<style id="tda-profile-courses">' . implode(',', $rules) . '{display:none !important;}</style>';
+    if (!$urls) return;
+    ?>
+<script>
+(function () {
+    var courseUrls = <?php echo wp_json_encode($urls); ?>;
+    var target = <?php echo wp_json_encode(tda_get_my_quizzes_page_url()); ?>;
+    function relink() {
+        document.querySelectorAll('a[href]').forEach(function (a) {
+            var href = a.getAttribute('href').replace(/\/$/, '');
+            if (courseUrls.indexOf(href) !== -1) a.setAttribute('href', target);
+        });
     }
-});
+    document.addEventListener('DOMContentLoaded', relink);
+    // "View more" / tab switches load the course list by AJAX.
+    if (window.MutationObserver) {
+        var t;
+        new MutationObserver(function () { clearTimeout(t); t = setTimeout(relink, 200); })
+            .observe(document.documentElement, { childList: true, subtree: true });
+    }
+})();
+</script>
+    <?php
+}, 99);
 
 /** All quiz IDs in a course's curriculum. */
 function tda_get_course_quiz_ids($course_id) {
