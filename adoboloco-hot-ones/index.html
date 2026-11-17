@@ -1,23 +1,21 @@
 <title>Adoboloco on Hot Ones</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="See every Adoboloco hot sauce featured on Hot Ones, from Hamajang in Season 5 to Jalapeño Chico in Season 21. Maui-made, family-owned. Shop the lineup.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
 <style>
-/* Simple wireframe-level layout: stacked full-width sections, one centered container.
-   All colours and fonts are tokens. Swap these for the live site's values on integration. */
+/* Simple layout: stacked full-width sections, one centered container.
+   Adoboloco brand: white background, red #D50909, Helvetica headings, Arial body. Light only. */
 :root{
+  color-scheme:light;
   --bg:#ffffff;
-  --bg-alt:#f6f5f3;
-  --fg:#1d1b1a;
-  --muted:#5f5955;
-  --line:#e4e0dc;
-  --accent:#b3261e;        /* chilli red, replace with site's brand red */
+  --bg-alt:#ffffff;
+  --fg:#111111;
+  --muted:#444444;
+  --line:#e6e6e6;
+  --accent:#D50909;
   --accent-fg:#ffffff;
-  --placeholder:#ebe7e3;
-  --font-head:"Space Grotesk", "Helvetica Neue", Arial, sans-serif;
-  --font-body:"Inter", "Helvetica Neue", Arial, sans-serif;
+  --placeholder:#f2f2f2;
+  --font-head:Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --font-body:Arial, Helvetica, sans-serif;
   --h1:clamp(2rem, 4.5vw, 3rem);
   --h2:clamp(1.6rem, 3vw, 2.25rem);
   --h3:1.25rem;
@@ -26,12 +24,6 @@
   --max:1140px;
   --radius:6px;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#151312;--bg-alt:#1e1b1a;--fg:#f2eeeb;--muted:#b3aca6;--line:#34302d;
-  --accent:#e2574c;--accent-fg:#1a0705;--placeholder:#2a2624;color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#151312;--bg-alt:#1e1b1a;--fg:#f2eeeb;--muted:#b3aca6;--line:#34302d;
-  --accent:#e2574c;--accent-fg:#1a0705;--placeholder:#2a2624;color-scheme:dark}
 
 body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:var(--body);line-height:1.65}
 .hop *{box-sizing:border-box}
@@ -44,7 +36,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size
 .hop a:focus-visible,.hop summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 .sec{padding-block:clamp(48px,7vw,88px)}
-.sec.alt{background:var(--bg-alt)}
+.sec.alt{background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .wrap{max-width:var(--max);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
 .head{display:flex;flex-direction:column;gap:12px;max-width:68ch}
 .head p{color:var(--muted)}
