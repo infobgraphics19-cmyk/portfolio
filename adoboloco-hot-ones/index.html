@@ -48,26 +48,27 @@ body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size
 .btn.ghost{background:transparent;color:var(--accent)}
 .btn:hover{filter:brightness(1.08)}
 
+.pic{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:#fff;max-width:100%}
 .ph{background:var(--placeholder);color:var(--muted);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;text-align:center;font-size:var(--small);padding:16px;max-width:100%}
 
 /* Hero */
 .hero{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
 .hero > div{min-width:0;display:flex;flex-direction:column;gap:18px}
-.hero .ph{aspect-ratio:4/3}
+.hero .pic{max-width:520px;justify-self:center}
 .trust{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:var(--small);color:var(--muted);list-style:none;margin:0;padding:0}
 .trust li::before{content:"✓ ";color:var(--accent);font-weight:700}
 
 /* Story */
 .story{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:start}
 .story .copy{display:flex;flex-direction:column;gap:16px;min-width:0;max-width:68ch}
-.story .ph{aspect-ratio:4/5}
+.story .pic{border:1px solid var(--line);border-radius:var(--radius)}
 blockquote{margin:8px 0 0;padding:4px 0 4px 18px;border-left:3px solid var(--accent);font-family:var(--font-head);font-size:1.2rem;line-height:1.4}
 blockquote cite{display:block;margin-top:8px;font-family:var(--font-body);font-size:var(--small);font-style:normal;color:var(--muted)}
 
 /* Season rows */
 .seasons{display:flex;flex-direction:column;gap:20px}
 .sauce{display:grid;grid-template-columns:220px 1fr;gap:28px;padding:24px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg)}
-.sauce .ph{aspect-ratio:3/4}
+
 .sauce .body{display:flex;flex-direction:column;gap:12px;min-width:0}
 .badges{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
 .badges li{font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:99px;border:1px solid var(--line);font-variant-numeric:tabular-nums}
@@ -79,7 +80,7 @@ blockquote cite{display:block;margin-top:8px;font-family:var(--font-body);font-s
 /* Product grid */
 .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
 .card{display:flex;flex-direction:column;gap:10px;padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg);min-width:0}
-.card .ph{aspect-ratio:1/1}
+
 .card h3{font-size:1rem}
 .card p{font-size:.9rem;color:var(--muted);flex:1}
 .meta{display:flex;justify-content:space-between;font-size:.85rem;font-weight:600;font-variant-numeric:tabular-nums}
@@ -117,11 +118,10 @@ blockquote cite{display:block;margin-top:8px;font-family:var(--font-body);font-s
 @media (max-width:960px){
   .grid{grid-template-columns:repeat(2,1fr)}
   .hero,.story{grid-template-columns:1fr}
-  .story .ph{aspect-ratio:16/10}
 }
 @media (max-width:640px){
   .sauce{grid-template-columns:1fr}
-  .sauce .ph{aspect-ratio:16/10}
+  .sauce .pic{max-width:320px;margin:0 auto}
   .trios{grid-template-columns:1fr}
   .grid{grid-template-columns:1fr 1fr}
 }
@@ -149,7 +149,7 @@ blockquote cite{display:block;margin-top:8px;font-family:var(--font-body);font-s
             <li>Simple, all-natural ingredients</li>
           </ul>
         </div>
-        <div class="ph" role="img" aria-label="Adoboloco hot sauces featured on Hot Ones Seasons 5, 8, 10, 18 and 21">Image: lineup of all five bottles, Hamajang to Jalapeño Chico, in season order</div>
+        <img class="pic hero-img" src="images/hero.jpg" alt="Adoboloco hot sauces featured on Hot Ones Seasons 5, 8, 10, 18 and 21" width="1920" height="1920">
       </div>
     </div>
   </section>
@@ -167,7 +167,7 @@ blockquote cite{display:block;margin-top:8px;font-family:var(--font-body);font-s
           <p>Five seasons later, we're still the same family business, still bottling in small batches, and still amazed every time an Adoboloco wing hits the table.</p>
           <blockquote>"Our sauces are made to bring out the natural flavor of each pepper, not to cover up your food."<cite>Tim Parsons, co-founder (wording to be confirmed)</cite></blockquote>
         </div>
-        <div class="ph" role="img" aria-label="The Parsons family in their Maui pepper garden">Image: Parsons family photo or the Maui pepper garden</div>
+        <img class="pic story-img" src="images/story.jpg" alt="Adoboloco hot sauce lineup, small-batch made in Maui, Hawaiʻi" loading="lazy" width="1200" height="1200">
       </div>
     </div>
   </section>
@@ -183,7 +183,7 @@ blockquote cite{display:block;margin-top:8px;font-family:var(--font-body);font-s
 
       <div class="seasons">
         <article class="sauce">
-          <div class="ph" role="img" aria-label="Hamajang Kiawe Smoked Ghost Pepper Hot Sauce bottle">Bottle image</div>
+          <img class="pic" src="images/hamajang.webp" alt="Hamajang Kiawe Smoked Ghost Pepper Hot Sauce bottle, as seen on Hot Ones" loading="lazy" width="1536" height="1536">
           <div class="body">
             <ul class="badges"><li>Hot Ones Season 5</li><li>Wing #5</li><li>32,000 SHU</li><li>Heat 07/10</li></ul>
             <h3><a href="/product/hamajang/">Hamajang Kiawe Smoked Ghost Pepper Hot Sauce</a></h3>
@@ -195,7 +195,7 @@ blockquote cite{display:block;margin-top:8px;font-family:var(--font-body);font-s
         </article>
 
         <article class="sauce">
-          <div class="ph" role="img" aria-label="Kolohe Kid! Hot Sauce bottle">Bottle image</div>
+          <img class="pic" src="images/kolohe-kid.webp" alt="Kolohe Kid! Hot Sauce bottle, as seen on Hot Ones" loading="lazy" width="1536" height="1536">
           <div class="body">
             <ul class="badges"><li>Hot Ones Season 8</li><li>Wing #6</li><li>61,000 SHU</li><li>Heat 05/10</li></ul>
             <h3><a href="/product/kolohe-kid/">Kolohe Kid! Hot Sauce</a></h3>
@@ -206,7 +206,7 @@ blockquote cite{display:block;margin-top:8px;font-family:var(--font-body);font-s
         </article>
 
         <article class="sauce">
-          <div class="ph" role="img" aria-label="Fiya! Fiya! Hot Sauce bottle">Bottle image</div>
+          <img class="pic" src="images/fiya-fiya.webp" alt="Fiya! Fiya! Hot Sauce bottle, as seen on Hot Ones" loading="lazy" width="1536" height="1536">
           <div class="body">
             <ul class="badges"><li>Hot Ones Season 10 All-Stars</li><li>Wing #6</li><li>77,000 SHU</li><li>Heat 11/10</li></ul>
             <h3><a href="/product/fiya-fiya/">Fiya! Fiya! Hot Sauce</a></h3>
@@ -217,7 +217,7 @@ blockquote cite{display:block;margin-top:8px;font-family:var(--font-body);font-s
         </article>
 
         <article class="sauce">
-          <div class="ph" role="img" aria-label="Island Wings Hot Sauce bottle">Bottle image</div>
+          <img class="pic" src="images/island-wings.jpg" alt="Island Wings Hot Sauce bottle, as seen on Hot Ones" loading="lazy" width="1536" height="1536">
           <div class="body">
             <ul class="badges"><li>Hot Ones Season 18</li><li>Wing #2</li><li>5,500 SHU</li><li>Mild</li></ul>
             <h3><a href="/product/island-wings/">Island Wings Hot Sauce</a></h3>
@@ -228,7 +228,7 @@ blockquote cite{display:block;margin-top:8px;font-family:var(--font-body);font-s
         </article>
 
         <article class="sauce">
-          <div class="ph" role="img" aria-label="Jalapeño Chico Hot Sauce bottle">Bottle image</div>
+          <img class="pic" src="images/jalapeno-chico.webp" alt="Jalapeño Chico Hot Sauce bottle, as seen on Hot Ones" loading="lazy" width="1536" height="1536">
           <div class="body">
             <ul class="badges"><li>Hot Ones Season 21</li><li>Wing #7</li><li>103,000 SHU</li><li>xHOT</li></ul>
             <h3><a href="/product/jalapeno-chico/">Jalapeño Chico Hot Sauce</a></h3>
@@ -253,35 +253,35 @@ blockquote cite{display:block;margin-top:8px;font-family:var(--font-body);font-s
       </div>
       <div class="grid">
         <div class="card">
-          <div class="ph">Product image</div>
+          <img class="pic" src="images/hamajang-banner.jpg" alt="Hamajang Kiawe Smoked Ghost Pepper Hot Sauce" loading="lazy" width="1536" height="1536">
           <h3>Hamajang Kiawe Smoked Ghost Pepper Hot Sauce</h3>
           <p>Kiawe-smoked ghost peppers, bright and tangy. Our first Hot Ones sauce.</p>
           <div class="meta"><span>Season 5 · 07/10</span><span>Live price</span></div>
           <a class="btn primary" href="/product/hamajang/">Shop Now</a>
         </div>
         <div class="card">
-          <div class="ph">Product image</div>
+          <img class="pic" src="images/kolohe-kid.webp" alt="Kolohe Kid! Hot Sauce" loading="lazy" width="1536" height="1536">
           <h3>Kolohe Kid! Hot Sauce</h3>
           <p>Ghost and Hawaiian chili peppers in a splashy, vinegar-forward sauce.</p>
           <div class="meta"><span>Season 8 · 05/10</span><span>$12.99</span></div>
           <a class="btn primary" href="/product/kolohe-kid/">Shop Now</a>
         </div>
         <div class="card">
-          <div class="ph">Product image</div>
+          <img class="pic" src="images/fiya-fiya.webp" alt="Fiya! Fiya! Hot Sauce" loading="lazy" width="1536" height="1536">
           <h3>Fiya! Fiya! Hot Sauce</h3>
           <p>Four-pepper blend led by Trinidad Moruga Scorpion. Our hottest.</p>
           <div class="meta"><span>Season 10 · 11/10</span><span>$16.99</span></div>
           <a class="btn primary" href="/product/fiya-fiya/">Shop Now</a>
         </div>
         <div class="card">
-          <div class="ph">Product image</div>
+          <img class="pic" src="images/island-wings.jpg" alt="Island Wings Hot Sauce" loading="lazy" width="1536" height="1536">
           <h3>Island Wings Hot Sauce</h3>
           <p>Fire-roasted pineapple and honey with a mild, tropical kick.</p>
           <div class="meta"><span>Season 18 · Mild</span><span>Live price</span></div>
           <a class="btn primary" href="/product/island-wings/">Shop Now</a>
         </div>
         <div class="card">
-          <div class="ph">Product image</div>
+          <img class="pic" src="images/jalapeno-chico.webp" alt="Jalapeño Chico Hot Sauce" loading="lazy" width="1536" height="1536">
           <h3>Jalapeño Chico Hot Sauce</h3>
           <p>Smoked jalapeño and scorpion pepper with a hint of lime.</p>
           <div class="meta"><span>Season 21 · xHOT</span><span>$14.99</span></div>
