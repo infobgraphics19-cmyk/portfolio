@@ -1,0 +1,417 @@
+<!-- Adoboloco on Hot Ones (/hot-ones/): paste into ONE Elementor "HTML" widget. Page layout: Elementor Full Width. -->
+<style>
+.hop{color-scheme:light;
+  --bg:#ffffff;
+  --bg-alt:#ffffff;
+  --fg:#111111;
+  --muted:#444444;
+  --line:#e6e6e6;
+  --accent:#D50909;
+  --accent-fg:#ffffff;
+  --placeholder:#f2f2f2;
+  --font-head:Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --font-body:Arial, Helvetica, sans-serif;
+  --h1:clamp(2rem, 4.5vw, 3rem);
+  --h2:clamp(1.6rem, 3vw, 2.25rem);
+  --h3:1.25rem;
+  --body:1.0625rem;
+  --small:.875rem;
+  --max:1140px;
+  --radius:6px;}
+.hop{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:var(--body);line-height:1.65}
+.hop *{box-sizing:border-box}
+.hop h1,.hop h2,.hop h3{font-family:var(--font-head);line-height:1.15;margin:0;text-wrap:balance}
+.hop h1{font-size:var(--h1);font-weight:700}
+.hop h2{font-size:var(--h2);font-weight:700}
+.hop h3{font-size:var(--h3);font-weight:700}
+.hop p{margin:0}
+.hop a{color:var(--accent)}
+.hop a:focus-visible,.hop summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.hop .sec{padding-block:clamp(48px,7vw,88px)}
+.hop .sec.alt{background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.hop .wrap{max-width:var(--max);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+.hop .head{display:flex;flex-direction:column;gap:12px;max-width:68ch}
+.hop .head p{color:var(--muted)}
+.hop .eyebrow{font-size:var(--small);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.hop .btns{display:flex;flex-wrap:wrap;gap:12px}
+.hop .btn{display:inline-block;padding:13px 22px;border-radius:var(--radius);font-weight:600;font-size:.95rem;text-decoration:none;border:2px solid var(--accent)}
+.hop .btn.primary{background:var(--accent);color:var(--accent-fg)}
+.hop .btn.ghost{background:transparent;color:var(--accent)}
+.hop .btn:hover{filter:brightness(1.08)}
+.hop .pic{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:#fff;max-width:100%}
+.hop .ph{background:var(--placeholder);color:var(--muted);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;text-align:center;font-size:var(--small);padding:16px;max-width:100%}
+.hop .hero{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
+.hop .hero > div{min-width:0;display:flex;flex-direction:column;gap:18px}
+.hop .hero .pic{width:100%}
+.hop .trust{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:var(--small);color:var(--muted);list-style:none;margin:0;padding:0}
+.hop .trust li::before{content:"✓ ";color:var(--accent);font-weight:700}
+.hop .story{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:start}
+.hop .story .copy{display:flex;flex-direction:column;gap:16px;min-width:0;max-width:68ch}
+.hop .story .pic{border:1px solid var(--line);border-radius:var(--radius)}
+.hop blockquote{margin:8px 0 0;padding:4px 0 4px 18px;border-left:3px solid var(--accent);font-family:var(--font-head);font-size:1.2rem;line-height:1.4}
+.hop blockquote cite{display:block;margin-top:8px;font-family:var(--font-body);font-size:var(--small);font-style:normal;color:var(--muted)}
+.hop .seasons{display:flex;flex-direction:column;gap:20px}
+.hop .sauce{display:grid;grid-template-columns:220px 1fr;gap:28px;padding:24px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg)}
+.hop .sauce .body{display:flex;flex-direction:column;gap:12px;min-width:0}
+.hop .badges{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.hop .badges li{font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:99px;border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.hop .badges li:first-child{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.hop .tryon{font-size:.95rem;color:var(--muted)}
+.hop .tryon strong{color:var(--fg)}
+.hop .note{font-size:var(--small);color:var(--muted)}
+.hop .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.hop .card{display:flex;flex-direction:column;gap:10px;padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg);min-width:0}
+.hop .card h3{font-size:1rem}
+.hop .card p{font-size:.9rem;color:var(--muted);flex:1}
+.hop .meta{display:flex;justify-content:space-between;font-size:.85rem;font-weight:600;font-variant-numeric:tabular-nums}
+.hop .card .btn{text-align:center;padding:10px 14px}
+.hop .center{text-align:center}
+.hop .vids{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.hop .vid{display:flex;flex-direction:column;gap:8px;min-width:0}
+.hop .vid .ph{aspect-ratio:16/9}
+.hop .vid .lbl{font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.hop .vid p{font-size:.9rem;color:var(--muted)}
+.hop .trios{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.hop .trio{padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg);display:flex;flex-direction:column;gap:8px}
+.hop .trio p{font-size:.95rem;color:var(--muted)}
+.hop .faq{display:flex;flex-direction:column;border-top:1px solid var(--line);max-width:820px}
+.hop .faq details{border-bottom:1px solid var(--line)}
+.hop .faq summary{cursor:pointer;list-style:none;padding:18px 36px 18px 0;font-weight:600;position:relative}
+.hop .faq summary::-webkit-details-marker{display:none}
+.hop .faq summary::after{content:"+";position:absolute;right:4px;top:14px;font-size:1.4rem;color:var(--accent)}
+.hop .faq details[open] summary::after{content:"–"}
+.hop .faq details p{padding:0 0 18px;color:var(--muted);max-width:68ch}
+.hop .final{background:var(--accent);color:var(--accent-fg)}
+.hop .final .wrap{align-items:center;text-align:center}
+.hop .final p{max-width:60ch;opacity:.92}
+.hop .final .btn.primary{background:var(--accent-fg);color:var(--accent);border-color:var(--accent-fg)}
+.hop .final .btn.ghost{color:var(--accent-fg);border-color:var(--accent-fg)}
+.hop .bundle{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hop .bundle-copy{display:flex;flex-direction:column;gap:16px;min-width:0}
+.hop .pic.five{aspect-ratio:auto;object-fit:contain}
+.hop .incl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 18px;font-size:.95rem}
+.hop .price{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px;font-variant-numeric:tabular-nums}
+.hop .price .now{font-family:var(--font-head);font-size:2rem;font-weight:700}
+.hop .price .was{color:var(--muted);font-size:1.1rem}
+.hop .price .save{font-size:.8rem;font-weight:700;color:var(--accent-fg);background:var(--accent);padding:4px 10px;border-radius:99px}
+.hop .ship{font-weight:600;color:var(--accent)}
+.hop .table-wrap{overflow-x:auto;max-width:640px}
+.hop .lineup{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.hop .lineup caption{text-align:left;font-weight:700;padding-bottom:10px}
+.hop .lineup th,.hop .lineup td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+.hop .lineup th{font-size:var(--small);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+@media (max-width:960px){.hop .grid{grid-template-columns:repeat(2,1fr)}
+.hop .hero,.hop .story,.hop .bundle{grid-template-columns:1fr}
+}
+@media (max-width:640px){.hop .sauce{grid-template-columns:1fr}
+.hop .sauce .pic{max-width:320px;margin:0 auto}
+.hop .trios{grid-template-columns:1fr}
+.hop .grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:420px){.hop .grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.hop *{transition:none!important}
+}
+.hop{display:block;width:100%;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+.hop h1,.hop h2,.hop h3,.hop p,.hop ul,.hop blockquote{letter-spacing:normal;text-transform:none}
+.hop .eyebrow{text-transform:uppercase;letter-spacing:.08em}
+.hop a.btn,.hop a.btn:hover,.hop a.btn:visited{text-decoration:none;box-shadow:none}
+.hop a.btn.primary,.hop a.btn.primary:visited{color:var(--accent-fg)}
+.hop a.btn.ghost,.hop a.btn.ghost:visited{color:var(--accent)}
+.hop .final a.btn.primary{color:var(--accent)}.hop .final a.btn.ghost{color:var(--accent-fg)}
+.hop img{max-width:100%;height:auto;border:0;box-shadow:none}
+.hop table{margin:0}
+.hop ul li{margin:0;list-style:none}
+.hop h1,.hop h2,.hop h3{color:var(--fg)}
+.hop .final h2{color:var(--accent-fg)}
+.hop h3 a,.hop h3 a:visited{color:var(--accent)}
+</style>
+<main class="hop">
+
+  <!-- SECTION 1: HERO -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="hero">
+        <div>
+          <span class="eyebrow">As seen on 5 seasons of Hot Ones</span>
+          <h1>Adoboloco on Hot Ones: Five Seasons of Maui-Born Heat</h1>
+          <p>From a homeschool garden in Kīhei, Maui to the Hot Ones table. Five Adoboloco hot sauces have coated the wings of doom across Seasons 5, 8, 10, 18 and 21. Meet the sauces, learn the stories behind them, and bring the lineup home.</p>
+          <div class="btns">
+            <a class="btn primary" href="#featured-sauces">Explore the Featured Sauces</a>
+            <a class="btn ghost" href="#hot-ones-5-pack">Get the Hot Ones 5-Pack</a>
+          </div>
+          <ul class="trust">
+            <li>Family-owned</li>
+            <li>Established 2011 in Maui, Hawaii</li>
+            <li>Simple, all-natural ingredients</li>
+          </ul>
+        </div>
+        <img class="pic five" src="https://adoboloco.com/wp-content/uploads/2026/11/hot-ones-5-bottles.webp" alt="The five Adoboloco hot sauces featured on Hot Ones: Hamajang, Kolohe Kid!, Fiya! Fiya!, Island Wings and Jalapeño Chico" width="1612" height="1250">
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: OUR HOT ONES JOURNEY -->
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="story">
+        <div class="copy">
+          <span class="eyebrow">Our Hot Ones journey</span>
+          <h2>From a Maui Garden to the Hot Ones Table</h2>
+          <p>Adoboloco started with a homeschool garden on Maui in 2011. Tim and Summer Parsons were teaching their three kids about growing food when the jalapeños took off, producing far more peppers than the family could eat. Tim turned the harvest into hot sauce, filled old shoyu bottles, and shared it at parties. People loved it. A family garden project was becoming a family business.</p>
+          <p>That first Jalapeño sauce kept things simple: apple cider vinegar, jalapeño peppers, sea salt and garlic. Its bright flavor drew inspiration from Hawaiian chili pepper water. The Adoboloco name came from an adobo recipe blog Tim had started years earlier, inspired by his love of chicken and pork adobo.</p>
+          <p>In 2018, Hamajang brought our kiawe-smoked ghost pepper heat to Hot Ones Season 5. Kolohe Kid followed in Season 8, then Fiya! Fiya! in Season 10. Island Wings brought another taste of Hawaiʻi to Season 18, and Jalapeño Chico carried the heat into Season 21. Those five appearances introduced our sauces to a whole new community of hot sauce lovers.</p>
+          <p>From those first bottles to the wings on Hot Ones, our approach has stayed simple: make sauces full of flavor that bring something good to the food you already love.</p>
+          <blockquote>“In Hawaiʻi it’s more than just heat. It’s about the food. It’s always been about the food.”<cite>Tim Parsons, co-founder, as quoted in <em>Hana Hou!</em></cite></blockquote>
+        </div>
+        <img class="pic story-img" src="https://adoboloco.com/wp-content/uploads/2021/01/Adoboloco-bulk-12up-01a.jpg" alt="The Adoboloco hot sauce lineup" loading="lazy" width="1200" height="1200">
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: FIVE SEASONS, FIVE SAUCES -->
+  <section class="sec" id="featured-sauces">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Five seasons, five sauces</span>
+        <h2>Explore Our Five Hot Ones Appearances</h2>
+        <p>Every Adoboloco sauce on Hot Ones has its own story. Here's the full run, season by season.</p>
+      </div>
+
+      <div class="seasons">
+        <article class="sauce">
+          <img class="pic" src="https://adoboloco.com/wp-content/uploads/2024/10/Hamajang-Smoky-Ghost-HOTONES-BANNER.jpg" alt="Hamajang Kiawe Smoked Ghost Pepper Hot Sauce bottle, as seen on Hot Ones" loading="lazy" width="1536" height="1536">
+          <div class="body">
+            <ul class="badges"><li>Hot Ones Season 5</li><li>Wing #5</li><li>Hot Ones est. 32,000 SHU</li><li>Heat 07/10</li></ul>
+            <h3><a href="https://adoboloco.com/shop/hamajang/">Hamajang Kiawe Smoked Ghost Pepper Hot Sauce</a></h3>
+            <p>The one that started our Hot Ones story. Hamajang is Hawaiian pidgin for "messed up," and that's how a ghost pepper makes you feel. We smoke the ghost peppers over kiawe wood, then keep the recipe simple: apple cider vinegar, peppers, sea salt and garlic. You get a deep, smoky heat with a bright, tangy finish.</p>
+            <p>Guests who took on Hamajang in Season 5 included Charlize Theron, Michael B. Jordan, John Mayer, Shawn Mendes, Tyra Banks and Alton Brown.</p>
+            <p class="tryon"><strong>Try it on:</strong> loco moco, eggs Benedict, burgers, fried rice.</p>
+            <div class="btns"><a class="btn primary" href="https://adoboloco.com/shop/hamajang/">Shop Hamajang</a></div>
+          </div>
+        </article>
+
+        <article class="sauce">
+          <img class="pic" src="https://adoboloco.com/wp-content/uploads/2019/09/KOLOHE-KID-1-HOTONES-08-1536x1536.webp" alt="Kolohe Kid! Hot Sauce bottle, as seen on Hot Ones" loading="lazy" width="1536" height="1536">
+          <div class="body">
+            <ul class="badges"><li>Hot Ones Season 8</li><li>Wing #6</li><li>Hot Ones est. 61,000 SHU</li><li>Heat 05/10</li></ul>
+            <h3><a href="https://adoboloco.com/shop/kolohekid-ghost-pepper-hawaiian-hotsauce/">Kolohe Kid! Hot Sauce</a></h3>
+            <p>Kolohe (co-low-hey) means "mischievous" in Hawaiian, and this sauce lives up to the name. Kolohe Kid blends ghost peppers with Hawaiian chili peppers for a thin, splashy, vinegar-forward sauce. Think of it as a spicier, more flavorful take on Tabasco.</p>
+            <p class="tryon"><strong>Try it on:</strong> poke, seafood, tacos, Bloody Marys.</p>
+            <div class="btns"><a class="btn primary" href="https://adoboloco.com/shop/kolohekid-ghost-pepper-hawaiian-hotsauce/">Shop Kolohe Kid!</a></div>
+          </div>
+        </article>
+
+        <article class="sauce">
+          <img class="pic" src="https://adoboloco.com/wp-content/uploads/2024/10/FIYA-FIYA-1-HOTONES-10-1536x1536.webp" alt="Fiya! Fiya! Hot Sauce bottle, as seen on Hot Ones" loading="lazy" width="1536" height="1536">
+          <div class="body">
+            <ul class="badges"><li>Hot Ones Season 10 All-Stars</li><li>Wing #6</li><li>Hot Ones est. 77,000 SHU</li><li>Heat 11/10</li></ul>
+            <h3><a href="https://adoboloco.com/shop/fiyafiya/">Fiya! Fiya! Hot Sauce</a></h3>
+            <p>When Hot Ones invited its favorite makers back for the Season 10 All-Star lineup, we brought our hottest sauce yet. Fiya! Fiya! combines Trinidad Moruga Scorpion, smoked ghost peppers, habanero and sweet red jalapeños with fire-roasted garlic. The label says it best: Open. Go Fo Broke.</p>
+            <p class="tryon"><strong>Try it on:</strong> spicy poke mayo, pizza, nachos, breakfast burritos, steak.</p>
+            <div class="btns"><a class="btn primary" href="https://adoboloco.com/shop/fiyafiya/">Shop Fiya! Fiya!</a></div>
+          </div>
+        </article>
+
+        <article class="sauce">
+          <img class="pic" src="https://adoboloco.com/wp-content/uploads/2024/10/ISLAND-WING-1-HOT-ONES-18-03-1536x1536.jpg" alt="Island Wings Hot Sauce bottle, as seen on Hot Ones" loading="lazy" width="1536" height="1536">
+          <div class="body">
+            <ul class="badges"><li>Hot Ones Season 18</li><li>Wing #2</li><li>Hot Ones est. 5,500 SHU</li><li>Mild</li></ul>
+            <h3><a href="https://adoboloco.com/shop/island-wings/">Island Wings Hot Sauce</a></h3>
+            <p>Made with HEATONIST for Season 18, Island Wings is a taste of Hawaiʻi in one wing. Fire-roasted pineapple and honey meet chili peppers and red wine vinegar for a sweet, tangy, tropical sauce. It's the friendliest heat in our Hot Ones lineup and a perfect starting point for new fans.</p>
+            <p class="tryon"><strong>Try it on:</strong> chicken wings, grilled shrimp, pork, summer barbecues.</p>
+            <div class="btns"><a class="btn primary" href="https://adoboloco.com/shop/island-wings/">Shop Island Wings</a></div>
+          </div>
+        </article>
+
+        <article class="sauce">
+          <img class="pic" src="https://adoboloco.com/wp-content/uploads/2023/10/JALAPENO-CHICO-xHOT-1-HOTONES-21.webp" alt="Jalapeño Chico Hot Sauce bottle, as seen on Hot Ones Season 21" loading="lazy" width="1920" height="1920">
+          <div class="body">
+            <ul class="badges"><li>Hot Ones Season 21</li><li>Wing #7</li><li>Hot Ones est. 103,000 SHU</li><li>xHOT</li></ul>
+            <h3><a href="https://adoboloco.com/shop/jalapeno-chico-taco-sauce/">Jalapeño Chico Hot Sauce</a></h3>
+            <p>Season 21 was our Black Jack year, and Jalapeño Chico was our winning hand. Smoked jalapeños, smoked ghost pepper and Trinidad Moruga Scorpion bring the fire. A hint of lime, garlic and smoked paprika bring the flavor. It's a smoky, zesty taco sauce with serious heat.</p>
+            <p class="tryon"><strong>Try it on:</strong> tacos, eggs, avocado toast, breakfast sandwiches, nachos.</p>
+            <div class="btns"><a class="btn primary" href="https://adoboloco.com/shop/jalapeno-chico-taco-sauce/">Shop Jalapeño Chico</a></div>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="note">Lineup positions and Scoville estimates come from the official Hot Ones season lineups published by HEATONIST and Sauce Mania. Scoville figures are estimates and vary from batch to batch; our own heat ratings reflect how hot each sauce tastes.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 4: HOT ONES 5-PACK BUNDLE (new product: create in WooCommerce, then update the Shop link) -->
+  <section class="sec alt" id="hot-ones-5-pack">
+    <div class="wrap">
+      <div class="bundle">
+        <img class="pic five" src="https://adoboloco.com/wp-content/uploads/2026/11/hot-ones-5-bottles.webp" alt="The Adoboloco Hot Ones 5-Pack: Hamajang, Kolohe Kid!, Fiya! Fiya!, Island Wings and Jalapeño Chico" width="1612" height="1250">
+        <div class="bundle-copy">
+          <span class="eyebrow">New bundle</span>
+          <h2>The Hot Ones 5-Pack</h2>
+          <p>Every Adoboloco sauce from Hot Ones in one box. Taste the full run, from the mild, tropical Island Wings to the 11/10 Fiya! Fiya!</p>
+          <ul class="incl">
+            <li><strong>Hamajang</strong> · Season 5</li>
+            <li><strong>Kolohe Kid!</strong> · Season 8</li>
+            <li><strong>Fiya! Fiya!</strong> · Season 10</li>
+            <li><strong>Island Wings</strong> · Season 18</li>
+            <li><strong>Jalapeño Chico</strong> · Season 21</li>
+          </ul>
+          <div class="price"><span class="now">$63.99</span><s class="was">$70.95</s><span class="save">Save $6.96</span></div>
+          <p class="ship">✓ Free shipping</p>
+          <div class="btns"><a class="btn primary" href="https://adoboloco.com/shop/hot-ones-5-pack/">Shop the 5-Pack</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: BUILD YOUR OWN TRIO (customer favourite, sits above single bottles) -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Customer favorite</span>
+        <h2>Create Your Own Hot Ones Trio</h2>
+        <p>Can't pick just one? Choose any three Adoboloco hot sauces and build a box that fits your heat level. Go mild to wild with Island Wings, Kolohe Kid! and Fiya! Fiya!, or stack the smoky ones with Hamajang, Jalapeño Chico and your house favorite. It's an easy gift for any Hot Ones fan.</p>
+      </div>
+      <div class="trios">
+        <div class="trio"><h3>The Hot Ones Starter</h3><p>Island Wings, Kolohe Kid!, Hamajang</p></div>
+        <div class="trio"><h3>The Smoke Show</h3><p>Hamajang, Jalapeño Chico, Fiya! Fiya!</p></div>
+        <div class="trio"><h3>Go Fo Broke</h3><p>Kolohe Kid!, Jalapeño Chico, Fiya! Fiya!</p></div>
+      </div>
+      <div class="btns"><a class="btn primary" href="https://adoboloco.com/shop/build-your-own-hot-sauce-trio/">Build Your Own Trio</a></div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: SHOP THE HOT ONES COLLECTION (pull image + live price from WooCommerce) -->
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Shop</span>
+        <h2>Shop the Hot Ones Collection</h2>
+        <p>Taste what the guests tasted. Every sauce below was featured on Hot Ones, and every one comes from our family business.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <img class="pic" src="https://adoboloco.com/wp-content/uploads/2024/10/Hamajang-Smoky-Ghost-HOTONES-BANNER.jpg" alt="Hamajang Smoky Ghost &amp; Unhinged Habanero hot sauce, as seen on Hot Ones Season 5" loading="lazy" width="1536" height="1536">
+          <h3>Hamajang Smoky Ghost &amp; Unhinged Habanero</h3>
+          <p>Kiawe-smoked ghost pepper and habanero, bright and tangy. Our first Hot Ones sauce.</p>
+          <div class="meta"><span>Season 5 · 07/10</span><span>$12.99</span></div>
+          <a class="btn primary" href="https://adoboloco.com/shop/hamajang/">Shop Now</a>
+        </div>
+        <div class="card">
+          <img class="pic" src="https://adoboloco.com/wp-content/uploads/2019/09/KOLOHE-KID-1-HOTONES-08-1536x1536.webp" alt="Kolohe Kid! Hot Sauce" loading="lazy" width="1536" height="1536">
+          <h3>Kolohe Kid! Hot Sauce</h3>
+          <p>Ghost and Hawaiian chili peppers in a splashy, vinegar-forward sauce.</p>
+          <div class="meta"><span>Season 8 · 05/10</span><span>$12.99</span></div>
+          <a class="btn primary" href="https://adoboloco.com/shop/kolohekid-ghost-pepper-hawaiian-hotsauce/">Shop Now</a>
+        </div>
+        <div class="card">
+          <img class="pic" src="https://adoboloco.com/wp-content/uploads/2024/10/FIYA-FIYA-1-HOTONES-10-1536x1536.webp" alt="Fiya! Fiya! Hot Sauce" loading="lazy" width="1536" height="1536">
+          <h3>Fiya! Fiya! Hot Sauce</h3>
+          <p>Four-pepper blend led by Trinidad Moruga Scorpion. Our hottest.</p>
+          <div class="meta"><span>Season 10 · 11/10</span><span>$16.99</span></div>
+          <a class="btn primary" href="https://adoboloco.com/shop/fiyafiya/">Shop Now</a>
+        </div>
+        <div class="card">
+          <img class="pic" src="https://adoboloco.com/wp-content/uploads/2024/10/ISLAND-WING-1-HOT-ONES-18-03-1536x1536.jpg" alt="Island Wings Hot Sauce" loading="lazy" width="1536" height="1536">
+          <h3>Island Wings Hot Sauce</h3>
+          <p>Fire-roasted pineapple and honey with a mild, tropical kick.</p>
+          <div class="meta"><span>Season 18 · Mild</span><span>$12.99</span></div>
+          <a class="btn primary" href="https://adoboloco.com/shop/island-wings/">Shop Now</a>
+        </div>
+        <div class="card">
+          <img class="pic" src="https://adoboloco.com/wp-content/uploads/2023/10/JALAPENO-CHICO-xHOT-1-HOTONES-21.webp" alt="Jalapeño Chico Hot Sauce bottle, as seen on Hot Ones Season 21" loading="lazy" width="1920" height="1920">
+          <h3>Jalapeño Chico Hot Sauce</h3>
+          <p>Smoked jalapeño and scorpion pepper with a hint of lime.</p>
+          <div class="meta"><span>Season 21 · xHOT</span><span>$14.99</span></div>
+          <a class="btn primary" href="https://adoboloco.com/shop/jalapeno-chico-taco-sauce/">Shop Now</a>
+        </div>
+      </div>
+      <p class="center"><a class="btn ghost" href="https://adoboloco.com/product-category/hot-ones/">View the full Hot Ones Collection</a></p>
+    </div>
+  </section>
+
+  <!-- SECTION 7: WATCH THE APPEARANCES (replace placeholders with First We Feast YouTube embeds once approved) -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Watch</span>
+        <h2>See Adoboloco on Hot Ones</h2>
+        <p>Watch Sean Evans and his celebrity guests take on the Adoboloco wing, from first bite to the sweat that follows.</p>
+      </div>
+      <div class="vids">
+        <div class="vid"><div class="ph">YouTube embed</div><span class="lbl">Season 5 · Hamajang</span><p>Our Hot Ones debut, on the Season 5 lineup with guests like Charlize Theron and John Mayer.</p></div>
+        <div class="vid"><div class="ph">YouTube embed</div><span class="lbl">Season 8 · Kolohe Kid!</span><p>The mischievous ghost pepper sauce lands at wing #6.</p></div>
+        <div class="vid"><div class="ph">YouTube embed</div><span class="lbl">Season 10 · Fiya! Fiya!</span><p>Back for the All-Star edition with our hottest sauce ever.</p></div>
+        <div class="vid"><div class="ph">YouTube embed</div><span class="lbl">Season 18 · Island Wings</span><p>A tropical #2 wing made with HEATONIST, opening with Post Malone.</p></div>
+        <div class="vid"><div class="ph">YouTube embed</div><span class="lbl">Season 21 · Jalapeño Chico</span><p>Our Black Jack year: smoky heat at wing #7.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: FAQ -->
+  <section class="sec alt">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">FAQ</span>
+        <h2>Hot Ones FAQs</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>Which Adoboloco sauces have been on Hot Ones?</summary><p>Five sauces across five seasons: Hamajang (Season 5), Kolohe Kid! (Season 8), Fiya! Fiya! (Season 10), Island Wings (Season 18) and Jalapeño Chico (Season 21).</p></details>
+        <details><summary>Which Adoboloco Hot Ones sauce is the hottest?</summary><p>Fiya! Fiya! is our hottest sauce, rated 11/10 on our own heat scale. Its Trinidad Moruga Scorpion, smoked ghost pepper and habanero blend hits harder than anything else we make. Hot Ones lineups list a Scoville estimate for each wing, but those are estimates and they vary from batch to batch, so we rate our sauces by how hot they taste.</p></details>
+        <details><summary>What is the mildest Adoboloco Hot Ones sauce?</summary><p>Island Wings, at 5,500 SHU. It sat in the #2 spot in Season 18 and has a sweet pineapple flavor.</p></details>
+        <details><summary>Where is Adoboloco from?</summary><p>Adoboloco is a family-owned company, established in 2011 in Maui, Hawaiʻi, where it started as a homeschool garden project.</p></details>
+        <details><summary>Can I buy all the Adoboloco Hot Ones sauces in one place?</summary><p>Yes. Get all five in our <a href="#hot-ones-5-pack">Hot Ones 5-Pack</a> for $63.99 with free shipping, or pick any three in our <a href="https://adoboloco.com/shop/build-your-own-hot-sauce-trio/">Build Your Own Trio</a> box.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: COMPLETE HOT ONES SAUCE LIST (links to the dedicated page) -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">More Hot Ones</span>
+        <h2>Every Hot Ones Hot Sauce, Season by Season</h2>
+        <p>Curious what else has been on the wings of death? See every sauce from every season of Hot Ones, with each wing's lineup position and Scoville rating.</p>
+      </div>
+      <div class="table-wrap">
+        <table class="lineup">
+          <caption>Adoboloco in the Hot Ones lineups</caption>
+          <thead><tr><th scope="col">Season</th><th scope="col">Wing</th><th scope="col">Sauce</th></tr></thead>
+          <tbody>
+            <tr><td>5</td><td>#5</td><td><a href="https://adoboloco.com/shop/hamajang/">Hamajang</a></td></tr>
+            <tr><td>8</td><td>#6</td><td><a href="https://adoboloco.com/shop/kolohekid-ghost-pepper-hawaiian-hotsauce/">Kolohe Kid!</a></td></tr>
+            <tr><td>10</td><td>#6</td><td><a href="https://adoboloco.com/shop/fiyafiya/">Fiya! Fiya!</a></td></tr>
+            <tr><td>18</td><td>#2</td><td><a href="https://adoboloco.com/shop/island-wings/">Island Wings</a></td></tr>
+            <tr><td>21</td><td>#7</td><td><a href="https://adoboloco.com/shop/jalapeno-chico-taco-sauce/">Jalapeño Chico</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="btns"><a class="btn primary" href="/hot-ones-hot-sauces-list/">See the Complete List of Hot Ones Hot Sauces</a></div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA BAND -->
+  <section class="sec final">
+    <div class="wrap">
+      <h2>Bring the Heat Home</h2>
+      <p>Five seasons on Hot Ones, one family that started in a Maui garden, and a whole lineup of sauces ready for your kitchen. Find your favorite, or try them all.</p>
+      <div class="btns">
+        <a class="btn primary" href="https://adoboloco.com/shop/">Shop All Hot Sauces</a>
+        <a class="btn ghost" href="https://adoboloco.com/product-category/hot-ones/">Shop the Hot Ones Collection</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FAQPage schema (Organization, BreadcrumbList and ItemList to be added with final product URLs) -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Which Adoboloco sauces have been on Hot Ones?","acceptedAnswer":{"@type":"Answer","text":"Five sauces across five seasons: Hamajang (Season 5), Kolohe Kid! (Season 8), Fiya! Fiya! (Season 10), Island Wings (Season 18) and Jalapeño Chico (Season 21)."}},
+{"@type":"Question","name":"Which Adoboloco Hot Ones sauce is the hottest?","acceptedAnswer":{"@type":"Answer","text":"Fiya! Fiya! is our hottest sauce, rated 11/10 on our own heat scale. Its Trinidad Moruga Scorpion, smoked ghost pepper and habanero blend hits harder than anything else we make. Hot Ones lineups list a Scoville estimate for each wing, but those are estimates and they vary from batch to batch, so we rate our sauces by how hot they taste."}},
+{"@type":"Question","name":"What is the mildest Adoboloco Hot Ones sauce?","acceptedAnswer":{"@type":"Answer","text":"Island Wings, at 5,500 SHU. It sat in the #2 spot in Season 18 and has a sweet pineapple flavor."}},
+{"@type":"Question","name":"Where is Adoboloco from?","acceptedAnswer":{"@type":"Answer","text":"Adoboloco is a family-owned company, established in 2011 in Maui, Hawaiʻi, where it started as a homeschool garden project."}},
+{"@type":"Question","name":"Can I buy all the Adoboloco Hot Ones sauces in one place?","acceptedAnswer":{"@type":"Answer","text":"Yes. Get all five in our Hot Ones 5-Pack for $63.99 with free shipping, or pick any three in our Build Your Own Trio box."}}
+]}
+</script>
